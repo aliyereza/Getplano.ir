@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plano — پلتفرم همکاری سینما و تئاتر</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -9,9 +12,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Plano">
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PLANO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -657,6 +657,239 @@
       </div>
     </div>
   </footer>
+
+<!-- iOS Add to Home Screen Banner — فقط برای iOS Safari -->
+<div id="ios-banner" style="display:none;">
+  <style>
+    #ios-banner {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 0;
+      animation: fadeInBanner 0.35s ease;
+    }
+    @keyframes fadeInBanner {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+    #ios-banner-card {
+      background: #181818;
+      border: 1px solid rgba(201,162,39,.22);
+      border-bottom: none;
+      border-radius: 20px 20px 0 0;
+      padding: 32px 28px 40px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 -8px 60px rgba(201,162,39,.1);
+      position: relative;
+      font-family: 'Vazirmatn', 'IranianSans', sans-serif;
+      direction: rtl;
+    }
+    #ios-banner-close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      border: none;
+      color: #CFC7BA;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    #ios-banner-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    #ios-banner-logo-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: #111;
+      border: 1px solid rgba(201,162,39,.3);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #ios-banner-logo-icon img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    #ios-banner-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: .2em;
+      color: #C9A227;
+      text-transform: uppercase;
+    }
+    #ios-banner-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #F4EFE6;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    #ios-banner-sub {
+      font-size: .78rem;
+      font-weight: 300;
+      color: #CFC7BA;
+      text-align: center;
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    #ios-banner-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,162,39,.25), transparent);
+      margin-bottom: 24px;
+    }
+    .ios-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .ios-step-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(201,162,39,.12);
+      border: 1px solid rgba(201,162,39,.25);
+      color: #C9A227;
+      font-size: .68rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .ios-step-text {
+      font-size: .82rem;
+      color: #CFC7BA;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .ios-step-text .highlight {
+      color: #F4EFE6;
+      font-weight: 600;
+    }
+    .ios-step-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,.1);
+      border-radius: 5px;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+    #ios-banner-arrow {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+      padding-left: 8px;
+    }
+    #ios-banner-arrow svg {
+      animation: bounce 1.4s ease infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(6px); }
+    }
+  </style>
+
+  <div id="ios-banner-card">
+    <button id="ios-banner-close" onclick="closeBanner()">✕</button>
+
+    <div id="ios-banner-logo">
+      <div id="ios-banner-logo-icon">
+        <img src="/apple-touch-icon.png" alt="Plano">
+      </div>
+      <span id="ios-banner-logo-text">PLANO</span>
+    </div>
+
+    <div id="ios-banner-title">نصب اپلیکیشن Plano</div>
+    <div id="ios-banner-sub">برای دسترسی سریع‌تر، Plano را به صفحه اصلی گوشی خود اضافه کنید</div>
+
+    <div id="ios-banner-divider"></div>
+
+    <div class="ios-step">
+      <span class="ios-step-num">۱</span>
+      <span class="ios-step-text">
+        در نوار پایین Safari، دکمه
+        <span class="ios-step-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4EFE6" stroke-width="2" stroke-linecap="round">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+            <polyline points="16 6 12 2 8 6"/>
+            <line x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+        </span>
+        <span class="highlight">اشتراک‌گذاری</span> را لمس کنید
+      </span>
+    </div>
+
+    <div class="ios-step">
+      <span class="ios-step-num">۲</span>
+      <span class="ios-step-text">
+        در منوی باز شده، به پایین اسکرول کنید و گزینه
+        <span class="highlight">Add to Home Screen</span>
+        <span class="ios-step-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F4EFE6" stroke-width="2.5" stroke-linecap="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+        </span>
+        را بزنید
+      </span>
+    </div>
+
+    <div class="ios-step">
+      <span class="ios-step-num">۳</span>
+      <span class="ios-step-text">
+        در بالای صفحه دکمه <span class="highlight">Add</span> را بزنید
+      </span>
+    </div>
+
+    <div id="ios-banner-arrow">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <polyline points="19 12 12 19 5 12"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+  function isIOS() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+  }
+  function isInStandaloneMode() {
+    return ('standalone' in window.navigator) && window.navigator.standalone;
+  }
+  function closeBanner() {
+    document.getElementById('ios-banner').style.display = 'none';
+    localStorage.setItem('plano-banner-dismissed', '1');
+  }
+
+  window.addEventListener('load', function() {
+    if (isIOS() && !isInStandaloneMode()) {
+      const dismissed = localStorage.getItem('plano-banner-dismissed');
+      if (!dismissed) {
+        setTimeout(function() {
+          document.getElementById('ios-banner').style.display = 'flex';
+        }, 1500);
+      }
+    }
+  });
+</script>
 
 </body>
 </html>
