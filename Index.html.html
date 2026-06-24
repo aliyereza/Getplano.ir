@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plano — پلتفرم همکاری سینما و تئاتر</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#111111">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Plano">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    
+
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+    :root {
+      --black:   #111111;
+      --black2:  #0D0D0D;
+      --surface: #161616;
+      --gold:    #C9A227;
+      --gold-lo: rgba(201,162,39,.12);
+      --gold-xs: rgba(201,162,39,.06);
+      --ivory:   #F4EFE6;
+      --ivory2:  #CFC7BA;
+      --muted:   #5A5247;
+      --border:  rgba(201,162,39,.14);
+      --max:     1080px;
+    }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--ivory);
+      font-family: 'Vazirmatn','IranianSans',sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain overlay ── */
+    body::after {
+      content:'';
+      position:fixed; inset:0; z-index:999; pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity:.5; mix-blend-mode:overlay;
+    }
+
+    .wrap { max-width:var(--max); margin:0 auto; padding:0 32px; position:relative; z-index:1; }
+
+    /* ═══════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════ */
+    .nav {
+      position:sticky; top:0; z-index:100;
+      border-bottom:1px solid var(--border);
+      background: rgba(17,17,17,.88);
+      backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+    }
+    .nav-inner {
+      display:flex; align-items:center; justify-content:space-between;
+      height:66px;
+    }
+    .nav-logo {
+      font-family:'Montserrat',sans-serif;
+      font-weight:800; font-size:1.2rem; letter-spacing:.2em;
+      color:var(--gold); text-decoration:none; text-transform:uppercase;
+    }
+    .nav-links { display:flex; align-items:center; gap:4px; }
+    .nav-a {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      color:var(--ivory2); text-decoration:none; font-size:.78rem; font-weight:500;
+      padding:8px 14px; border-radius:7px;
+      transition:color .15s, background .15s;
+    }
+    .nav-a:hover { color:var(--ivory); background:rgba(255,255,255,.04); }
+    .nav-cta {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      background:var(--gold); color:var(--black); font-size:.78rem; font-weight:700;
+      padding:9px 20px; border-radius:8px; text-decoration:none;
+      transition:opacity .15s, transform .15s;
+    }
+    .nav-cta:hover { opacity:.88; transform:translateY(-1px); }
+
+    .nav-artist {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      background:transparent; color:var(--ivory); font-size:.78rem; font-weight:700;
+      padding:9px 20px; border-radius:8px; text-decoration:none;
+      border:1px solid rgba(201,162,39,.35);
+      transition:background .15s, transform .15s, border-color .15s;
+    }
+    .nav-artist:hover { background:rgba(201,162,39,.07); border-color:rgba(201,162,39,.6); transform:translateY(-1px); }
+
+    /* ═══════════════════════════════════
+       HERO — curtain split
+    ═══════════════════════════════════ */
+    .hero {
+      min-height:92vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:80px 32px 72px; text-align:center;
+      position:relative; overflow:hidden;
+    }
+
+    /* spotlight from top-right */
+    .hero::before {
+      content:'';
+      position:absolute; top:-120px; right:-8%;
+      width:820px; height:820px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,162,39,.11) 0%, transparent 62%);
+      pointer-events:none;
+    }
+    /* second softer fill left */
+    .hero::after {
+      content:'';
+      position:absolute; bottom:-60px; left:-10%;
+      width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,162,39,.04) 0%, transparent 65%);
+      pointer-events:none;
+    }
+
+    /* curtain lines */
+    .curtain-line {
+      position:absolute; top:0; bottom:0; width:1px;
+      background:linear-gradient(180deg, transparent, var(--gold) 35%, var(--gold) 65%, transparent);
+      opacity:.22;
+    }
+    .cl-left  { left:30%; }
+    .cl-right { right:30%; }
+
+    .hero-content { position:relative; z-index:2; }
+
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:9px;
+      font-size:.65rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+      color:#b89830;
+      border:1px solid rgba(201,162,39,.2);
+      padding:6px 16px; border-radius:100px;
+      margin-bottom:44px;
+    }
+    .eyebrow-dot {
+      width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0;
+      animation:pulse 2.6s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; }
+      50%      { opacity:.3; }
+    }
+
+    .hero-label {
+      font-family:'Montserrat',sans-serif;
+      font-size:clamp(.65rem,.9vw,.75rem); font-weight:700;
+      letter-spacing:.28em; text-transform:uppercase;
+      color:var(--gold); opacity:.7; margin-bottom:20px;
+      display:block;
+    }
+
+    .hero-h1 {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:clamp(2.6rem,6.5vw,5rem);
+      font-weight:700; line-height:1.14; letter-spacing:-.02em;
+      color:var(--ivory); margin-bottom:26px;
+    }
+    .hero-h1 .gold { color:var(--gold); }
+
+    .hero-tagline {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:clamp(1rem,1.8vw,1.2rem); font-weight:300;
+      color:var(--gold); opacity:.75; letter-spacing:.04em;
+      margin-bottom:20px;
+    }
+
+    .hero-sub {
+      font-size:clamp(.9rem,1.6vw,1.05rem); font-weight:300;
+      color:var(--ivory2); max-width:520px; margin:0 auto 52px;
+      line-height:1.85;
+    }
+
+    .hero-btns {
+      display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:24px;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:.88rem; font-weight:600;
+      padding:15px 32px; border-radius:9px;
+      text-decoration:none; cursor:pointer; border:none;
+      transition:transform .16s, box-shadow .2s, opacity .15s;
+    }
+    .btn:active { transform:scale(.97); }
+    .btn-gold {
+      background:var(--gold); color:var(--black);
+      box-shadow: 0 0 28px rgba(201,162,39,.2);
+    }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 6px 36px rgba(201,162,39,.32); }
+    .btn-outline {
+      background:transparent; color:var(--ivory);
+      border:1px solid rgba(201,162,39,.45);
+    }
+    .btn-outline:hover { transform:translateY(-2px); background:rgba(201,162,39,.06); }
+
+    .hero-micro {
+      font-size:.68rem; color:var(--muted); letter-spacing:.06em;
+    }
+
+    /* ═══════════════════════════════════
+       DIVIDER
+    ═══════════════════════════════════ */
+    .gold-rule {
+      border:none; height:1px;
+      background:linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity:.2; margin:0;
+    }
+
+    /* ═══════════════════════════════════
+       SHARED SECTION STYLES
+    ═══════════════════════════════════ */
+    .section { padding:100px 0; position:relative; z-index:1; }
+    .section-sm { padding:72px 0; }
+
+    .eyebrow-tag {
+      font-family:'Montserrat',sans-serif;
+      font-size:.6rem; font-weight:700; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--gold); opacity:.75;
+      margin-bottom:18px; display:block;
+    }
+    .section-title {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:clamp(1.7rem,3.8vw,2.6rem);
+      font-weight:700; letter-spacing:-.025em; line-height:1.22;
+      color:var(--ivory); margin-bottom:18px;
+    }
+    .section-body {
+      font-size:.9rem; font-weight:300; color:var(--ivory2);
+      max-width:480px; line-height:1.85;
+    }
+
+    /* ═══════════════════════════════════
+       PROBLEM  — horizontal scroll of pain points
+    ═══════════════════════════════════ */
+    .problem-list {
+      margin-top:56px;
+      display:grid; gap:0;
+      border-top:1px solid var(--border);
+    }
+    .problem-item {
+      display:grid; grid-template-columns:48px 1fr;
+      gap:0 28px; align-items:start;
+      padding:28px 0;
+      border-bottom:1px solid var(--border);
+      transition:background .2s;
+    }
+    .problem-item:hover { background:rgba(201,162,39,.025); }
+    .problem-num {
+      font-family:'Montserrat',sans-serif;
+      font-size:.65rem; font-weight:700; letter-spacing:.1em;
+      color:var(--gold); opacity:.5; padding-top:4px;
+      text-align:left;
+    }
+    .problem-text h3 {
+      font-size:1rem; font-weight:600; color:var(--ivory);
+      margin-bottom:6px; letter-spacing:-.01em;
+    }
+    .problem-text p {
+      font-size:.82rem; font-weight:300; color:var(--ivory2); line-height:1.75;
+    }
+
+    /* ═══════════════════════════════════
+       STATEMENT — full-bleed quote
+    ═══════════════════════════════════ */
+    .statement-section {
+      padding:80px 0; text-align:center;
+      background:linear-gradient(180deg, transparent, rgba(201,162,39,.04) 50%, transparent);
+    }
+    .statement-quote {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:clamp(1.2rem,2.8vw,1.75rem);
+      font-weight:500; line-height:1.65; letter-spacing:-.015em;
+      color:var(--ivory); max-width:740px; margin:0 auto;
+    }
+    .statement-quote .g { color:var(--gold); }
+    .statement-rule {
+      width:40px; height:1px; background:var(--gold);
+      margin:32px auto 0; opacity:.45;
+    }
+
+    /* ═══════════════════════════════════
+       EMPLOYER
+    ═══════════════════════════════════ */
+    .employer-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:80px; align-items:center;
+    }
+    .role-tags { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 36px; }
+    .rtag {
+      font-size:.75rem; font-weight:500;
+      padding:7px 15px; border-radius:7px;
+      background:rgba(201,162,39,.07);
+      border:1px solid rgba(201,162,39,.18);
+      color:#c8a840;
+      transition:background .15s;
+    }
+    .rtag:hover { background:rgba(201,162,39,.14); }
+    .free-note {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:.7rem; color:#3da868; margin-top:18px;
+    }
+    .free-dot {
+      width:5px; height:5px; border-radius:50%;
+      background:#3da868; flex-shrink:0;
+    }
+
+    /* mock card */
+    .mock {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:14px; padding:28px;
+      box-shadow:0 0 80px rgba(201,162,39,.07);
+    }
+    .mock-head { display:flex; align-items:center; gap:13px; margin-bottom:24px; }
+    .mock-av {
+      width:44px; height:44px; border-radius:10px; flex-shrink:0;
+      background:linear-gradient(135deg,rgba(201,162,39,.5),rgba(201,162,39,.1));
+    }
+    .mock-ttl { font-size:.88rem; font-weight:600; color:var(--ivory); }
+    .mock-sub { font-size:.7rem; color:var(--ivory2); margin-top:3px; }
+    .mock-chips { display:flex; gap:7px; flex-wrap:wrap; }
+    .mock-chip {
+      font-size:.68rem; padding:4px 10px; border-radius:6px;
+      background:rgba(255,255,255,.04); border:1px solid var(--border);
+      color:var(--ivory2);
+    }
+    .mock-foot {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-top:22px; padding-top:22px;
+      border-top:1px solid var(--border);
+    }
+    .mock-foot-label { font-size:.7rem; color:var(--ivory2); }
+    .mock-foot-num { font-size:1.35rem; font-weight:700; color:var(--gold); }
+
+    /* ═══════════════════════════════════
+       ARTIST
+    ═══════════════════════════════════ */
+    .artist-block {
+      text-align:center;
+      padding:80px 48px;
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+    }
+    .soon-tag {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:.72rem; color:var(--ivory2);
+      border:1px solid var(--border);
+      padding:7px 18px; border-radius:100px; margin-top:28px;
+    }
+
+    /* ═══════════════════════════════════
+       WHY — three columns, no cards
+    ═══════════════════════════════════ */
+    .why-cols {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:0; margin-top:64px;
+      border-top:1px solid var(--border);
+    }
+    .why-col {
+      padding:36px 32px 36px 0;
+      border-right:1px solid var(--border);
+      transition:background .2s;
+    }
+    .why-col:last-child { border-right:none; padding-right:0; padding-left:32px; }
+    .why-col:hover { background:rgba(201,162,39,.02); }
+    .why-head {
+      font-family:'Montserrat',sans-serif;
+      font-size:.6rem; font-weight:700; letter-spacing:.16em;
+      color:var(--gold); opacity:.6; text-transform:uppercase;
+      margin-bottom:16px; display:block;
+    }
+    .why-col h3 {
+      font-size:.98rem; font-weight:600; color:var(--ivory);
+      margin-bottom:10px; letter-spacing:-.01em;
+    }
+    .why-col p {
+      font-size:.8rem; font-weight:300; color:var(--ivory2); line-height:1.8;
+    }
+
+    /* ═══════════════════════════════════
+       EARLY ACCESS
+    ═══════════════════════════════════ */
+    .cta-band {
+      padding:100px 0;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .cta-band::before {
+      content:'';
+      position:absolute; top:-200px; left:50%; transform:translateX(-50%);
+      width:900px; height:600px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,162,39,.1) 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .cta-band h2 {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:clamp(1.7rem,4vw,2.8rem);
+      font-weight:700; letter-spacing:-.03em; margin-bottom:14px;
+      position:relative;
+    }
+    .cta-band p {
+      font-size:.9rem; font-weight:300; color:var(--ivory2);
+      max-width:400px; margin:0 auto 44px; line-height:1.85;
+      position:relative;
+    }
+    .cta-band .btn { position:relative; }
+
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
+    .footer {
+      padding:40px 0;
+      border-top:1px solid var(--border);
+      position:relative; z-index:1;
+    }
+    .footer-inner {
+      display:flex; align-items:center;
+      justify-content:space-between; flex-wrap:wrap; gap:12px;
+    }
+    .footer-logo {
+      font-family:'Montserrat',sans-serif;
+      font-weight:800; font-size:.95rem; letter-spacing:.2em;
+      color:var(--gold); text-decoration:none; text-transform:uppercase;
+    }
+    .footer-r { font-size:.75rem; color:var(--muted); }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media(max-width:860px){
+      .employer-grid { grid-template-columns:1fr; gap:48px; }
+      .mock { display:none; }
+      .why-cols { grid-template-columns:1fr; }
+      .why-col { padding:28px 0; border-right:none; border-bottom:1px solid var(--border); }
+      .why-col:last-child { padding-left:0; border-bottom:none; }
+      .curtain-line { display:none; }
+    }
+    @media(max-width:580px){
+      .hero { padding:72px 20px 60px; }
+      .nav-a { display:none; }
+      .nav-a.nav-artist { display:flex; }
+      .hero-h1 { font-size:2.3rem; }
+      .artist-block { padding:52px 24px; }
+      .cta-band { padding:72px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="nav">
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">Plano</a>
+        <div class="nav-links">
+          <a href="#employer" class="nav-a">برای کارفرما</a>
+          <a href="#artist"   class="nav-a">برای هنرمندان</a>
+          <a href="https://tally.so/r/Pd4yqQ" target="_blank" rel="noopener" class="nav-a nav-artist">ثبت هنرمند</a>
+          <a href="https://tally.so/r/dWgVQD" target="_blank" rel="noopener" class="nav-cta">ثبت فراخوان</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="curtain-line cl-left"></div>
+    <div class="curtain-line cl-right"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        نسخه اول در حال ساخت است
+      </div>
+      <span class="hero-label">Film & Theatre Talent Marketplace</span>
+      <h1 class="hero-h1">
+        پلتفرم همکاری<br><span class="gold">سینما و تئاتر</span>
+      </h1>
+      <p class="hero-tagline">جایگاه هنرمند</p>
+      <p class="hero-sub">
+        فراخوان پروژه ثبت کنید، هنرمندان حرفه‌ای پیدا کنید — سریع، مستقیم، بدون واسطه.
+      </p>
+      <div class="hero-btns">
+        <a href="https://tally.so/r/dWgVQD" target="_blank" rel="noopener" class="btn btn-gold">ثبت فراخوان پروژه</a>
+        <a href="https://tally.so/r/Pd4yqQ" target="_blank" rel="noopener" class="btn btn-outline">عضویت هنرمندان</a>
+      </div>
+      <p class="hero-micro">اولین انتشار رایگان است</p>
+    </div>
+  </section>
+
+  <hr class="gold-rule">
+
+  <!-- ── EMPLOYER ── -->
+  <section class="section" id="employer">
+    <div class="wrap">
+      <div class="employer-grid">
+        <div>
+          <span class="eyebrow-tag">برای کارفرما</span>
+          <h2 class="section-title">پروژه دارید؟</h2>
+          <p class="section-body">فراخوان خود را ثبت کنید و مستقیم به هنرمندان و متخصصانی که دنبالشان می‌گردید برسید.</p>
+          <div class="role-tags">
+            <span class="rtag">بازیگر</span>
+            <span class="rtag">فیلمبردار</span>
+            <span class="rtag">صدابردار</span>
+            <span class="rtag">گریم</span>
+            <span class="rtag">طراح صحنه</span>
+            <span class="rtag">کارگردان</span>
+            <span class="rtag">تدوینگر</span>
+          </div>
+          <a href="https://tally.so/r/dWgVQD" target="_blank" rel="noopener" class="btn btn-gold">ثبت فراخوان پروژه</a>
+          <div class="free-note"><span class="free-dot"></span>انتشار اولیه رایگان است</div>
+        </div>
+        <div class="mock">
+          <div class="mock-head">
+            <div class="mock-av"></div>
+            <div>
+              <div class="mock-ttl">فراخوان: فیلم کوتاه</div>
+              <div class="mock-sub">تهران &nbsp;·&nbsp; منتشرشده</div>
+            </div>
+          </div>
+          <div class="mock-chips">
+            <span class="mock-chip">بازیگر زن</span>
+            <span class="mock-chip">فیلمبردار</span>
+            <span class="mock-chip">گریم</span>
+          </div>
+          <div class="mock-foot">
+            <span class="mock-foot-label">متقاضیان دریافتی</span>
+            <span class="mock-foot-num">۱۴</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="gold-rule">
+
+  <!-- ── PROBLEM ── -->
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow-tag">چرا Plano؟</span>
+      <h2 class="section-title">مشکلاتی که همه می‌شناسند</h2>
+      <p class="section-body">صنعت سینما و تئاتر هنوز با روش‌های قدیمی کار می‌کند.</p>
+      <div class="problem-list">
+        <div class="problem-item">
+          <span class="problem-num">—</span>
+          <div class="problem-text">
+            <h3>پراکندگی نیروها</h3>
+            <p>متخصصان باتجربه هر جایی هستند جز یک جای واحد. پیدا کردن آن‌ها وقت و شانس می‌خواهد.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="problem-num">—</span>
+          <div class="problem-text">
+            <h3>وابستگی به ارتباطات شخصی</h3>
+            <p>اگر در شبکه درست نباشی، پروژه‌های خوب از کنارت رد می‌شوند — بدون اینکه بدانی.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="problem-num">—</span>
+          <div class="problem-text">
+            <h3>زمان‌بر بودن انتخاب تیم</h3>
+            <p>بارها تماس، رزومه‌های پراکنده، هماهنگی‌های بی‌پایان — فقط برای یک نقش.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <span class="problem-num">—</span>
+          <div class="problem-text">
+            <h3>نبود پلتفرم متمرکز</h3>
+            <p>هیچ جایی برای ثبت فراخوان، بررسی پروفایل و ارزیابی متقاضیان در مسیری واحد وجود ندارد.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="gold-rule">
+
+  <!-- ── STATEMENT ── -->
+  <section class="statement-section">
+    <div class="wrap">
+      <p class="statement-quote">
+        <span class="g">Plano</span> یک پلتفرم برای اتصال پروژه‌های سینما و تئاتر<br>
+        به نیروهای حرفه‌ای است — بدون واسطه، بدون ابهام.
+      </p>
+      <div class="statement-rule"></div>
+    </div>
+  </section>
+
+
+  <hr class="gold-rule">
+
+  <!-- ── ARTIST ── -->
+  <section id="artist">
+    <div class="artist-block">
+      <span class="eyebrow-tag" style="justify-content:center;display:block;">برای هنرمندان</span>
+      <h2 class="section-title">هنرمند هستید؟</h2>
+      <p class="section-body" style="margin:0 auto;text-align:center;">
+        به پروژه‌های واقعی بپیوندید. پروفایل بسازید، فرصت‌ها را ببینید، مستقیم درخواست بدهید.
+      </p>
+      <a href="https://tally.so/r/Pd4yqQ" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:28px;">ثبت پیش‌عضویت هنرمندان</a>
+      <p class="hero-micro" style="margin-top:14px;">اطلاع‌رسانی می‌کنیم وقتی پلتفرم آماده شد</p>
+    </div>
+  </section>
+
+  <!-- ── WHY ── -->
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow-tag">تمایز</span>
+      <h2 class="section-title">چرا Plano متفاوت است</h2>
+      <div class="why-cols">
+        <div class="why-col">
+          <span class="why-head">سرعت</span>
+          <h3>کاهش زمان جذب نیرو</h3>
+          <p>به‌جای هفته‌ها تماس و پیگیری، در چند ساعت به متقاضیان واجد شرایط برسید.</p>
+        </div>
+        <div class="why-col">
+          <span class="why-head">دسترسی</span>
+          <h3>استعدادهای بیشتر، یک‌جا</h3>
+          <p>به مخزنی از هنرمندان و متخصصان سینما و تئاتر دسترسی داشته باشید که در هیچ جای دیگری نیستند.</p>
+        </div>
+        <div class="why-col">
+          <span class="why-head">شفافیت</span>
+          <h3>مسیر روشن، بدون واسطه</h3>
+          <p>وضعیت هر درخواست مشخص است. مستقیم با هنرمند در ارتباط باشید — بدون کمیسیون پنهان.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="gold-rule">
+
+  <!-- ── EARLY ACCESS ── -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>نسخه اولیه در حال ساخت است</h2>
+      <p>اگر پروژه دارید، همین الان فراخوان بدهید.<br>اولین‌ها رایگان منتشر می‌شوند.</p>
+      <a href="https://tally.so/r/dWgVQD" target="_blank" rel="noopener" class="btn btn-gold" style="font-size:.9rem;padding:17px 40px;">ثبت فراخوان پروژه</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <a href="https://getplano.ir" class="footer-logo">Plano</a>
+        <span class="footer-r">getplano.ir</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
