@@ -438,9 +438,47 @@
     /* ═══════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════ */
+    .nav-hamburger {
+      display:none; align-items:center; justify-content:center;
+      width:36px; height:36px; background:transparent;
+      border:1px solid var(--border); border-radius:8px;
+      cursor:pointer; flex-direction:column; gap:5px; padding:8px;
+    }
+    .nav-hamburger span {
+      display:block; width:16px; height:1.5px;
+      background:var(--ivory2); border-radius:2px; transition:all .2s;
+    }
+    .nav-mobile-menu {
+      position:fixed; inset:0; z-index:200;
+      background:rgba(17,17,17,.97);
+      backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+      display:none; flex-direction:column;
+      align-items:center; justify-content:center; gap:10px;
+      padding:60px 28px;
+    }
+    .nav-mobile-menu.open { display:flex; }
+    .nav-mobile-menu a {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:1rem; font-weight:600; color:var(--ivory);
+      text-decoration:none; padding:14px 28px; width:100%; text-align:center;
+      border-radius:10px; border:1px solid var(--border); transition:background .15s;
+    }
+    .nav-mobile-menu a.m-gold {
+      background:var(--gold); color:var(--black); border-color:var(--gold);
+    }
+    .nav-mobile-menu a.m-outline {
+      border-color:rgba(201,162,39,.4);
+    }
+    .nav-mobile-close {
+      position:absolute; top:20px; left:20px;
+      width:36px; height:36px; border-radius:50%;
+      background:rgba(255,255,255,.07); border:none;
+      color:var(--ivory2); font-size:1rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+    }
+
     @media(max-width:860px){
       .employer-grid { grid-template-columns:1fr; gap:48px; }
-      .mock { display:none; }
       .why-cols { grid-template-columns:1fr; }
       .why-col { padding:28px 0; border-right:none; border-bottom:1px solid var(--border); }
       .why-col:last-child { padding-left:0; border-bottom:none; }
@@ -450,6 +488,7 @@
       .hero { padding:72px 20px 60px; }
       .nav-a { display:none; }
       .nav-a.nav-artist { display:flex; }
+      .nav-hamburger { display:flex; }
       .hero-h1 { font-size:2.3rem; }
       .artist-block { padding:52px 24px; }
       .cta-band { padding:72px 0; }
@@ -469,6 +508,9 @@
           <a href="#artist"   class="nav-a">برای هنرمندان</a>
           <a href="https://tally.so/r/Pd4yqQ" target="_blank" rel="noopener" class="nav-a nav-artist">ثبت هنرمند</a>
           <a href="https://tally.so/r/dWgVQD" target="_blank" rel="noopener" class="nav-cta">ثبت فراخوان</a>
+          <button class="nav-hamburger" onclick="openMenu()" aria-label="منو">
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
     </div>
@@ -907,6 +949,21 @@
     }
   });
 </script>
+
+
+  <!-- Mobile Menu -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <button class="nav-mobile-close" onclick="closeMenu()">✕</button>
+    <a href="/frakhhvan.html" onclick="closeMenu()">فراخوان‌ها</a>
+    <a href="#employer" onclick="closeMenu()">برای کارفرما</a>
+    <a href="#artist" onclick="closeMenu()">برای هنرمندان</a>
+    <a href="https://tally.so/r/Pd4yqQ" target="_blank" rel="noopener" class="m-outline" onclick="closeMenu()">ثبت هنرمند</a>
+    <a href="https://tally.so/r/dWgVQD" target="_blank" rel="noopener" class="m-gold" onclick="closeMenu()">ثبت فراخوان</a>
+  </div>
+  <script>
+    function openMenu()  { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
+  </script>
 
 </body>
 </html>
