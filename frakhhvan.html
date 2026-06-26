@@ -273,7 +273,7 @@
 
   <script>
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyYFCm_UMfk0wL5pyxT7kApMUzQc8ym4twk8amjGuG-VA0HCSMUsgElEeLeVIJRZFbPFw/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzLwyJyjBvPfKKuOKwa6yxJRC1pj7CRrIW91vIjapywniUG6i1CLqU8gyzHaOuQJWkf/exec';
 
     const TALLY_ARTIST = 'https://tally.so/r/Pd4yqQ';
 
@@ -282,7 +282,11 @@
 
     async function loadJobs() {
       try {
-        const res = await fetch(API_URL);
+        const res = await fetch(API_URL, {
+          method: 'GET',
+          redirect: 'follow',
+        });
+        if (!res.ok) throw new Error('Network response was not ok');
         const json = await res.json();
         if (json.status === 'ok') {
           allJobs = json.data;
@@ -291,6 +295,7 @@
           showError();
         }
       } catch(e) {
+        console.error('Fetch error:', e);
         showError();
       }
     }
