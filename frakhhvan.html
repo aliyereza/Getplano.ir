@@ -275,7 +275,7 @@
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
     const API_URL = 'https://script.google.com/macros/s/AKfycbwr2pBIw5fzL3Gk0jqZL91eCp3LbUxm7qTHlG1UW3DubpkZ2U4j9JYefZ6kjV6uEEw/exec';
 
-    const TALLY_ARTIST = 'https://tally.so/r/Pd4yqQ';
+    const ARTIST_URL = '/artist.html';
 
     let allJobs = [];
     let activeFilter = 'all';
@@ -324,7 +324,7 @@
         const expLabel = job.experience && job.experience.includes('دارد') ? 'سابقه لازم است' : 'سابقه لازم نیست';
 
         // Pre-fill Tally با نام پروژه
-        const tallyUrl = `${TALLY_ARTIST}?project=${encodeURIComponent(job.project)}`;
+        const tallyUrl = `${ARTIST_URL}?project=${encodeURIComponent(job.project)}`;
 
         return `
         <div class="job-card" data-roles='${JSON.stringify(job.roles)}'>
