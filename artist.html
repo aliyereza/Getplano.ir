@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ثبت هنرمند — Plano</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --black:#111111;--surface:#161616;--gold:#C9A227;
+      --border:rgba(201,162,39,.13);--ivory:#F4EFE6;--ivory2:#CFC7BA;
+      --muted:#5A5247;--success:#2E8B57;--error:#e07070;--max:680px;
+    }
+    html{scroll-behavior:smooth;}
+    body{
+      background:var(--black);
+      background-image:radial-gradient(circle at 50% 0%,rgba(201,162,39,.07),transparent 50%);
+      color:var(--ivory);font-family:'Vazirmatn',sans-serif;
+      line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;
+    }
+    body::after{
+      content:'';position:fixed;inset:0;z-index:999;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+      opacity:.5;mix-blend-mode:overlay;
+    }
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+    .nav{position:sticky;top:0;z-index:100;background:rgba(17,17,17,.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .nav-logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.22em;color:var(--gold);text-decoration:none;text-transform:uppercase;}
+    .nav-back{font-size:.78rem;color:var(--ivory2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:7px;transition:color .15s,background .15s;}
+    .nav-back:hover{color:var(--ivory);background:rgba(255,255,255,.04);}
+    .page-header{padding:56px 0 40px;text-align:center;}
+    .eyebrow{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.72;margin-bottom:12px;display:block;}
+    .page-title{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;letter-spacing:-.025em;margin-bottom:10px;}
+    .page-sub{font-size:.84rem;font-weight:300;color:var(--ivory2);line-height:1.8;}
+    .form-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:36px 32px;margin:32px 0 60px;box-shadow:0 0 40px rgba(201,162,39,.05);}
+    .form-section{margin-bottom:32px;}
+    .form-section-title{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+    .field{margin-bottom:20px;}
+    .field label{display:block;font-size:.8rem;font-weight:600;color:var(--ivory2);margin-bottom:7px;}
+    .field label .req{color:var(--gold);margin-right:2px;}
+    input[type=text],input[type=tel],input[type=number],input[type=email],textarea,select{
+      width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);
+      border-radius:9px;padding:12px 14px;color:var(--ivory);font-family:'Vazirmatn',sans-serif;
+      font-size:.85rem;outline:none;transition:border-color .18s,box-shadow .18s;
+      -webkit-appearance:none;appearance:none;
+    }
+    input:focus,textarea:focus,select:focus{border-color:rgba(201,162,39,.45);box-shadow:0 0 0 3px rgba(201,162,39,.08);}
+    input::placeholder,textarea::placeholder{color:var(--muted);}
+    textarea{resize:vertical;min-height:100px;}
+    select option{background:#1a1a1a;color:var(--ivory);}
+    .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    .check-item{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s,background .15s;}
+    .check-item:hover{border-color:rgba(201,162,39,.3);background:rgba(201,162,39,.04);}
+    .check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+    .check-item span{font-size:.8rem;color:var(--ivory2);}
+    .btn-submit{width:100%;padding:15px;border-radius:10px;background:var(--gold);color:var(--black);font-family:'Vazirmatn',sans-serif;font-size:.95rem;font-weight:700;border:none;cursor:pointer;transition:opacity .15s,transform .15s,box-shadow .2s;box-shadow:0 0 24px rgba(201,162,39,.2);}
+    .btn-submit:hover{opacity:.88;transform:translateY(-1px);}
+    .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+    .success-box{display:none;text-align:center;padding:48px 24px;}
+    .success-icon{font-size:2.5rem;margin-bottom:16px;}
+    .success-box h2{font-size:1.3rem;font-weight:700;margin-bottom:10px;}
+    .success-box p{font-size:.85rem;color:var(--ivory2);line-height:1.8;}
+    .success-box a{display:inline-block;margin-top:24px;color:var(--gold);font-size:.82rem;text-decoration:underline;}
+    .err-msg{font-size:.72rem;color:var(--error);margin-top:5px;display:none;}
+    .field.invalid input,.field.invalid textarea,.field.invalid select{border-color:var(--error);}
+    .field.invalid .err-msg{display:block;}
+    @media(max-width:500px){.form-card{padding:24px 18px;}.check-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap" style="max-width:100%;">
+      <div class="nav-inner" style="padding:0 24px;">
+        <a href="/" class="nav-logo">Plano</a>
+        <a href="/" class="nav-back">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          بازگشت
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="page-header">
+      <span class="eyebrow">برای هنرمندان</span>
+      <h1 class="page-title">ثبت‌نام هنرمند</h1>
+      <p class="page-sub">پروفایل خود را ثبت کنید تا به محض انتشار فراخوان به شما اطلاع‌رسانی کنیم</p>
+    </div>
+
+    <div id="formWrap">
+      <div class="form-card">
+        <form id="artistForm" novalidate>
+
+          <!-- اطلاعات شخصی -->
+          <div class="form-section">
+            <div class="form-section-title">اطلاعات شخصی</div>
+
+            <div class="field" id="f-name">
+              <label><span class="req">*</span>نام و نام خانوادگی</label>
+              <input type="text" name="fullname" placeholder="نام کامل شما">
+              <div class="err-msg">این فیلد الزامی است</div>
+            </div>
+
+            <div class="field" id="f-phone">
+              <label><span class="req">*</span>شماره تماس</label>
+              <input type="tel" name="phone" placeholder="09xx xxx xxxx">
+              <div class="err-msg">شماره تماس معتبر وارد کنید</div>
+            </div>
+
+            <div class="field" id="f-age">
+              <label><span class="req">*</span>سن</label>
+              <input type="number" name="age" placeholder="مثلاً ۲۵" min="15" max="99">
+              <div class="err-msg">سن معتبر وارد کنید</div>
+            </div>
+
+            <div class="field">
+              <label>شهر</label>
+              <input type="text" name="city" placeholder="تهران">
+            </div>
+          </div>
+
+          <!-- تخصص -->
+          <div class="form-section">
+            <div class="form-section-title">تخصص و مهارت</div>
+
+            <div class="field" id="f-skills">
+              <label><span class="req">*</span>حوزه فعالیت</label>
+              <div class="check-grid">
+                <label class="check-item"><input type="checkbox" name="skills" value="بازیگر"><span>بازیگر</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="کارگردان"><span>کارگردان</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="دستیار کارگردان"><span>دستیار کارگردان</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="فیلمبردار"><span>فیلمبردار</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="صدابردار"><span>صدابردار</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="گریمور"><span>گریمور</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="طراح صحنه"><span>طراح صحنه</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="طراح لباس"><span>طراح لباس</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="تدوینگر"><span>تدوینگر</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="سایر"><span>سایر</span></label>
+              </div>
+              <div class="err-msg">حداقل یک مورد انتخاب کنید</div>
+            </div>
+
+            <div class="field" id="f-bio">
+              <label><span class="req">*</span>معرفی کوتاه</label>
+              <textarea name="bio" placeholder="سابقه کاری، مهارت‌ها و توضیحات بیشتر..."></textarea>
+              <div class="err-msg">این فیلد الزامی است</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">ثبت اطلاعات</button>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-box" id="successBox">
+      <div class="success-icon">🎭</div>
+      <h2>ثبت‌نام شما با موفقیت انجام شد!</h2>
+      <p>به محض انتشار فراخوان مناسب با تخصص شما، از طریق شماره تماس اطلاع‌رسانی می‌کنیم.</p>
+      <a href="/frakhhvan.html">مشاهده فراخوان‌های فعلی</a>
+    </div>
+  </div>
+
+  <script>
+    // ⚠️ بعد از deploy کردن Apps Script این URL رو جایگزین کن
+    const ARTIST_SCRIPT = 'https://script.google.com/macros/s/AKfycbxEWO-KKVws_rmeu8VrZT4cq8OwTisAhN2Wf9qIaliTXRa2MSdEmBc2Gqf9ecDq4wTzmw/exec';
+
+    function validateForm() {
+      let valid = true;
+      const required = [
+        {id:'f-name',  name:'fullname'},
+        {id:'f-phone', name:'phone'},
+        {id:'f-age',   name:'age'},
+        {id:'f-bio',   name:'bio'},
+      ];
+      required.forEach(function(f){
+        var el = document.querySelector('[name="'+f.name+'"]');
+        var wrapper = document.getElementById(f.id);
+        if(!el.value.trim()){wrapper.classList.add('invalid');valid=false;}
+        else{wrapper.classList.remove('invalid');}
+      });
+      var skills = document.querySelectorAll('[name="skills"]:checked');
+      var skillsWrapper = document.getElementById('f-skills');
+      if(skills.length===0){skillsWrapper.classList.add('invalid');valid=false;}
+      else{skillsWrapper.classList.remove('invalid');}
+      return valid;
+    }
+
+    document.getElementById('artistForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      if(!validateForm()) return;
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'در حال ارسال...';
+      var skills = Array.from(document.querySelectorAll('[name="skills"]:checked')).map(function(el){return el.value;});
+      var data = {
+        fullname:  document.querySelector('[name="fullname"]').value.trim(),
+        phone:     document.querySelector('[name="phone"]').value.trim(),
+        age:       document.querySelector('[name="age"]').value.trim(),
+        city:      document.querySelector('[name="city"]').value.trim(),
+        skills:    skills.join('، '),
+        bio:       document.querySelector('[name="bio"]').value.trim(),
+        timestamp: new Date().toISOString()
+      };
+      try{
+        await fetch(ARTIST_SCRIPT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+        document.getElementById('formWrap').style.display='none';
+        document.getElementById('successBox').style.display='block';
+        window.scrollTo({top:0,behavior:'smooth'});
+      }catch(err){
+        btn.disabled=false;
+        btn.textContent='ثبت اطلاعات';
+        alert('خطا در ارسال. لطفاً دوباره تلاش کنید.');
+      }
+    });
+  </script>
+
+</body>
+</html>
