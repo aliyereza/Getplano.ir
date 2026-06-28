@@ -140,7 +140,10 @@
                 <label class="check-item"><input type="checkbox" name="skills" value="طراح صحنه"><span>طراح صحنه</span></label>
                 <label class="check-item"><input type="checkbox" name="skills" value="طراح لباس"><span>طراح لباس</span></label>
                 <label class="check-item"><input type="checkbox" name="skills" value="تدوینگر"><span>تدوینگر</span></label>
-                <label class="check-item"><input type="checkbox" name="skills" value="سایر"><span>سایر</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="سایر" id="skillsOther" onchange="toggleOther()"><span>سایر</span></label>
+              </div>
+              <div class="field" id="otherSkillWrap" style="display:none;margin-top:10px;">
+                <input type="text" name="other_skill" placeholder="مثلاً: مدل، عکاس، نورپرداز...">
               </div>
               <div class="err-msg">حداقل یک مورد انتخاب کنید</div>
             </div>
@@ -169,6 +172,13 @@
 
   <script>
     // ⚠️ بعد از deploy کردن Apps Script این URL رو جایگزین کن
+    function toggleOther() {
+      var cb = document.getElementById('skillsOther');
+      var wrap = document.getElementById('otherSkillWrap');
+      wrap.style.display = cb.checked ? 'block' : 'none';
+      if (!cb.checked) document.querySelector('[name="other_skill"]').value = '';
+    }
+
     const ARTIST_SCRIPT = 'https://script.google.com/macros/s/AKfycbxEWO-KKVws_rmeu8VrZT4cq8OwTisAhN2Wf9qIaliTXRa2MSdEmBc2Gqf9ecDq4wTzmw/exec';
 
     function validateForm() {
@@ -204,7 +214,12 @@
         phone:     document.querySelector('[name="phone"]').value.trim(),
         age:       document.querySelector('[name="age"]').value.trim(),
         city:      document.querySelector('[name="city"]').value.trim(),
-        skills:    skills.join('، '),
+        skills:    (function(){
+          var s = skills.filter(function(x){return x !== 'سایر';});
+          var other = document.querySelector('[name="other_skill"]').value.trim();
+          if(other) s.push(other);
+          return s.join('، ');
+        })(),
         bio:       document.querySelector('[name="bio"]').value.trim(),
         timestamp: new Date().toISOString()
       };
