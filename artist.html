@@ -163,15 +163,30 @@
 
     <!-- SUCCESS -->
     <div class="success-box" id="successBox">
-      <div class="success-icon">🎭</div>
-      <h2>ثبت‌نام شما با موفقیت انجام شد!</h2>
-      <p>به محض انتشار فراخوان مناسب با تخصص شما، از طریق شماره تماس اطلاع‌رسانی می‌کنیم.</p>
+      <div class="success-icon" id="successIcon">🎭</div>
+      <h2 id="successTitle">ثبت‌نام شما با موفقیت انجام شد!</h2>
+      <p id="successMsg">به محض انتشار فراخوان مناسب با تخصص شما، از طریق شماره تماس اطلاع‌رسانی می‌کنیم.</p>
       <a href="/frakhhvan.html">مشاهده فراخوان‌های فعلی</a>
     </div>
   </div>
 
   <script>
     // ⚠️ بعد از deploy کردن Apps Script این URL رو جایگزین کن
+    // خوندن نام پروژه از URL و نمایش در صفحه
+    window.addEventListener('load', function() {
+      var params = new URLSearchParams(window.location.search);
+      var project = params.get('project');
+      if (project) {
+        var banner = document.createElement('div');
+        banner.style.cssText = 'background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:.82rem;color:#CFC7BA;';
+        banner.innerHTML = '<span style="color:#C9A227;font-weight:600;">پروژه:</span> ' + project;
+        document.querySelector('.form-card form').insertBefore(banner, document.querySelector('.form-section'));
+
+        // ذخیره برای ارسال
+        document.getElementById('artistForm').dataset.project = project;
+      }
+    });
+
     function toggleOther() {
       var cb = document.getElementById('skillsOther');
       var wrap = document.getElementById('otherSkillWrap');
@@ -221,7 +236,8 @@
           return s.join('، ');
         })(),
         bio:       document.querySelector('[name="bio"]').value.trim(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        project:   document.getElementById('artistForm').dataset.project || ''
       };
       try{
         await fetch(ARTIST_SCRIPT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
