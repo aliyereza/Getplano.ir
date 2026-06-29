@@ -38,6 +38,13 @@
 
     body {
       background: var(--black);
+      background-image:
+        linear-gradient(180deg, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.88) 50%, rgba(17,17,17,0.96) 100%),
+        url('/hero-bg.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       color: var(--ivory);
       font-family: 'Vazirmatn','IranianSans',sans-serif;
       line-height: 1.7;
@@ -510,6 +517,61 @@
     .mini-job-cta { font-family:'Vazirmatn','IranianSans',sans-serif; font-size:.78rem; font-weight:700; padding:10px; border-radius:8px; background:var(--gold); color:var(--black); text-decoration:none; text-align:center; transition:opacity .15s; margin-top:auto; display:block; }
     .mini-job-cta:hover { opacity:.88; }
     .mini-jobs-loading { text-align:center; color:var(--muted); font-size:.82rem; padding:32px 0; grid-column:1/-1; }
+
+    /* ── SLIDER ── */
+    .slider-wrap { position:relative; overflow:hidden; margin-top:32px; }
+    .slider-track {
+      display:flex; gap:20px;
+      transition:transform .5s cubic-bezier(.4,0,.2,1);
+      will-change:transform;
+    }
+    .slider-card {
+      min-width:100%; max-width:100%;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      border-radius:16px; padding:32px 28px;
+      display:flex; flex-direction:column; gap:0;
+      box-shadow:0 0 40px rgba(201,162,39,.06);
+      flex-shrink:0;
+    }
+    .slider-card-title {
+      font-size:1.2rem; font-weight:700; color:var(--ivory);
+      letter-spacing:-.02em; margin-bottom:10px; text-align:right;
+    }
+    .slider-card-title span { color:var(--gold); }
+    .slider-card-meta {
+      display:flex; align-items:center; gap:8px;
+      font-size:.78rem; color:var(--ivory2); margin-bottom:20px;
+      justify-content:flex-end;
+    }
+    .slider-card-meta-dot { width:3px; height:3px; border-radius:50%; background:var(--muted); }
+    .slider-card-roles { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; justify-content:flex-end; }
+    .slider-card-role {
+      font-size:.78rem; font-weight:500; padding:7px 16px; border-radius:8px;
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+      color:var(--ivory2);
+    }
+    .slider-card-divider { height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin-bottom:20px; }
+    .slider-card-footer { display:flex; align-items:center; justify-content:space-between; }
+    .slider-card-footer-label { font-size:.78rem; color:var(--ivory2); }
+    .slider-card-footer-num { font-size:1.6rem; font-weight:700; color:var(--gold); font-family:'Montserrat',sans-serif; }
+    .slider-card-cta {
+      font-family:'Vazirmatn','IranianSans',sans-serif;
+      font-size:.82rem; font-weight:700; padding:11px 24px; border-radius:9px;
+      background:var(--gold); color:var(--black); text-decoration:none;
+      transition:opacity .15s,transform .15s;
+    }
+    .slider-card-cta:hover { opacity:.88; transform:translateY(-1px); }
+    .slider-dots { display:flex; justify-content:center; gap:8px; margin-top:20px; }
+    .slider-dot {
+      width:7px; height:7px; border-radius:50%;
+      background:var(--border); cursor:pointer;
+      transition:background .2s, transform .2s;
+      border:none; padding:0;
+    }
+    .slider-dot.active { background:var(--gold); transform:scale(1.3); }
+    .mini-jobs-loading { text-align:center; color:var(--muted); font-size:.82rem; padding:48px 0; }
+
     .mini-jobs-more { display:block; text-align:center; margin-top:24px; color:var(--gold); font-size:.8rem; text-decoration:none; opacity:.8; }
     .mini-jobs-more:hover { opacity:1; text-decoration:underline; }
   </style>
@@ -582,24 +644,7 @@
           <a href="/employer.html" class="btn btn-gold">ثبت فراخوان پروژه</a>
           <div class="free-note"><span class="free-dot"></span>انتشار اولیه رایگان است</div>
         </div>
-        <div class="mock">
-          <div class="mock-head">
-            <div class="mock-av"></div>
-            <div>
-              <div class="mock-ttl">فراخوان: فیلم کوتاه</div>
-              <div class="mock-sub">تهران &nbsp;·&nbsp; منتشرشده</div>
-            </div>
-          </div>
-          <div class="mock-chips">
-            <span class="mock-chip">بازیگر زن</span>
-            <span class="mock-chip">فیلمبردار</span>
-            <span class="mock-chip">گریم</span>
-          </div>
-          <div class="mock-foot">
-            <span class="mock-foot-label">متقاضیان دریافتی</span>
-            <span class="mock-foot-num">۱۴</span>
-          </div>
-        </div>
+<!-- mock removed -->
       </div>
     </div>
   </section>
@@ -677,13 +722,16 @@
 
   <hr class="gold-rule">
 
-  <!-- فراخوان‌های زنده -->
+  <!-- فراخوان‌های زنده - اسلایدر -->
   <section class="section" id="live-jobs">
     <div class="wrap">
       <span class="eyebrow-tag">فراخوان‌های فعال</span>
       <h2 class="section-title">آخرین فرصت‌های همکاری</h2>
-      <div class="mini-jobs-grid" id="miniJobsGrid">
-        <div class="mini-jobs-loading">در حال بارگذاری...</div>
+      <div class="slider-wrap">
+        <div class="slider-track" id="sliderTrack">
+          <div class="mini-jobs-loading">در حال بارگذاری...</div>
+        </div>
+        <div class="slider-dots" id="sliderDots"></div>
       </div>
       <a href="/frakhhvan.html" class="mini-jobs-more">مشاهده همه فراخوان‌ها ←</a>
     </div>
@@ -1001,32 +1049,70 @@
 
 
   <script>
-    // بارگذاری فراخوان‌های زنده در صفحه اصلی
     (async function() {
       const API = 'https://script.google.com/macros/s/AKfycbwr2pBIw5fzL3Gk0jqZL91eCp3LbUxm7qTHlG1UW3DubpkZ2U4j9JYefZ6kjV6uEEw/exec';
-      const grid = document.getElementById('miniJobsGrid');
-      if (!grid) return;
+      const track = document.getElementById('sliderTrack');
+      const dotsWrap = document.getElementById('sliderDots');
+      if (!track) return;
+
+      var jobs = [];
+      var current = 0;
+      var timer = null;
+
       try {
         const res = await fetch(API, { method:'GET', redirect:'follow' });
         const json = await res.json();
         if (!json.data || !json.data.length) {
-          grid.innerHTML = '<div class="mini-jobs-loading">فراخوان فعالی موجود نیست</div>';
+          track.innerHTML = '<div class="mini-jobs-loading">فراخوان فعالی موجود نیست</div>';
           return;
         }
-        // فقط ۳ تا آخرین
-        const jobs = json.data.slice(0, 3);
-        grid.innerHTML = jobs.map(function(job) {
-          var roles = (job.roles || []).slice(0,3).map(function(r){ return '<span class="mini-job-role">'+r+'</span>'; }).join('');
+        jobs = json.data.slice(0, 6);
+        renderSlider();
+        startAuto();
+      } catch(e) {
+        track.innerHTML = '<div class="mini-jobs-loading">خطا در بارگذاری</div>';
+      }
+
+      function renderSlider() {
+        track.innerHTML = jobs.map(function(job, i) {
+          var roles = (job.roles || []).map(function(r){ return '<span class="slider-card-role">'+r+'</span>'; }).join('');
           var url = '/artist.html?project=' + encodeURIComponent(job.project);
-          return '<div class="mini-job-card">' +
-            '<div><span class="mini-job-label">نام پروژه</span><div class="mini-job-name">'+job.project+'</div></div>' +
-            '<div class="mini-job-city"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>'+job.city+'</div>' +
-            '<div class="mini-job-roles">'+roles+'</div>' +
-            '<a href="'+url+'" class="mini-job-cta">درخواست همکاری</a>' +
+          var applicants = job.applicants || '—';
+          return '<div class="slider-card">' +
+            '<div class="slider-card-title"><span>فراخوان:</span> ' + job.project + '</div>' +
+            '<div class="slider-card-meta">' + job.city + '<span class="slider-card-meta-dot"></span>منتشرشده</div>' +
+            '<div class="slider-card-roles">' + roles + '</div>' +
+            '<div class="slider-card-divider"></div>' +
+            '<div class="slider-card-footer">' +
+              '<a href="' + url + '" class="slider-card-cta">درخواست همکاری</a>' +
+              '<div style="text-align:left"><div class="slider-card-footer-label">متقاضیان دریافتی</div><div class="slider-card-footer-num">' + applicants + '</div></div>' +
+            '</div>' +
           '</div>';
         }).join('');
-      } catch(e) {
-        grid.innerHTML = '';
+
+        // dots
+        dotsWrap.innerHTML = jobs.map(function(_, i) {
+          return '<button class="slider-dot' + (i===0?' active':'') + '" onclick="goSlide('+i+')"></button>';
+        }).join('');
+      }
+
+      window.goSlide = function(idx) {
+        current = idx;
+        track.style.transform = 'translateX(' + (idx * 100) + '%)';
+        document.querySelectorAll('.slider-dot').forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+        resetAuto();
+      };
+
+      function startAuto() {
+        timer = setInterval(function() {
+          current = (current + 1) % jobs.length;
+          goSlide(current);
+        }, 4000);
+      }
+
+      function resetAuto() {
+        clearInterval(timer);
+        startAuto();
       }
     })();
   </script>
