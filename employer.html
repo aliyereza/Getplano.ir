@@ -2,6 +2,22 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
+  <meta name="description" content="فراخوان پروژه سینمایی یا تئاتری خود را رایگان ثبت کنید و مستقیم به هنرمندان حرفه‌ای برسید.">
+  <meta name="keywords" content="ثبت فراخوان، جذب بازیگر، جذب عوامل فیلم، فراخوان سینما، فراخوان تئاتر">
+  <meta name="author" content="Plano">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ثبت فراخوان پروژه — Plano">
+  <meta property="og:description" content="فراخوان پروژه سینمایی یا تئاتری خود را رایگان ثبت کنید و مستقیم به هنرمندان حرفه‌ای برسید.">
+  <meta property="og:url" content="https://getplano.ir/employer.html">
+  <meta property="og:image" content="https://getplano.ir/apple-touch-icon.png">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="Plano">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ثبت فراخوان پروژه — Plano">
+  <meta name="twitter:description" content="فراخوان پروژه سینمایی یا تئاتری خود را رایگان ثبت کنید و مستقیم به هنرمندان حرفه‌ای برسید.">
+  <meta name="twitter:image" content="https://getplano.ir/apple-touch-icon.png">
+  <link rel="canonical" href="https://getplano.ir/employer.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ثبت فراخوان — Plano</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -17,12 +33,7 @@
     html{scroll-behavior:smooth;}
     body{
       background:var(--black);
-      background-image:linear-gradient(180deg, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.88) 50%, rgba(17,17,17,0.96) 100%), url('/hero-bg.jpg?v=2');
-      background-size:cover;
-      min-height:100vh;
-      background-position:center top;
-      background-attachment:scroll;
-      background-repeat:no-repeat;
+      background-image:linear-gradient(180deg, rgba(17,17,17,0.45) 0%, rgba(17,17,17,0.65) 50%, rgba(17,17,17,0.85) 100%), ;
       color:var(--ivory);font-family:'Vazirmatn',sans-serif;
       line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;
     }
@@ -252,6 +263,10 @@
             </div>
           </div>
 
+          <!-- honeypot — نباید پر بشه -->
+          <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;">
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="btn-submit" id="submitBtn">ثبت فراخوان</button>
 
         </form>
@@ -327,8 +342,26 @@
       return valid;
     }
 
+    // rate limit: حداکثر ۳ بار در ۱۰ دقیقه
+    function checkRateLimit() {
+      var key = 'plano_emp_submits';
+      var now = Date.now();
+      var data = JSON.parse(localStorage.getItem(key) || '[]');
+      data = data.filter(function(t){ return now - t < 600000; }); // 10 min
+      if (data.length >= 3) return false;
+      data.push(now);
+      localStorage.setItem(key, JSON.stringify(data));
+      return true;
+    }
+
     document.getElementById('employerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      // honeypot check
+      if (document.querySelector('[name="website"]').value !== '') return;
+      if (!checkRateLimit()) {
+        alert('تعداد درخواست‌ها بیش از حد مجاز است. لطفاً بعداً تلاش کنید.');
+        return;
+      }
       if (!validateForm()) return;
 
       var btn = document.getElementById('submitBtn');
@@ -337,9 +370,14 @@
 
       var roles = Array.from(document.querySelectorAll('[name="roles"]:checked')).map(function(el){return el.value;});
 
+      // sanitize inputs
+      function sanitize(str) {
+        return str.replace(/<[^>]*>/g, '').replace(/[<>"']/g, '').trim().slice(0, 200);
+      }
+
       var data = {
-        firstname:   document.querySelector('[name="firstname"]').value.trim(),
-        lastname:    document.querySelector('[name="lastname"]').value.trim(),
+        firstname:   sanitize(document.querySelector('[name="firstname"]').value),
+        lastname:    sanitize(document.querySelector('[name="lastname"]').value),
         phone:       document.querySelector('[name="phone"]').value.trim(),
         email:       document.querySelector('[name="email"]').value.trim(),
         project:     document.querySelector('[name="project"]').value.trim(),

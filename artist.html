@@ -2,6 +2,22 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
+  <meta name="description" content="به عنوان بازیگر، فیلمبردار، گریمور یا سایر عوامل سینما و تئاتر ثبت‌نام کنید و از فراخوان‌های جدید مطلع شوید.">
+  <meta name="keywords" content="ثبت نام هنرمند، بازیگر، فیلمبردار، گریمور، طراح صحنه، تدوینگر، فرصت همکاری">
+  <meta name="author" content="Plano">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ثبت‌نام هنرمند — Plano">
+  <meta property="og:description" content="به عنوان بازیگر، فیلمبردار، گریمور یا سایر عوامل سینما و تئاتر ثبت‌نام کنید و از فراخوان‌های جدید مطلع شوید.">
+  <meta property="og:url" content="https://getplano.ir/artist.html">
+  <meta property="og:image" content="https://getplano.ir/apple-touch-icon.png">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="Plano">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ثبت‌نام هنرمند — Plano">
+  <meta name="twitter:description" content="به عنوان بازیگر، فیلمبردار، گریمور یا سایر عوامل سینما و تئاتر ثبت‌نام کنید و از فراخوان‌های جدید مطلع شوید.">
+  <meta name="twitter:image" content="https://getplano.ir/apple-touch-icon.png">
+  <link rel="canonical" href="https://getplano.ir/artist.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ثبت هنرمند — Plano</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -17,12 +33,7 @@
     html{scroll-behavior:smooth;}
     body{
       background:var(--black);
-      background-image:linear-gradient(180deg, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.88) 50%, rgba(17,17,17,0.96) 100%), url('/hero-bg.jpg?v=2');
-      background-size:cover;
-      min-height:100vh;
-      background-position:center top;
-      background-attachment:scroll;
-      background-repeat:no-repeat;
+      background-image:linear-gradient(180deg, rgba(17,17,17,0.45) 0%, rgba(17,17,17,0.65) 50%, rgba(17,17,17,0.85) 100%), ;
       color:var(--ivory);font-family:'Vazirmatn',sans-serif;
       line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;
     }
@@ -160,6 +171,9 @@
             </div>
           </div>
 
+          <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;">
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="btn-submit" id="submitBtn">ثبت اطلاعات</button>
 
         </form>
@@ -222,8 +236,24 @@
       return valid;
     }
 
+    function checkRateLimit() {
+      var key = 'plano_art_submits';
+      var now = Date.now();
+      var data = JSON.parse(localStorage.getItem(key) || '[]');
+      data = data.filter(function(t){ return now - t < 600000; });
+      if (data.length >= 3) return false;
+      data.push(now);
+      localStorage.setItem(key, JSON.stringify(data));
+      return true;
+    }
+
     document.getElementById('artistForm').addEventListener('submit', async function(e){
       e.preventDefault();
+      if (document.querySelector('[name="website"]').value !== '') return;
+      if (!checkRateLimit()) {
+        alert('تعداد درخواست‌ها بیش از حد مجاز است. لطفاً بعداً تلاش کنید.');
+        return;
+      }
       if(!validateForm()) return;
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
