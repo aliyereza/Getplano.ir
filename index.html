@@ -498,6 +498,20 @@
       .artist-block { padding:52px 24px; }
       .cta-band { padding:72px 0; }
     }
+    /* ── MINI JOBS ── */
+    .mini-jobs-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-top:32px; }
+    .mini-job-card { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:22px; display:flex; flex-direction:column; gap:12px; box-shadow:0 0 24px rgba(201,162,39,.05); transition:border-color .2s,transform .2s; }
+    .mini-job-card:hover { border-color:rgba(201,162,39,.3); transform:translateY(-2px); }
+    .mini-job-label { font-size:.58rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); opacity:.7; display:block; margin-bottom:3px; }
+    .mini-job-name { font-size:.95rem; font-weight:700; color:var(--ivory); letter-spacing:-.01em; }
+    .mini-job-city { font-size:.72rem; color:var(--ivory2); display:flex; align-items:center; gap:5px; }
+    .mini-job-roles { display:flex; flex-wrap:wrap; gap:5px; }
+    .mini-job-role { font-size:.68rem; padding:3px 9px; border-radius:5px; background:rgba(201,162,39,.07); border:1px solid rgba(201,162,39,.18); color:#c8a840; }
+    .mini-job-cta { font-family:'Vazirmatn','IranianSans',sans-serif; font-size:.78rem; font-weight:700; padding:10px; border-radius:8px; background:var(--gold); color:var(--black); text-decoration:none; text-align:center; transition:opacity .15s; margin-top:auto; display:block; }
+    .mini-job-cta:hover { opacity:.88; }
+    .mini-jobs-loading { text-align:center; color:var(--muted); font-size:.82rem; padding:32px 0; grid-column:1/-1; }
+    .mini-jobs-more { display:block; text-align:center; margin-top:24px; color:var(--gold); font-size:.8rem; text-decoration:none; opacity:.8; }
+    .mini-jobs-more:hover { opacity:1; text-decoration:underline; }
   </style>
 </head>
 <body>
