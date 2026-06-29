@@ -328,11 +328,12 @@
 
         return `
         <div class="job-card" data-roles='${JSON.stringify(job.roles)}'>
-          <div class="job-top">
-            <div>
+          <div class="job-top" style="flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+              <span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.7;">نام پروژه</span>
               <div class="job-name">${job.project}</div>
-              <div class="job-date">${job.date}</div>
             </div>
+            <div class="job-date">${job.date}</div>
           </div>
 
           <div class="job-city">

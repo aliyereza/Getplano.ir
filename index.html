@@ -970,5 +970,37 @@
     function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
   </script>
 
+
+  <script>
+    // بارگذاری فراخوان‌های زنده در صفحه اصلی
+    (async function() {
+      const API = 'https://script.google.com/macros/s/AKfycbwr2pBIw5fzL3Gk0jqZL91eCp3LbUxm7qTHlG1UW3DubpkZ2U4j9JYefZ6kjV6uEEw/exec';
+      const grid = document.getElementById('miniJobsGrid');
+      if (!grid) return;
+      try {
+        const res = await fetch(API, { method:'GET', redirect:'follow' });
+        const json = await res.json();
+        if (!json.data || !json.data.length) {
+          grid.innerHTML = '<div class="mini-jobs-loading">فراخوان فعالی موجود نیست</div>';
+          return;
+        }
+        // فقط ۳ تا آخرین
+        const jobs = json.data.slice(0, 3);
+        grid.innerHTML = jobs.map(function(job) {
+          var roles = (job.roles || []).slice(0,3).map(function(r){ return '<span class="mini-job-role">'+r+'</span>'; }).join('');
+          var url = '/artist.html?project=' + encodeURIComponent(job.project);
+          return '<div class="mini-job-card">' +
+            '<div><span class="mini-job-label">نام پروژه</span><div class="mini-job-name">'+job.project+'</div></div>' +
+            '<div class="mini-job-city"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>'+job.city+'</div>' +
+            '<div class="mini-job-roles">'+roles+'</div>' +
+            '<a href="'+url+'" class="mini-job-cta">درخواست همکاری</a>' +
+          '</div>';
+        }).join('');
+      } catch(e) {
+        grid.innerHTML = '';
+      }
+    })();
+  </script>
+
 </body>
 </html>
