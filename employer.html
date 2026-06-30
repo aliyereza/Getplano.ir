@@ -238,6 +238,17 @@
               </div>
               <div class="err-msg">حداقل یک نقش انتخاب کنید</div>
             </div>
+
+            <div class="field" id="f-gender">
+              <label><span class="req">*</span>جنسیت</label>
+              <div class="radio-row">
+                <label class="radio-item"><input type="radio" name="gender" value="آقا"><span>آقا</span></label>
+                <label class="radio-item"><input type="radio" name="gender" value="خانم"><span>خانم</span></label>
+                <label class="radio-item"><input type="radio" name="gender" value="آقا و خانم"><span>آقا و خانم</span></label>
+                <label class="radio-item"><input type="radio" name="gender" value="فرقی ندارد"><span>فرقی ندارد</span></label>
+              </div>
+              <div class="err-msg">این فیلد الزامی است</div>
+            </div>
           </div>
 
           <!-- شرایط -->
@@ -327,6 +338,12 @@
         rolesWrapper.classList.remove('invalid');
       }
 
+      // gender
+      var gender = document.querySelector('[name="gender"]:checked');
+      var genderWrapper = document.getElementById('f-gender');
+      if (!gender) { genderWrapper.classList.add('invalid'); valid = false; }
+      else { genderWrapper.classList.remove('invalid'); }
+
       // salary
       var salary = document.querySelector('[name="salary"]:checked');
       var salaryWrapper = document.getElementById('f-salary');
@@ -374,6 +391,7 @@
           if(other) r.push(other);
           return r.join('، ');
         })(),
+        gender:      document.querySelector('[name="gender"]:checked').value,
         salary:      document.querySelector('[name="salary"]:checked').value,
         experience:  document.querySelector('[name="experience"]:checked').value,
         timestamp:   new Date().toISOString()
