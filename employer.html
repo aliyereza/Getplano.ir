@@ -342,26 +342,10 @@
       return valid;
     }
 
-    // rate limit: حداکثر ۳ بار در ۱۰ دقیقه
-    function checkRateLimit() {
-      var key = 'plano_emp_submits';
-      var now = Date.now();
-      var data = JSON.parse(localStorage.getItem(key) || '[]');
-      data = data.filter(function(t){ return now - t < 600000; }); // 10 min
-      if (data.length >= 3) return false;
-      data.push(now);
-      localStorage.setItem(key, JSON.stringify(data));
-      return true;
-    }
-
     document.getElementById('employerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      // honeypot check
+      // honeypot check — اگه ربات این فیلد مخفی رو پر کرده باشه، نادیده می‌گیریم
       if (document.querySelector('[name="website"]').value !== '') return;
-      if (!checkRateLimit()) {
-        alert('تعداد درخواست‌ها بیش از حد مجاز است. لطفاً بعداً تلاش کنید.');
-        return;
-      }
       if (!validateForm()) return;
 
       var btn = document.getElementById('submitBtn');

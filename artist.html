@@ -236,24 +236,10 @@
       return valid;
     }
 
-    function checkRateLimit() {
-      var key = 'plano_art_submits';
-      var now = Date.now();
-      var data = JSON.parse(localStorage.getItem(key) || '[]');
-      data = data.filter(function(t){ return now - t < 600000; });
-      if (data.length >= 3) return false;
-      data.push(now);
-      localStorage.setItem(key, JSON.stringify(data));
-      return true;
-    }
-
     document.getElementById('artistForm').addEventListener('submit', async function(e){
       e.preventDefault();
+      // honeypot check
       if (document.querySelector('[name="website"]').value !== '') return;
-      if (!checkRateLimit()) {
-        alert('تعداد درخواست‌ها بیش از حد مجاز است. لطفاً بعداً تلاش کنید.');
-        return;
-      }
       if(!validateForm()) return;
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
