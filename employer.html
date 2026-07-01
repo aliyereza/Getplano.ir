@@ -359,54 +359,55 @@
       return valid;
     }
 
+    function sanitize(str) {
+      if (!str) return '';
+      return str.toString().replace(/<[^>]*>/g, '').trim().slice(0, 500);
+    }
+
     document.getElementById('employerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      // honeypot check — اگه ربات این فیلد مخفی رو پر کرده باشه، نادیده می‌گیریم
-      if (document.querySelector('[name="website"]').value !== '') return;
       if (!validateForm()) return;
 
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.textContent = 'در حال ارسال...';
 
-      var roles = Array.from(document.querySelectorAll('[name="roles"]:checked')).map(function(el){return el.value;});
-
-      // sanitize inputs
-      function sanitize(str) {
-        return str.replace(/<[^>]*>/g, '').replace(/[<>"']/g, '').trim().slice(0, 200);
-      }
-
-      var data = {
-        firstname:   sanitize(document.querySelector('[name="firstname"]').value),
-        lastname:    sanitize(document.querySelector('[name="lastname"]').value),
-        phone:       document.querySelector('[name="phone"]').value.trim(),
-        email:       document.querySelector('[name="email"]').value.trim(),
-        project:     document.querySelector('[name="project"]').value.trim(),
-        type:        document.querySelector('[name="type"]').value,
-        city:        document.querySelector('[name="city"]').value.trim(),
-        description: document.querySelector('[name="description"]').value.trim(),
-        roles:       (function(){
-          var r = roles.filter(function(x){return x !== 'سایر';});
-          var other = document.querySelector('[name="other_role"]').value.trim();
-          if(other) r.push(other);
-          return r.join('، ');
-        })(),
-        gender:      document.querySelector('[name="gender"]:checked').value,
-        salary:      document.querySelector('[name="salary"]:checked').value,
-        experience:  document.querySelector('[name="experience"]:checked').value,
-        timestamp:   new Date().toISOString()
-      };
-
       try {
+        var roles = Array.from(document.querySelectorAll('[name="roles"]:checked')).map(function(el){return el.value;});
+        var otherRole = document.querySelector('[name="other_role"]') ? document.querySelector('[name="other_role"]').value.trim() : '';
+        if (otherRole) roles.push(otherRole);
+
+        var genderEl = document.querySelector('[name="gender"]:checked');
+        var salaryEl = document.querySelector('[name="salary"]:checked');
+        var expEl    = document.querySelector('[name="experience"]:checked');
+
+        var data = {
+          firstname:   sanitize(document.querySelector('[name="firstname"]').value),
+          lastname:    sanitize(document.querySelector('[name="lastname"]').value),
+          phone:       sanitize(document.querySelector('[name="phone"]').value),
+          email:       sanitize(document.querySelector('[name="email"]').value),
+          project:     sanitize(document.querySelector('[name="project"]').value),
+          type:        document.querySelector('[name="type"]').value,
+          city:        sanitize(document.querySelector('[name="city"]').value),
+          description: sanitize(document.querySelector('[name="description"]').value),
+          roles:       roles.join('، '),
+          gender:      genderEl ? genderEl.value : '',
+          salary:      salaryEl ? salaryEl.value : '',
+          experience:  expEl    ? expEl.value    : '',
+          timestamp:   new Date().toISOString()
+        };
+
         await fetch(EMPLOYER_SCRIPT, {
-          method:'POST',
-          mode:'no-cors',
-          headers:{'Content-Type':'application/json'},
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(data)
         });
+
         document.getElementById('formWrap').style.display = 'none';
         document.getElementById('successBox').style.display = 'block';
-        window.scrollTo({top:0,behavior:'smooth'});
+        window.scrollTo({top: 0, behavior: 'smooth'});
+
       } catch(err) {
         btn.disabled = false;
         btn.textContent = 'ثبت فراخوان';
