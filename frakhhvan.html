@@ -165,7 +165,11 @@
       line-height:1.75;
       display:-webkit-box;-webkit-line-clamp:3;
       -webkit-box-orient:vertical;overflow:hidden;
+      transition:all .2s;
     }
+    .job-desc.expanded{display:block;-webkit-line-clamp:unset;}
+    .desc-more{background:none;border:none;color:var(--gold);font-size:.75rem;cursor:pointer;padding:4px 0;font-family:'Vazirmatn',sans-serif;}
+    .desc-more:hover{text-decoration:underline;}
 
     .job-meta{
       display:flex;gap:10px;flex-wrap:wrap;
@@ -289,7 +293,7 @@
 
   <script>
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
-    const API_URL = 'https://script.google.com/macros/s/AKfycbzQLNCSVdErd2Gn9hJRAJ-ivf1N_C1okjZGQj-EdOuHKA9PRTDshitIxvZAtHkMHcgQ/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwXOY_GN1iSa_TghsmOhPdHrqLn1kyChPyPeg9--34Z9AGKZwADhFJ-Q_PhaDZPEJTF/exec';
 
     const ARTIST_URL = '/artist.html';
 
@@ -359,7 +363,10 @@
 
           <div class="job-roles">${roles}</div>
 
-          ${job.description ? `<div class="job-desc">${job.description}</div>` : ''}
+          ${job.description ? `<div class="job-desc-wrap">
+            <div class="job-desc" id="desc-${i}">${job.description}</div>
+            ${job.description.length > 120 ? `<button class="desc-more" onclick="toggleDesc(${i})">بیشتر...</button>` : ''}
+          </div>` : ''}
 
           <div class="job-meta">
             <span class="meta-badge ${salaryClass}">

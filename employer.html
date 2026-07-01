@@ -59,8 +59,24 @@
     .success-box p{font-size:.85rem;color:var(--ivory2);line-height:1.8;}
     .success-box a{display:inline-block;margin-top:24px;color:var(--gold);font-size:.82rem;text-decoration:underline;}
     @media(max-width:500px){.form-card{padding:20px 16px;}.two-col{grid-template-columns:1fr;}.check-grid{grid-template-columns:1fr;}}
-    input[type=date]{color-scheme:dark;}
-    input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.7);}
+    /* Jalali date picker */
+    .jalali-wrap{position:relative;}
+    .jalali-input{cursor:pointer;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:12px 14px;color:var(--ivory);font-family:'Vazirmatn',sans-serif;font-size:.85rem;width:100%;outline:none;}
+    .jalali-input:focus{border-color:rgba(201,162,39,.45);}
+    .jalali-cal{display:none;position:absolute;top:calc(100% + 6px);right:0;z-index:500;background:#1a1a1a;border:1px solid var(--border);border-radius:12px;padding:16px;width:280px;box-shadow:0 8px 32px rgba(0,0,0,.5);}
+    .jalali-cal.open{display:block;}
+    .jalali-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    .jalali-nav button{background:none;border:none;color:var(--ivory2);cursor:pointer;font-size:1rem;padding:4px 8px;border-radius:6px;}
+    .jalali-nav button:hover{background:rgba(255,255,255,.08);}
+    .jalali-nav span{color:var(--ivory);font-size:.85rem;font-weight:600;}
+    .jalali-days-header{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px;}
+    .jalali-days-header span{text-align:center;font-size:.65rem;color:var(--muted);padding:4px 0;}
+    .jalali-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+    .jalali-day{text-align:center;padding:6px 2px;font-size:.75rem;border-radius:6px;cursor:pointer;color:var(--ivory2);}
+    .jalali-day:hover{background:rgba(201,162,39,.15);color:var(--ivory);}
+    .jalali-day.selected{background:var(--gold);color:var(--black);font-weight:700;}
+    .jalali-day.empty{cursor:default;}
+    .jalali-day.today{border:1px solid rgba(201,162,39,.4);}
   </style>
 </head>
 <body>
@@ -103,19 +119,19 @@
             </div>
             <div class="field" id="f-phone">
               <label><span class="req">*</span>شماره تماس</label>
-              <div style="display:flex;gap:8px;">
-                <select name="phone_code" style="width:110px;flex-shrink:0;">
-                  <option value="+98">🇮🇷 +98</option>
-                  <option value="+1">🇺🇸 +1</option>
-                  <option value="+44">🇬🇧 +44</option>
-                  <option value="+49">🇩🇪 +49</option>
-                  <option value="+33">🇫🇷 +33</option>
-                  <option value="+971">🇦🇪 +971</option>
-                  <option value="+90">🇹🇷 +90</option>
-                  <option value="+7">🇷🇺 +7</option>
-                  <option value="+86">🇨🇳 +86</option>
+              <div style="display:flex;gap:8px;direction:ltr;">
+                <select name="phone_code" style="width:115px;flex-shrink:0;direction:ltr;">
+                  <option value="+98">🇮🇷 IR +98</option>
+                  <option value="+1">🇺🇸 US +1</option>
+                  <option value="+44">🇬🇧 GB +44</option>
+                  <option value="+49">🇩🇪 DE +49</option>
+                  <option value="+33">🇫🇷 FR +33</option>
+                  <option value="+971">🇦🇪 AE +971</option>
+                  <option value="+90">🇹🇷 TR +90</option>
+                  <option value="+7">🇷🇺 RU +7</option>
+                  <option value="+86">🇨🇳 CN +86</option>
                 </select>
-                <input type="tel" name="phone" placeholder="09xx xxx xxxx" style="flex:1;">
+                <input type="tel" name="phone" placeholder="بدون صفر وارد کنید" style="flex:1;direction:ltr;text-align:left;">
               </div>
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
@@ -155,7 +171,21 @@
             </div>
             <div class="field" id="f-deadline">
               <label><span class="req">*</span>مهلت فراخوان</label>
-              <input type="date" name="deadline" id="deadlineInput">
+              <div class="jalali-wrap">
+                <input type="text" class="jalali-input" id="jalaliDisplay" name="deadline" placeholder="انتخاب تاریخ شمسی" readonly>
+                <div class="jalali-cal" id="jalaliCal">
+                  <div class="jalali-nav">
+                    <button onclick="jalaliPrev()">&#8249;</button>
+                    <span id="jalaliTitle"></span>
+                    <button onclick="jalaliNext()">&#8250;</button>
+                  </div>
+                  <div class="jalali-days-header">
+                    <span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span>
+                  </div>
+                  <div class="jalali-days" id="jalaliDays"></div>
+                </div>
+              </div>
+              <input type="hidden" name="deadline_val" id="deadlineVal">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
             <div class="field" id="f-desc">
@@ -234,7 +264,117 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQLNCSVdErd2Gn9hJRAJ-ivf1N_C1okjZGQj-EdOuHKA9PRTDshitIxvZAtHkMHcgQ/exec';
+
+    // ── Jalali Calendar ──
+    var jMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+    var jDaysInMonth = [31,31,31,31,31,31,30,30,30,30,30,29];
+    var jCurYear, jCurMonth, jSelYear, jSelMonth, jSelDay;
+
+    function toJalali(gy, gm, gd) {
+      var g_d_no, j_d_no, j_np, i;
+      var g_days_in_month = [31,28,31,30,31,30,31,31,30,31,30,31];
+      var j_days_in_month = [31,31,31,31,31,31,30,30,30,30,30,29];
+      gy -= 1600; gm -= 1; gd -= 1;
+      g_d_no = 365*gy + Math.floor((gy+3)/4) - Math.floor((gy+99)/100) + Math.floor((gy+399)/400);
+      for(i=0;i<gm;i++) g_d_no += g_days_in_month[i];
+      if(gm>1 && ((gy%4==0 && gy%100!=0) || (gy%400==0))) g_d_no++;
+      g_d_no += gd;
+      j_d_no = g_d_no - 79;
+      j_np = Math.floor(j_d_no/12053); j_d_no %= 12053;
+      var jy = 979 + 33*j_np + 4*Math.floor(j_d_no/1461);
+      j_d_no %= 1461;
+      if(j_d_no >= 366) { jy += Math.floor((j_d_no-1)/365); j_d_no = (j_d_no-1)%365; }
+      for(i=0;i<11 && j_d_no>=j_days_in_month[i];i++) j_d_no -= j_days_in_month[i];
+      return [jy, i+1, j_d_no+1];
+    }
+
+    function jalaliInit() {
+      var now = new Date();
+      var j = toJalali(now.getFullYear(), now.getMonth()+1, now.getDate());
+      jCurYear = j[0]; jCurMonth = j[1]-1;
+      jSelYear = null; jSelMonth = null; jSelDay = null;
+      jalaliRender();
+    }
+
+    function jalaliRender() {
+      document.getElementById('jalaliTitle').textContent = jMonths[jCurMonth] + ' ' + jCurYear;
+      var days = document.getElementById('jalaliDays');
+      days.innerHTML = '';
+      // first day of month weekday (0=Sat in Jalali)
+      var firstDay = jalaliFirstDay(jCurYear, jCurMonth+1);
+      for(var e=0;e<firstDay;e++) { var emp=document.createElement('div'); emp.className='jalali-day empty'; days.appendChild(emp); }
+      var daysInMonth = jDaysInMonth[jCurMonth];
+      if(jCurMonth==11) {
+        // check leap
+        var isLeap = jalaliIsLeap(jCurYear);
+        if(isLeap) daysInMonth = 30;
+      }
+      for(var d=1;d<=daysInMonth;d++) {
+        var el = document.createElement('div');
+        el.className = 'jalali-day';
+        el.textContent = d;
+        if(jSelYear==jCurYear && jSelMonth==jCurMonth && jSelDay==d) el.classList.add('selected');
+        (function(dd){ el.onclick = function(){ jalaliSelect(dd); }; })(d);
+        days.appendChild(el);
+      }
+    }
+
+    function jalaliFirstDay(y, m) {
+      // convert 1st of month to gregorian, get weekday
+      var gy = jalaliToGregorian(y, m, 1);
+      var date = new Date(gy[0], gy[1]-1, gy[2]);
+      var dow = date.getDay(); // 0=Sun
+      return (dow+1)%7; // Sat=0
+    }
+
+    function jalaliIsLeap(y) {
+      var breaks = [1,5,9,13,17,22,26,30];
+      var rem = ((y-474)%2820+474+38)*682%2816;
+      return rem < 682;
+    }
+
+    function jalaliToGregorian(jy, jm, jd) {
+      jy -= 979; jm -= 1; jd -= 1;
+      var j_day_no = 365*jy + Math.floor(jy/4)*8 - Math.floor(jy/100)*7 + Math.floor(jy/400)*3 + 0;
+      for(var i=0;i<jm;i++) j_day_no += jDaysInMonth[i];
+      j_day_no += jd;
+      var g_day_no = j_day_no + 79;
+      var gy = 1600 + 400*Math.floor(g_day_no/146097); g_day_no %= 146097;
+      var leap = true;
+      if(g_day_no >= 36525) { g_day_no--; gy += 100*Math.floor(g_day_no/36524); g_day_no %= 36524; if(g_day_no >= 365) g_day_no++; else leap = false; }
+      gy += 4*Math.floor(g_day_no/1461); g_day_no %= 1461;
+      if(g_day_no >= 366) { leap = false; g_day_no--; gy += Math.floor(g_day_no/365); g_day_no %= 365; }
+      var g_days_in_month = [31,(leap?29:28),31,30,31,30,31,31,30,31,30,31];
+      var gm;
+      for(gm=0;g_day_no>=g_days_in_month[gm];gm++) g_day_no -= g_days_in_month[gm];
+      return [gy, gm+1, g_day_no+1];
+    }
+
+    function jalaliSelect(d) {
+      jSelYear = jCurYear; jSelMonth = jCurMonth; jSelDay = d;
+      var displayStr = jSelYear + '/' + String(jSelMonth+1).padStart(2,'0') + '/' + String(d).padStart(2,'0');
+      document.getElementById('jalaliDisplay').value = displayStr;
+      document.getElementById('deadlineVal').value = displayStr;
+      document.getElementById('f-deadline').classList.remove('invalid');
+      document.getElementById('jalaliCal').classList.remove('open');
+      jalaliRender();
+    }
+
+    function jalaliPrev() { if(jCurMonth==0){jCurMonth=11;jCurYear--;} else jCurMonth--; jalaliRender(); }
+    function jalaliNext() { if(jCurMonth==11){jCurMonth=0;jCurYear++;} else jCurMonth++; jalaliRender(); }
+
+    document.getElementById('jalaliDisplay').addEventListener('click', function(e) {
+      e.stopPropagation();
+      var cal = document.getElementById('jalaliCal');
+      cal.classList.toggle('open');
+      if(cal.classList.contains('open')) jalaliInit();
+    });
+    document.addEventListener('click', function() {
+      document.getElementById('jalaliCal').classList.remove('open');
+    });
+    document.getElementById('jalaliCal').addEventListener('click', function(e){ e.stopPropagation(); });
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXOY_GN1iSa_TghsmOhPdHrqLn1kyChPyPeg9--34Z9AGKZwADhFJ-Q_PhaDZPEJTF/exec';
 
     document.getElementById('rolesOtherCb').addEventListener('change', function() {
       document.getElementById('otherRoleWrap').style.display = this.checked ? 'block' : 'none';
@@ -265,7 +405,10 @@
       check('f-project',   'project');
       check('f-type',      'type');
       check('f-city',      'city');
-      check('f-deadline',  'deadline');
+      var deadlineVal = document.getElementById('deadlineVal') ? document.getElementById('deadlineVal').value : '';
+      var deadlineWrapper = document.getElementById('f-deadline');
+      if (!deadlineVal) { deadlineWrapper.classList.add('invalid'); ok = false; }
+      else { deadlineWrapper.classList.remove('invalid'); }
       check('f-desc',      'description');
 
       var roles = document.querySelectorAll('[name="roles"]:checked');
@@ -297,7 +440,7 @@
         project:     val('project'),
         type:        val('type'),
         city:        val('city'),
-        deadline:    val('deadline'),
+        deadline:    document.getElementById('deadlineVal') ? document.getElementById('deadlineVal').value : '',
         description: val('description'),
         roles:       rolesList.join('، '),
         gender:      radio('gender'),
