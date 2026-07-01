@@ -312,8 +312,11 @@
       var s = document.createElement('script');
       s.src = API_URL + '?callback=_planoCallback&t=' + Date.now();
       s.onerror = function() { showError(); };
-      document.body.appendChild(s);
+      document.head.appendChild(s);
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadJobs();
 
     function renderJobs(jobs) {
       const grid = document.getElementById('jobs-grid');
@@ -390,7 +393,7 @@
       renderJobs(filtered);
     });
 
-    loadJobs();
+    }); // end DOMContentLoaded
   </script>
 
 
