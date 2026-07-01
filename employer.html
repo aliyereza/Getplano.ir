@@ -59,6 +59,8 @@
     .success-box p{font-size:.85rem;color:var(--ivory2);line-height:1.8;}
     .success-box a{display:inline-block;margin-top:24px;color:var(--gold);font-size:.82rem;text-decoration:underline;}
     @media(max-width:500px){.form-card{padding:20px 16px;}.two-col{grid-template-columns:1fr;}.check-grid{grid-template-columns:1fr;}}
+    input[type=date]{color-scheme:dark;}
+    input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.7);}
   </style>
 </head>
 <body>
@@ -101,7 +103,20 @@
             </div>
             <div class="field" id="f-phone">
               <label><span class="req">*</span>شماره تماس</label>
-              <input type="tel" name="phone" placeholder="09xx xxx xxxx">
+              <div style="display:flex;gap:8px;">
+                <select name="phone_code" style="width:110px;flex-shrink:0;">
+                  <option value="+98">🇮🇷 +98</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+49">🇩🇪 +49</option>
+                  <option value="+33">🇫🇷 +33</option>
+                  <option value="+971">🇦🇪 +971</option>
+                  <option value="+90">🇹🇷 +90</option>
+                  <option value="+7">🇷🇺 +7</option>
+                  <option value="+86">🇨🇳 +86</option>
+                </select>
+                <input type="tel" name="phone" placeholder="09xx xxx xxxx" style="flex:1;">
+              </div>
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
             <div class="field">
@@ -136,6 +151,11 @@
             <div class="field" id="f-city">
               <label><span class="req">*</span>شهر</label>
               <input type="text" name="city" placeholder="تهران">
+              <div class="err-msg">این فیلد الزامی است</div>
+            </div>
+            <div class="field" id="f-deadline">
+              <label><span class="req">*</span>مهلت فراخوان</label>
+              <input type="date" name="deadline" id="deadlineInput">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
             <div class="field" id="f-desc">
@@ -245,6 +265,7 @@
       check('f-project',   'project');
       check('f-type',      'type');
       check('f-city',      'city');
+      check('f-deadline',  'deadline');
       check('f-desc',      'description');
 
       var roles = document.querySelectorAll('[name="roles"]:checked');
@@ -271,11 +292,12 @@
       var data = {
         firstname:   val('firstname'),
         lastname:    val('lastname'),
-        phone:       val('phone'),
+        phone:       (document.querySelector('[name="phone_code"]').value + val('phone')),
         email:       val('email'),
         project:     val('project'),
         type:        val('type'),
         city:        val('city'),
+        deadline:    val('deadline'),
         description: val('description'),
         roles:       rolesList.join('، '),
         gender:      radio('gender'),
@@ -301,5 +323,10 @@
     }
   </script>
 
+
+  <!-- Goftino Widget -->
+  <script type="text/javascript">
+    ["keydown","touchmove","touchstart","mouseover"].forEach(function(v){window.addEventListener(v,function(){if(!window.isGoftinoAdded){window.isGoftinoAdded=1;var i="B6vmyn",d=document,g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.type="text/javascript",g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}})});
+  </script>
 </body>
 </html>

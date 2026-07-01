@@ -1098,7 +1098,7 @@
           return '<div class="slider-card">' +
             '<div class="slider-card-title"><span>فراخوان:</span> ' + job.project + '</div>' +
             '<div class="slider-card-meta">' + job.city + '<span class="slider-card-meta-dot"></span>منتشرشده</div>' +
-            '<div class="slider-card-roles">' + roles + '</div>' +
+            '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + '</div>' +
             '<div class="slider-card-divider"></div>' +
             '<div class="slider-card-footer">' +
               '<a href="' + url + '" class="slider-card-cta">درخواست همکاری</a>' +
@@ -1134,5 +1134,10 @@
     })();
   </script>
 
+
+  <!-- Goftino Widget -->
+  <script type="text/javascript">
+    ["keydown","touchmove","touchstart","mouseover"].forEach(function(v){window.addEventListener(v,function(){if(!window.isGoftinoAdded){window.isGoftinoAdded=1;var i="B6vmyn",d=document,g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.type="text/javascript",g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}})});
+  </script>
 </body>
 </html>
