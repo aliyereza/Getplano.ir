@@ -2,22 +2,6 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="description" content="فراخوان پروژه سینمایی یا تئاتری خود را رایگان ثبت کنید و مستقیم به هنرمندان حرفه‌ای برسید.">
-  <meta name="keywords" content="ثبت فراخوان، جذب بازیگر، جذب عوامل فیلم، فراخوان سینما، فراخوان تئاتر">
-  <meta name="author" content="Plano">
-  <meta name="robots" content="index, follow">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="ثبت فراخوان پروژه — Plano">
-  <meta property="og:description" content="فراخوان پروژه سینمایی یا تئاتری خود را رایگان ثبت کنید و مستقیم به هنرمندان حرفه‌ای برسید.">
-  <meta property="og:url" content="https://getplano.ir/employer.html">
-  <meta property="og:image" content="https://getplano.ir/apple-touch-icon.png">
-  <meta property="og:locale" content="fa_IR">
-  <meta property="og:site_name" content="Plano">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="ثبت فراخوان پروژه — Plano">
-  <meta name="twitter:description" content="فراخوان پروژه سینمایی یا تئاتری خود را رایگان ثبت کنید و مستقیم به هنرمندان حرفه‌ای برسید.">
-  <meta name="twitter:image" content="https://getplano.ir/apple-touch-icon.png">
-  <link rel="canonical" href="https://getplano.ir/employer.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ثبت فراخوان — Plano</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -26,107 +10,61 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
-      --black:#111111;--surface:#161616;--gold:#C9A227;
-      --border:rgba(201,162,39,.13);--ivory:#F4EFE6;--ivory2:#CFC7BA;
-      --muted:#5A5247;--success:#2E8B57;--error:#e07070;--max:680px;
+      --black:#111111;--gold:#C9A227;--border:rgba(201,162,39,.13);
+      --ivory:#F4EFE6;--ivory2:#CFC7BA;--muted:#5A5247;--error:#e07070;--max:680px;
     }
-    html{scroll-behavior:smooth;}
-    body{
-      background:var(--black);
-      background-image:linear-gradient(180deg, rgba(17,17,17,0.45) 0%, rgba(17,17,17,0.65) 50%, rgba(17,17,17,0.85) 100%), ;
-      color:var(--ivory);font-family:'Vazirmatn',sans-serif;
-      line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;
-    }
-    body::after{
-      content:'';position:fixed;inset:0;z-index:999;pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
-      opacity:.5;mix-blend-mode:overlay;
-    }
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative;z-index:1;}
-
-    /* NAV */
+    body{background:var(--black);background-image:radial-gradient(circle at 50% 0%,rgba(201,162,39,.07),transparent 50%);color:var(--ivory);font-family:'Vazirmatn',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
     .nav{position:sticky;top:0;z-index:100;background:rgba(17,17,17,.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
     .nav-logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.22em;color:var(--gold);text-decoration:none;text-transform:uppercase;}
-    .nav-back{font-size:.78rem;color:var(--ivory2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:7px;transition:color .15s,background .15s;}
-    .nav-back:hover{color:var(--ivory);background:rgba(255,255,255,.04);}
-
-    /* HEADER */
+    .nav-back{font-size:.78rem;color:var(--ivory2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:7px;}
+    .nav-back:hover{color:var(--ivory);}
     .page-header{padding:56px 0 40px;text-align:center;}
     .eyebrow{font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.72;margin-bottom:12px;display:block;}
     .page-title{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;letter-spacing:-.025em;margin-bottom:10px;}
     .page-sub{font-size:.84rem;font-weight:300;color:var(--ivory2);line-height:1.8;}
-
-    /* FORM */
-    .form-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:36px 32px;margin:32px 0 60px;box-shadow:0 0 40px rgba(201,162,39,.05);}
-
+    .form-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:36px 32px;margin:32px 0 60px;}
     .form-section{margin-bottom:32px;}
     .form-section-title{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-
     .field{margin-bottom:20px;}
     .field label{display:block;font-size:.8rem;font-weight:600;color:var(--ivory2);margin-bottom:7px;}
-    .field label .req{color:var(--gold);margin-right:2px;}
-
-    input[type=text],input[type=tel],input[type=email],textarea,select{
-      width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);
-      border-radius:9px;padding:12px 14px;color:var(--ivory);font-family:'Vazirmatn',sans-serif;
-      font-size:.85rem;outline:none;transition:border-color .18s,box-shadow .18s;
-      -webkit-appearance:none;appearance:none;
-    }
-    input[type=text]:focus,input[type=tel]:focus,input[type=email]:focus,textarea:focus,select:focus{
-      border-color:rgba(201,162,39,.45);box-shadow:0 0 0 3px rgba(201,162,39,.08);
-    }
+    .req{color:var(--gold);margin-right:2px;}
+    input[type=text],input[type=tel],input[type=email],textarea,select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:12px 14px;color:var(--ivory);font-family:'Vazirmatn',sans-serif;font-size:.85rem;outline:none;transition:border-color .18s;-webkit-appearance:none;}
+    input:focus,textarea:focus,select:focus{border-color:rgba(201,162,39,.45);}
     input::placeholder,textarea::placeholder{color:var(--muted);}
     textarea{resize:vertical;min-height:100px;}
-    select option{background:#1a1a1a;color:var(--ivory);}
-
-    /* CHECKBOX GRID */
+    select option{background:#1a1a1a;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
     .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-    .check-item{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s,background .15s;}
-    .check-item:hover{border-color:rgba(201,162,39,.3);background:rgba(201,162,39,.04);}
-    .check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+    .check-item{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;}
+    .check-item:hover{border-color:rgba(201,162,39,.3);}
+    .check-item input{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
     .check-item span{font-size:.8rem;color:var(--ivory2);}
-
-    /* RADIO */
     .radio-row{display:flex;gap:10px;flex-wrap:wrap;}
-    .radio-item{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s,background .15s;flex:1;min-width:120px;}
-    .radio-item:hover{border-color:rgba(201,162,39,.3);background:rgba(201,162,39,.04);}
-    .radio-item input[type=radio]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;}
+    .radio-item{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;flex:1;min-width:100px;}
+    .radio-item:hover{border-color:rgba(201,162,39,.3);}
+    .radio-item input{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;}
     .radio-item span{font-size:.82rem;color:var(--ivory2);}
-
-    /* SUBMIT */
-    .btn-submit{
-      width:100%;padding:15px;border-radius:10px;background:var(--gold);
-      color:var(--black);font-family:'Vazirmatn',sans-serif;font-size:.95rem;font-weight:700;
-      border:none;cursor:pointer;transition:opacity .15s,transform .15s,box-shadow .2s;
-      box-shadow:0 0 24px rgba(201,162,39,.2);
-    }
-    .btn-submit:hover{opacity:.88;transform:translateY(-1px);}
-    .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-
-    /* SUCCESS */
+    .other-field{margin-top:10px;display:none;}
+    .err-msg{font-size:.72rem;color:var(--error);margin-top:5px;display:none;}
+    .field.invalid input,.field.invalid textarea,.field.invalid select{border-color:var(--error);}
+    .field.invalid .err-msg{display:block;}
+    .btn-submit{width:100%;padding:15px;border-radius:10px;background:var(--gold);color:var(--black);font-family:'Vazirmatn',sans-serif;font-size:.95rem;font-weight:700;border:none;cursor:pointer;margin-top:8px;}
+    .btn-submit:hover{opacity:.9;}
+    .btn-submit:disabled{opacity:.5;cursor:not-allowed;}
     .success-box{display:none;text-align:center;padding:48px 24px;}
     .success-icon{font-size:2.5rem;margin-bottom:16px;}
     .success-box h2{font-size:1.3rem;font-weight:700;margin-bottom:10px;}
     .success-box p{font-size:.85rem;color:var(--ivory2);line-height:1.8;}
     .success-box a{display:inline-block;margin-top:24px;color:var(--gold);font-size:.82rem;text-decoration:underline;}
-
-    /* ERROR MSG */
-    .err-msg{font-size:.72rem;color:var(--error);margin-top:5px;display:none;}
-    .field.invalid input,.field.invalid textarea,.field.invalid select{border-color:var(--error);}
-    .field.invalid .err-msg{display:block;}
-
-    @media(max-width:500px){
-      .form-card{padding:24px 18px;}
-      .check-grid{grid-template-columns:1fr;}
-    }
+    @media(max-width:500px){.form-card{padding:20px 16px;}.two-col{grid-template-columns:1fr;}.check-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
-
   <nav class="nav">
-    <div class="wrap" style="max-width:100%;">
-      <div class="nav-inner" style="padding:0 24px;">
+    <div class="wrap" style="max-width:100%;padding:0 24px;">
+      <div class="nav-inner">
         <a href="/" class="nav-logo">Plano</a>
         <a href="/" class="nav-back">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -145,13 +83,11 @@
 
     <div id="formWrap">
       <div class="form-card">
-        <form id="employerForm" novalidate>
+        <form id="employerForm">
 
-          <!-- اطلاعات شخصی -->
           <div class="form-section">
             <div class="form-section-title">اطلاعات شخصی</div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="two-col">
               <div class="field" id="f-firstname">
                 <label><span class="req">*</span>نام</label>
                 <input type="text" name="firstname" placeholder="نام شما">
@@ -163,33 +99,28 @@
                 <div class="err-msg">این فیلد الزامی است</div>
               </div>
             </div>
-
             <div class="field" id="f-phone">
               <label><span class="req">*</span>شماره تماس</label>
               <input type="tel" name="phone" placeholder="09xx xxx xxxx">
-              <div class="err-msg">شماره تماس معتبر وارد کنید</div>
+              <div class="err-msg">این فیلد الزامی است</div>
             </div>
-
             <div class="field">
               <label>ایمیل</label>
               <input type="email" name="email" placeholder="example@email.com">
             </div>
           </div>
 
-          <!-- اطلاعات پروژه -->
           <div class="form-section">
             <div class="form-section-title">اطلاعات پروژه</div>
-
             <div class="field" id="f-project">
               <label><span class="req">*</span>نام پروژه</label>
               <input type="text" name="project" placeholder="نام پروژه">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
-
             <div class="field" id="f-type">
               <label><span class="req">*</span>نوع پروژه</label>
               <select name="type">
-                <option value="" disabled selected>انتخاب کنید</option>
+                <option value="">انتخاب کنید</option>
                 <option>تئاتر</option>
                 <option>نمایشنامه‌خوانی</option>
                 <option>فیلم بلند</option>
@@ -202,13 +133,11 @@
               </select>
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
-
             <div class="field" id="f-city">
               <label><span class="req">*</span>شهر</label>
               <input type="text" name="city" placeholder="تهران">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
-
             <div class="field" id="f-desc">
               <label><span class="req">*</span>توضیحات پروژه</label>
               <textarea name="description" placeholder="توضیح مختصری از پروژه، شرایط همکاری و..."></textarea>
@@ -216,7 +145,6 @@
             </div>
           </div>
 
-          <!-- درخواست جذب -->
           <div class="form-section">
             <div class="form-section-title">درخواست جذب نیرو</div>
             <div class="field" id="f-roles">
@@ -231,9 +159,9 @@
                 <label class="check-item"><input type="checkbox" name="roles" value="طراح صحنه"><span>طراح صحنه</span></label>
                 <label class="check-item"><input type="checkbox" name="roles" value="طراح لباس"><span>طراح لباس</span></label>
                 <label class="check-item"><input type="checkbox" name="roles" value="تدوینگر"><span>تدوینگر</span></label>
-                <label class="check-item"><input type="checkbox" name="roles" value="سایر" id="rolesOther" onchange="toggleOther()"><span>سایر</span></label>
+                <label class="check-item"><input type="checkbox" name="roles" value="سایر" id="rolesOtherCb"><span>سایر</span></label>
               </div>
-              <div class="field" id="otherRoleWrap" style="display:none;margin-top:10px;">
+              <div class="other-field" id="otherRoleWrap">
                 <input type="text" name="other_role" placeholder="مثلاً: مدل، عکاس، نورپرداز...">
               </div>
               <div class="err-msg">حداقل یک نقش انتخاب کنید</div>
@@ -251,10 +179,8 @@
             </div>
           </div>
 
-          <!-- شرایط -->
           <div class="form-section">
             <div class="form-section-title">شرایط همکاری</div>
-
             <div class="field" id="f-salary">
               <label><span class="req">*</span>دستمزد</label>
               <div class="radio-row">
@@ -263,7 +189,6 @@
               </div>
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
-
             <div class="field" id="f-exp">
               <label><span class="req">*</span>نیاز به سابقه</label>
               <div class="radio-row">
@@ -274,17 +199,12 @@
             </div>
           </div>
 
-          <!-- honeypot — نباید پر بشه -->
-          <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;">
-            <input type="text" name="website" tabindex="-1" autocomplete="off">
-          </div>
-          <button type="submit" class="btn-submit" id="submitBtn">ثبت فراخوان</button>
+          <button type="button" class="btn-submit" id="submitBtn" onclick="submitForm()">ثبت فراخوان</button>
 
         </form>
       </div>
     </div>
 
-    <!-- SUCCESS -->
     <div class="success-box" id="successBox">
       <div class="success-icon">🎬</div>
       <h2>فراخوان شما ثبت شد!</h2>
@@ -294,126 +214,91 @@
   </div>
 
   <script>
-    // ⚠️ بعد از deploy کردن Apps Script این URL رو جایگزین کن
-    function toggleOther() {
-      var cb = document.getElementById('rolesOther');
-      var wrap = document.getElementById('otherRoleWrap');
-      wrap.style.display = cb.checked ? 'block' : 'none';
-      if (!cb.checked) document.querySelector('[name="other_role"]').value = '';
-    }
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQLNCSVdErd2Gn9hJRAJ-ivf1N_C1okjZGQj-EdOuHKA9PRTDshitIxvZAtHkMHcgQ/exec';
 
-    const EMPLOYER_SCRIPT = 'https://script.google.com/macros/s/AKfycbzQLNCSVdErd2Gn9hJRAJ-ivf1N_C1okjZGQj-EdOuHKA9PRTDshitIxvZAtHkMHcgQ/exec';
+    document.getElementById('rolesOtherCb').addEventListener('change', function() {
+      document.getElementById('otherRoleWrap').style.display = this.checked ? 'block' : 'none';
+      if (!this.checked) document.querySelector('[name="other_role"]').value = '';
+    });
 
-    function validateForm() {
-      let valid = true;
+    function val(name) { return document.querySelector('[name="' + name + '"]').value.trim(); }
+    function radio(name) { var el = document.querySelector('[name="' + name + '"]:checked'); return el ? el.value : ''; }
 
-      const required = [
-        {id:'f-firstname', name:'firstname', type:'text'},
-        {id:'f-lastname',  name:'lastname',  type:'text'},
-        {id:'f-phone',     name:'phone',     type:'tel'},
-        {id:'f-project',   name:'project',   type:'text'},
-        {id:'f-city',      name:'city',      type:'text'},
-        {id:'f-desc',      name:'description', type:'textarea'},
-        {id:'f-type',      name:'type',      type:'select'},
-      ];
+    function submitForm() {
+      var ok = true;
 
-      required.forEach(function(f) {
-        var el = document.querySelector('[name="' + f.name + '"]');
-        var wrapper = document.getElementById(f.id);
-        if (!el.value.trim()) {
-          wrapper.classList.add('invalid');
-          valid = false;
-        } else {
-          wrapper.classList.remove('invalid');
-        }
-      });
-
-      // roles
-      var roles = document.querySelectorAll('[name="roles"]:checked');
-      var rolesWrapper = document.getElementById('f-roles');
-      if (roles.length === 0) {
-        rolesWrapper.classList.add('invalid');
-        valid = false;
-      } else {
-        rolesWrapper.classList.remove('invalid');
+      function check(id, name) {
+        var v = document.querySelector('[name="' + name + '"]').value.trim();
+        document.getElementById(id).classList.toggle('invalid', !v);
+        if (!v) ok = false;
       }
 
-      // gender
-      var gender = document.querySelector('[name="gender"]:checked');
-      var genderWrapper = document.getElementById('f-gender');
-      if (!gender) { genderWrapper.classList.add('invalid'); valid = false; }
-      else { genderWrapper.classList.remove('invalid'); }
+      function checkRadio(id, name) {
+        var v = document.querySelector('[name="' + name + '"]:checked');
+        document.getElementById(id).classList.toggle('invalid', !v);
+        if (!v) ok = false;
+      }
 
-      // salary
-      var salary = document.querySelector('[name="salary"]:checked');
-      var salaryWrapper = document.getElementById('f-salary');
-      if (!salary) { salaryWrapper.classList.add('invalid'); valid = false; }
-      else { salaryWrapper.classList.remove('invalid'); }
+      check('f-firstname', 'firstname');
+      check('f-lastname',  'lastname');
+      check('f-phone',     'phone');
+      check('f-project',   'project');
+      check('f-type',      'type');
+      check('f-city',      'city');
+      check('f-desc',      'description');
 
-      // experience
-      var exp = document.querySelector('[name="experience"]:checked');
-      var expWrapper = document.getElementById('f-exp');
-      if (!exp) { expWrapper.classList.add('invalid'); valid = false; }
-      else { expWrapper.classList.remove('invalid'); }
+      var roles = document.querySelectorAll('[name="roles"]:checked');
+      document.getElementById('f-roles').classList.toggle('invalid', roles.length === 0);
+      if (roles.length === 0) ok = false;
 
-      return valid;
-    }
+      checkRadio('f-gender', 'gender');
+      checkRadio('f-salary', 'salary');
+      checkRadio('f-exp',    'experience');
 
-    function sanitize(str) {
-      if (!str) return '';
-      return str.toString().replace(/<[^>]*>/g, '').trim().slice(0, 500);
-    }
-
-    document.getElementById('employerForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      if (!validateForm()) return;
+      if (!ok) {
+        document.querySelector('.invalid').scrollIntoView({behavior:'smooth', block:'center'});
+        return;
+      }
 
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.textContent = 'در حال ارسال...';
 
-      try {
-        var roles = Array.from(document.querySelectorAll('[name="roles"]:checked')).map(function(el){return el.value;});
-        var otherRole = document.querySelector('[name="other_role"]') ? document.querySelector('[name="other_role"]').value.trim() : '';
-        if (otherRole) roles.push(otherRole);
+      var rolesList = Array.from(roles).map(function(r){ return r.value; });
+      var other = document.querySelector('[name="other_role"]').value.trim();
+      if (other) rolesList.push(other);
 
-        var genderEl = document.querySelector('[name="gender"]:checked');
-        var salaryEl = document.querySelector('[name="salary"]:checked');
-        var expEl    = document.querySelector('[name="experience"]:checked');
+      var data = {
+        firstname:   val('firstname'),
+        lastname:    val('lastname'),
+        phone:       val('phone'),
+        email:       val('email'),
+        project:     val('project'),
+        type:        val('type'),
+        city:        val('city'),
+        description: val('description'),
+        roles:       rolesList.join('، '),
+        gender:      radio('gender'),
+        salary:      radio('salary'),
+        experience:  radio('experience'),
+        timestamp:   new Date().toISOString()
+      };
 
-        var data = {
-          firstname:   sanitize(document.querySelector('[name="firstname"]').value),
-          lastname:    sanitize(document.querySelector('[name="lastname"]').value),
-          phone:       sanitize(document.querySelector('[name="phone"]').value),
-          email:       sanitize(document.querySelector('[name="email"]').value),
-          project:     sanitize(document.querySelector('[name="project"]').value),
-          type:        document.querySelector('[name="type"]').value,
-          city:        sanitize(document.querySelector('[name="city"]').value),
-          description: sanitize(document.querySelector('[name="description"]').value),
-          roles:       roles.join('، '),
-          gender:      genderEl ? genderEl.value : '',
-          salary:      salaryEl ? salaryEl.value : '',
-          experience:  expEl    ? expEl.value    : '',
-          timestamp:   new Date().toISOString()
-        };
-
-        await fetch(EMPLOYER_SCRIPT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        });
-
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      }).then(function() {
         document.getElementById('formWrap').style.display = 'none';
         document.getElementById('successBox').style.display = 'block';
         window.scrollTo({top: 0, behavior: 'smooth'});
-
-      } catch(err) {
+      }).catch(function() {
         btn.disabled = false;
         btn.textContent = 'ثبت فراخوان';
         alert('خطا در ارسال. لطفاً دوباره تلاش کنید.');
-      }
-    });
+      });
+    }
   </script>
 
 </body>
