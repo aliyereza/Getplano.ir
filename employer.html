@@ -175,9 +175,19 @@
                 <input type="text" class="jalali-input" id="jalaliDisplay" name="deadline" placeholder="انتخاب تاریخ شمسی" readonly>
                 <div class="jalali-cal" id="jalaliCal">
                   <div class="jalali-nav">
-                    <button onclick="jalaliPrev()">&#8249;</button>
-                    <span id="jalaliTitle"></span>
-                    <button onclick="jalaliNext()">&#8250;</button>
+                    <button type="button" onclick="jalaliPrev()">&#8249;</button>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                      <select id="jalaliMonthSel" onchange="jalaliChangeMonth(this.value)" style="background:#222;border:1px solid var(--border);color:var(--ivory);border-radius:6px;padding:3px 6px;font-size:.75rem;font-family:Vazirmatn,sans-serif;">
+                        <option value="0">فروردین</option><option value="1">اردیبهشت</option>
+                        <option value="2">خرداد</option><option value="3">تیر</option>
+                        <option value="4">مرداد</option><option value="5">شهریور</option>
+                        <option value="6">مهر</option><option value="7">آبان</option>
+                        <option value="8">آذر</option><option value="9">دی</option>
+                        <option value="10">بهمن</option><option value="11">اسفند</option>
+                      </select>
+                      <select id="jalaliYearSel" onchange="jalaliChangeYear(this.value)" style="background:#222;border:1px solid var(--border);color:var(--ivory);border-radius:6px;padding:3px 6px;font-size:.75rem;font-family:Vazirmatn,sans-serif;"></select>
+                    </div>
+                    <button type="button" onclick="jalaliNext()">&#8250;</button>
                   </div>
                   <div class="jalali-days-header">
                     <span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span>
@@ -297,7 +307,19 @@
     }
 
     function jalaliRender() {
-      document.getElementById('jalaliTitle').textContent = jMonths[jCurMonth] + ' ' + jCurYear;
+      // Update selectors
+      var mSel = document.getElementById('jalaliMonthSel');
+      var ySel = document.getElementById('jalaliYearSel');
+      if(mSel) mSel.value = jCurMonth;
+      if(ySel) {
+        ySel.innerHTML = '';
+        for(var y = jCurYear-5; y <= jCurYear+5; y++) {
+          var opt = document.createElement('option');
+          opt.value = y; opt.textContent = y;
+          if(y === jCurYear) opt.selected = true;
+          ySel.appendChild(opt);
+        }
+      }
       var days = document.getElementById('jalaliDays');
       days.innerHTML = '';
       // first day of month weekday (0=Sat in Jalali)
@@ -360,6 +382,8 @@
       jalaliRender();
     }
 
+    function jalaliChangeMonth(v) { jCurMonth = parseInt(v); jalaliRender(); }
+    function jalaliChangeYear(v) { jCurYear = parseInt(v); jalaliRender(); }
     function jalaliPrev() { if(jCurMonth==0){jCurMonth=11;jCurYear--;} else jCurMonth--; jalaliRender(); }
     function jalaliNext() { if(jCurMonth==11){jCurMonth=0;jCurYear++;} else jCurMonth++; jalaliRender(); }
 
