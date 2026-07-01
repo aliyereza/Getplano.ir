@@ -293,31 +293,26 @@
 
   <script>
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
-    const API_URL = 'https://script.google.com/macros/s/AKfycbwXOY_GN1iSa_TghsmOhPdHrqLn1kyChPyPeg9--34Z9AGKZwADhFJ-Q_PhaDZPEJTF/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbybtntGCZSiCQOUlAzKXlVzl0UhQ6eK4WHzE68oJMz2rH8M4SuXCKEa7dSxISzjXoh6/exec';
 
     const ARTIST_URL = '/artist.html';
 
     let allJobs = [];
     let activeFilter = 'all';
 
-    async function loadJobs() {
-      try {
-        const res = await fetch(API_URL, {
-          method: 'GET',
-          redirect: 'follow',
-        });
-        if (!res.ok) throw new Error('Network response was not ok');
-        const json = await res.json();
-        if (json.status === 'ok') {
+    function loadJobs() {
+      window._planoCallback = function(json) {
+        if (json && json.status === 'ok' && json.data) {
           allJobs = json.data;
           renderJobs(allJobs);
         } else {
           showError();
         }
-      } catch(e) {
-        console.error('Fetch error:', e);
-        showError();
-      }
+      };
+      var s = document.createElement('script');
+      s.src = API_URL + '?callback=_planoCallback&t=' + Date.now();
+      s.onerror = function() { showError(); };
+      document.body.appendChild(s);
     }
 
     function renderJobs(jobs) {
