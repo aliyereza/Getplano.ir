@@ -304,7 +304,11 @@
       window._planoCallback = function(json) {
         if (json && json.status === 'ok' && json.data) {
           allJobs = json.data;
-          renderJobs(allJobs);
+          // اعمال فیلتر فعال
+          var filtered = activeFilter === 'all'
+            ? allJobs
+            : allJobs.filter(function(j){ return Array.isArray(j.roles) && j.roles.includes(activeFilter); });
+          renderJobs(filtered);
         } else {
           showError();
         }
@@ -314,9 +318,6 @@
       s.onerror = function() { showError(); };
       document.head.appendChild(s);
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      loadJobs();
 
     function renderJobs(jobs) {
       const grid = document.getElementById('jobs-grid');
@@ -395,7 +396,9 @@
       renderJobs(filtered);
     });
 
-    }); // end DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+      loadJobs();
+    });
   </script>
 
 
