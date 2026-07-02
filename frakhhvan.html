@@ -336,10 +336,10 @@
         var roles = rolesList.map(function(r){ return '<span class="role-tag">'+r+'</span>'; }).join('');
         if (job.gender) roles += '<span class="role-tag" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>';
 
-        var salaryClass = job.salary && job.salary.includes('دارد') ? 'green' : 'red';
-        var salaryLabel = job.salary && job.salary.includes('دارد') ? 'دستمزد دارد' : 'بدون دستمزد';
-        var expClass = job.experience && job.experience.includes('دارد') ? '' : 'green';
-        var expLabel = job.experience && job.experience.includes('دارد') ? 'سابقه لازم است' : 'سابقه لازم نیست';
+        var salaryClass = job.salary === 'دارد' ? 'green' : 'red';
+        var salaryLabel = job.salary === 'دارد' ? 'دستمزد دارد' : 'بدون دستمزد';
+        var expClass = job.experience === 'ندارد' ? 'green' : '';
+        var expLabel = job.experience === 'ندارد' ? 'سابقه لازم نیست' : 'سابقه لازم است';
         var artistUrl = ARTIST_URL + '?project=' + encodeURIComponent(job.project || '');
         var cityLine = (job.city || '') + (job.deadline ? ' <span style="opacity:.6;font-size:.7rem;">· مهلت: ' + job.deadline + '</span>' : '');
 
@@ -379,24 +379,22 @@
     }
 
     // FILTERS
-    document.getElementById('filters').addEventListener('click', function(e) {
-      if (!e.target.classList.contains('filter-btn')) return;
-
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
-
-      activeFilter = e.target.dataset.filter;
-
-      if (!allJobs || allJobs.length === 0) return; // هنوز لود نشده
-
-      const filtered = activeFilter === 'all'
-        ? allJobs
-        : allJobs.filter(j => Array.isArray(j.roles) && j.roles.includes(activeFilter));
-
-      renderJobs(filtered);
-    });
+    function initFilters() {
+      document.getElementById('filters').addEventListener('click', function(e) {
+        if (!e.target.classList.contains('filter-btn')) return;
+        document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+        e.target.classList.add('active');
+        activeFilter = e.target.dataset.filter;
+        if (!allJobs || allJobs.length === 0) return;
+        var filtered = activeFilter === 'all'
+          ? allJobs
+          : allJobs.filter(function(j){ return Array.isArray(j.roles) && j.roles.includes(activeFilter); });
+        renderJobs(filtered);
+      });
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
+      initFilters();
       loadJobs();
     });
   </script>
