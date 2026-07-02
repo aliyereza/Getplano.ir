@@ -386,9 +386,11 @@
 
       activeFilter = e.target.dataset.filter;
 
+      if (!allJobs || allJobs.length === 0) return; // هنوز لود نشده
+
       const filtered = activeFilter === 'all'
         ? allJobs
-        : allJobs.filter(j => j.roles.includes(activeFilter));
+        : allJobs.filter(j => Array.isArray(j.roles) && j.roles.includes(activeFilter));
 
       renderJobs(filtered);
     });
