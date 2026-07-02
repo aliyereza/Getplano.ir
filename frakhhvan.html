@@ -293,7 +293,7 @@
 
   <script>
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
-    const API_URL = 'https://script.google.com/macros/s/AKfycbw2PflbO_cqkb9bPZ0ucOjyAq70P27rQQoq8zCgg2WNbtqrdiOsjqCvuWDnBWMNu032/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbw2PflbO_cqkb9bPZ0ucOjy-Aq70P27rQQoq8zCgg2WNbtqrdiOsjq-CvuWDnBWMNu032/exec';
 
     const ARTIST_URL = '/artist.html';
 
@@ -349,7 +349,7 @@
           descHtml += '</div>';
         }
 
-        return '<div class="job-card" data-roles=''+JSON.stringify(rolesList)+''>' +
+        return '<div class="job-card" data-roles="'+JSON.stringify(rolesList).replace(/"/g,'&quot;')+'">' +
           '<div class="job-top" style="flex-direction:column;gap:6px;">' +
             '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">' +
               '<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.7;">نام پروژه</span>' +

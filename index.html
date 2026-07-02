@@ -1066,8 +1066,8 @@
 
 
   <script>
-    (async function() {
-      const API = 'https://script.google.com/macros/s/AKfycbybtntGCZSiCQOUlAzKXlVzl0UhQ6eK4WHzE68oJMz2rH8M4SuXCKEa7dSxISzjXoh6/exec';
+    (function() {
+      const API = 'https://script.google.com/macros/s/AKfycbw2PflbO_cqkb9bPZ0ucOjy-Aq70P27rQQoq8zCgg2WNbtqrdiOsjq-CvuWDnBWMNu032/exec';
       const track = document.getElementById('sliderTrack');
       const dotsWrap = document.getElementById('sliderDots');
       if (!track) return;
@@ -1076,19 +1076,19 @@
       var current = 0;
       var timer = null;
 
-      try {
-        const res = await fetch(API, { method:'GET', redirect:'follow' });
-        const json = await res.json();
-        if (!json.data || !json.data.length) {
-          track.innerHTML = '<div class="mini-jobs-loading">فراخوان فعالی موجود نیست</div>';
+      window._indexCallback = function(json) {
+        if (!json || !json.data || !json.data.length) {
+          if(track) track.innerHTML = '<div class="mini-jobs-loading">فراخوان فعالی موجود نیست</div>';
           return;
         }
         jobs = json.data.slice(0, 6);
         renderSlider();
         startAuto();
-      } catch(e) {
-        track.innerHTML = '<div class="mini-jobs-loading">خطا در بارگذاری</div>';
-      }
+      };
+      var s = document.createElement('script');
+      s.src = API + '?callback=_indexCallback&t=' + Date.now();
+      s.onerror = function() { if(track) track.innerHTML = ''; };
+      document.head.appendChild(s);
 
       function renderSlider() {
         track.innerHTML = jobs.map(function(job, i) {
