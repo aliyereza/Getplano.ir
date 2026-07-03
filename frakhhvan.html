@@ -319,6 +319,19 @@
       document.head.appendChild(s);
     }
 
+    function toggleDesc(i) {
+      var el = document.getElementById('desc-' + i);
+      if (!el) return;
+      var btn = el.nextElementSibling;
+      if (el.classList.contains('expanded')) {
+        el.classList.remove('expanded');
+        if (btn) btn.textContent = 'بیشتر...';
+      } else {
+        el.classList.add('expanded');
+        if (btn) btn.textContent = 'کمتر';
+      }
+    }
+
     function renderJobs(jobs) {
       const grid = document.getElementById('jobs-grid');
 
