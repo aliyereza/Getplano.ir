@@ -293,7 +293,7 @@
 
   <script>
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
-    const API_URL = 'https://script.google.com/macros/s/AKfycby9XZtNa014WrnFgUCf49uUiYNuheGoPSGOSYI73BlMxwdXalumxiYr87bNX-l97u4-/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxwYnxvlV7fJ87Pr3bCPpg6ZASzWXun8FllRcEijVZM9QnU3bRBPRvekTnBRzwhF8On/exec';
 
     const ARTIST_URL = '/artist.html';
 
@@ -393,30 +393,27 @@
         // تبدیل مهلت فراخوان به فرمت شمسی خوانا
         var deadlineStr = '';
         if (job.deadline) {
-          // اگه قبلاً شمسی ذخیره شده (مثلاً ۱۴۰۴/۰۴/۱۰)
-          var dl = job.deadline.toString();
+          var dl = job.deadline.toString().trim();
+          var dayNames = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
           if (dl.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
-            var parts = dl.split('/');
-            var dayNames = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
-            // تبدیل به میلادی برای گرفتن روز هفته
+            // فرمت شمسی درست مثل ۱۴۰۴/۰۴/۱۰
             try {
+              var parts = dl.split('/');
               var gy = jalaliToGregorianSimple(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
               var d = new Date(gy[0], gy[1]-1, gy[2]);
-              var dayName = dayNames[d.getDay()];
-              deadlineStr = 'مهلت فراخوان: ' + dayName + ' ' + dl;
-            } catch(ex) {
-              deadlineStr = 'مهلت فراخوان: ' + dl;
-            }
-          } else {
-            // Date string میلادی
+              deadlineStr = 'مهلت فراخوان: ' + dayNames[d.getDay()] + ' ' + dl;
+            } catch(ex) { deadlineStr = 'مهلت فراخوان: ' + dl; }
+          } else if (dl.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            // فرمت ISO میلادی مثل 2025-07-10
             try {
-              var d2 = new Date(dl);
+              var d2 = new Date(dl + 'T00:00:00');
               var j = toJalaliSimple(d2.getFullYear(), d2.getMonth()+1, d2.getDate());
-              var dayNames2 = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
-              deadlineStr = 'مهلت فراخوان: ' + dayNames2[d2.getDay()] + ' ' + j[0]+'/'+String(j[1]).padStart(2,'0')+'/'+String(j[2]).padStart(2,'0');
-            } catch(ex) {
-              deadlineStr = 'مهلت فراخوان: ' + dl;
-            }
+              var jStr = j[0]+'/'+String(j[1]).padStart(2,'0')+'/'+String(j[2]).padStart(2,'0');
+              deadlineStr = 'مهلت فراخوان: ' + dayNames[d2.getDay()] + ' ' + jStr;
+            } catch(ex) { deadlineStr = 'مهلت فراخوان: ' + dl; }
+          } else {
+            // هر فرمت دیگه‌ای رو نشون نده
+            deadlineStr = '';
           }
         }
 
@@ -440,6 +437,9 @@
           '<div class="job-city"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> '+cityLine+'</div>' +
           '<div class="job-roles">'+roles+'</div>' +
           descHtml +
+          '<div class="job-applicants" style="font-size:.75rem;color:var(--ivory2);margin-bottom:4px;">' +
+            (job.applicants > 0 ? '<span style="color:var(--gold);font-weight:700;">' + job.applicants + '</span> نفر درخواست داده‌اند' : 'هنوز درخواستی ثبت نشده') +
+          '</div>' +
           '<div class="job-meta">' +
             '<span class="meta-badge '+salaryClass+'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> '+salaryLabel+'</span>' +
             '<span class="meta-badge '+expClass+'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> '+expLabel+'</span>' +
