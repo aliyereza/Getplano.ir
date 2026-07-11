@@ -332,6 +332,42 @@
       }
     }
 
+    function toJalaliSimple(gy, gm, gd) {
+      var g2j = [0,31,59,90,120,151,181,212,243,273,304,334];
+      var jy, jm, jd, g_d_no, j_d_no, j_np, i;
+      gy -= 1600; gm -= 1; gd -= 1;
+      g_d_no = 365*gy + Math.floor((gy+3)/4) - Math.floor((gy+99)/100) + Math.floor((gy+399)/400);
+      for(i=0;i<gm;i++) g_d_no += [31,28,31,30,31,30,31,31,30,31,30,31][i];
+      if(gm>1 && ((gy%4==0 && gy%100!=0)||(gy%400==0))) g_d_no++;
+      g_d_no += gd;
+      j_d_no = g_d_no - 79;
+      j_np = Math.floor(j_d_no/12053); j_d_no %= 12053;
+      jy = 979 + 33*j_np + 4*Math.floor(j_d_no/1461);
+      j_d_no %= 1461;
+      if(j_d_no >= 366){jy += Math.floor((j_d_no-1)/365); j_d_no = (j_d_no-1)%365;}
+      var jdim = [31,31,31,31,31,31,30,30,30,30,30,29];
+      for(i=0;i<11 && j_d_no>=jdim[i];i++) j_d_no -= jdim[i];
+      return [jy, i+1, j_d_no+1];
+    }
+
+    function jalaliToGregorianSimple(jy, jm, jd) {
+      var jdim = [31,31,31,31,31,31,30,30,30,30,30,29];
+      jy -= 979; jm -= 1; jd -= 1;
+      var j_day_no = 365*jy + Math.floor(jy/4)*8 - Math.floor(jy/100)*7 + Math.floor(jy/400)*3;
+      for(var i=0;i<jm;i++) j_day_no += jdim[i];
+      j_day_no += jd;
+      var g_day_no = j_day_no + 79;
+      var gy = 1600 + 400*Math.floor(g_day_no/146097); g_day_no %= 146097;
+      var leap = true;
+      if(g_day_no >= 36525){g_day_no--; gy += 100*Math.floor(g_day_no/36524); g_day_no %= 36524; if(g_day_no >= 365) g_day_no++; else leap=false;}
+      gy += 4*Math.floor(g_day_no/1461); g_day_no %= 1461;
+      if(g_day_no >= 366){leap=false; g_day_no--; gy += Math.floor(g_day_no/365); g_day_no %= 365;}
+      var gdim = [31,(leap?29:28),31,30,31,30,31,31,30,31,30,31];
+      var gm;
+      for(gm=0;g_day_no>=gdim[gm];gm++) g_day_no -= gdim[gm];
+      return [gy, gm+1, g_day_no+1];
+    }
+
     function renderJobs(jobs) {
       const grid = document.getElementById('jobs-grid');
 
@@ -354,7 +390,37 @@
         var expClass = job.experience === 'ندارد' ? 'green' : '';
         var expLabel = job.experience === 'ندارد' ? 'سابقه لازم نیست' : 'سابقه لازم است';
         var artistUrl = ARTIST_URL + '?project=' + encodeURIComponent(job.project || '');
-        var cityLine = (job.city || '') + (job.deadline ? ' <span style="opacity:.6;font-size:.7rem;">· مهلت: ' + job.deadline + '</span>' : '');
+        // تبدیل مهلت فراخوان به فرمت شمسی خوانا
+        var deadlineStr = '';
+        if (job.deadline) {
+          // اگه قبلاً شمسی ذخیره شده (مثلاً ۱۴۰۴/۰۴/۱۰)
+          var dl = job.deadline.toString();
+          if (dl.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+            var parts = dl.split('/');
+            var dayNames = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+            // تبدیل به میلادی برای گرفتن روز هفته
+            try {
+              var gy = jalaliToGregorianSimple(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
+              var d = new Date(gy[0], gy[1]-1, gy[2]);
+              var dayName = dayNames[d.getDay()];
+              deadlineStr = 'مهلت فراخوان: ' + dayName + ' ' + dl;
+            } catch(ex) {
+              deadlineStr = 'مهلت فراخوان: ' + dl;
+            }
+          } else {
+            // Date string میلادی
+            try {
+              var d2 = new Date(dl);
+              var j = toJalaliSimple(d2.getFullYear(), d2.getMonth()+1, d2.getDate());
+              var dayNames2 = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+              deadlineStr = 'مهلت فراخوان: ' + dayNames2[d2.getDay()] + ' ' + j[0]+'/'+String(j[1]).padStart(2,'0')+'/'+String(j[2]).padStart(2,'0');
+            } catch(ex) {
+              deadlineStr = 'مهلت فراخوان: ' + dl;
+            }
+          }
+        }
+
+        var cityLine = (job.city || '') + (deadlineStr ? ' <span style="display:block;font-size:.72rem;color:var(--gold);opacity:.85;margin-top:4px;">' + deadlineStr + '</span>' : '');
 
         var descHtml = '';
         if (job.description) {
@@ -369,7 +435,7 @@
               '<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.7;">نام پروژه</span>' +
               '<div class="job-name">'+(job.project||'')+'</div>' +
             '</div>' +
-            '<div class="job-date">'+(job.date||'')+'</div>' +
+            '<div class="job-date">تاریخ ثبت فراخوان: '+(job.date||'')+'</div>' +
           '</div>' +
           '<div class="job-city"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> '+cityLine+'</div>' +
           '<div class="job-roles">'+roles+'</div>' +
