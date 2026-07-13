@@ -49,13 +49,6 @@
     .slider-wrap {
       overflow: hidden !important;
     }
-    .slider-track {
-      overflow: visible !important;
-    }
-    /* Fix card clipping */
-    .slider-card {
-      overflow: visible !important;
-    }
     .mini-jobs-grid {
       overflow: visible !important;
     }
@@ -356,8 +349,16 @@
        EMPLOYER
     ═══════════════════════════════════ */
     .employer-grid {
-      display:grid; grid-template-columns:1fr 1fr;
-      gap:80px; align-items:center;
+      display:flex;
+      justify-content:center;
+    }
+    .employer-grid > div {
+      max-width:640px;
+      width:100%;
+      text-align:center;
+    }
+    .employer-grid .role-tags {
+      justify-content:center;
     }
     .role-tags { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 36px; }
     .rtag {
