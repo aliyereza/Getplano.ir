@@ -123,6 +123,12 @@
       font-family:'Montserrat',sans-serif;
       font-weight:800; font-size:1.2rem; letter-spacing:.2em;
       color:var(--gold); text-decoration:none; text-transform:uppercase;
+      display:flex; align-items:center;
+    }
+    .nav-logo img {
+      height:34px;
+      width:auto;
+      display:block;
     }
     .nav-links { display:flex; align-items:center; gap:4px; }
     .nav-a {
@@ -573,12 +579,14 @@
     /* ── SLIDER ── */
     .slider-wrap { position:relative; overflow:hidden; margin-top:32px; }
     .slider-track {
-      display:flex; gap:20px;
+      display:flex; gap:0;
+      direction:ltr;
       transition:transform .5s cubic-bezier(.4,0,.2,1);
       will-change:transform;
     }
     .slider-card {
       min-width:100%; max-width:100%;
+      direction:rtl;
       background:rgba(255,255,255,.02);
       border:1px solid var(--border);
       border-radius:16px; padding:32px 28px;
@@ -861,7 +869,7 @@
   <nav class="nav">
     <div class="wrap">
       <div class="nav-inner">
-        <a href="#" class="nav-logo">Plano</a>
+        <a href="#" class="nav-logo"><img src="/plano-logo.png" alt="Plano" height="34"></a>
         <div class="nav-links">
           <a href="/frakhhvan.html" class="nav-a">فراخوان‌ها</a>
           <a href="#employer" class="nav-a">برای کارفرما</a>
@@ -1383,7 +1391,7 @@
 
       window.goSlide = function(idx) {
         current = idx;
-        track.style.transform = 'translateX(' + (idx * 100) + '%)';
+        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
         document.querySelectorAll('.slider-dot').forEach(function(d,i){ d.classList.toggle('active', i===idx); });
         resetAuto();
       };
