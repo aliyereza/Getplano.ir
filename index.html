@@ -32,6 +32,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ── Critical fixes ── */
+    html, body {
+      background: #0a0806 !important;
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+    }
+    body {
+      min-height: 100vh !important;
+      min-height: -webkit-fill-available !important;
+    }
+    html {
+      height: -webkit-fill-available !important;
+    }
+    /* Fix slider overflow */
+    .slider-wrap {
+      overflow: hidden !important;
+    }
+    .slider-track {
+      overflow: visible !important;
+    }
+    /* Fix card clipping */
+    .slider-card {
+      overflow: visible !important;
+    }
+    .mini-jobs-grid {
+      overflow: visible !important;
+    }
+    /* Prevent horizontal scroll from animations */
+    #spotlight, #dust-canvas {
+      max-width: 100vw !important;
+      overflow: hidden !important;
+    }
+    * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    img, canvas, video {
+      max-width: none !important;
+    }
+    #dust-canvas, #spotlight, #theatre-bg {
+      max-width: none !important;
+    }
+
     
 
     *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
