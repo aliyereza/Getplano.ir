@@ -1349,8 +1349,10 @@
       if (!track) return;
 
       var jobs = [];
-      var current = 0;
+      var pos = 1;       // current slot in track (1 = first real slide)
+      var count = 0;     // number of real slides
       var timer = null;
+      var isJumping = false;
 
       window._indexCallback = function(json) {
         if (!json || !json.data || !json.data.length) {
@@ -1366,40 +1368,78 @@
       s.onerror = function() { if(track) track.innerHTML = ''; };
       document.head.appendChild(s);
 
-      function renderSlider() {
-        track.innerHTML = jobs.map(function(job, i) {
-          var roles = (job.roles || []).map(function(r){ return '<span class="slider-card-role">'+r+'</span>'; }).join('');
-          var url = '/artist.html?project=' + encodeURIComponent(job.project);
-          var applicants = job.applicants || '—';
-          return '<div class="slider-card">' +
-            '<div class="slider-card-title"><span>فراخوان:</span> ' + job.project + '</div>' +
-            '<div class="slider-card-meta">' + job.city + '<span class="slider-card-meta-dot"></span>منتشرشده</div>' +
-            '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + '</div>' +
-            '<div class="slider-card-divider"></div>' +
-            '<div class="slider-card-footer">' +
-              '<a href="' + url + '" class="slider-card-cta">درخواست همکاری</a>' +
-              '<div style="text-align:left"><div class="slider-card-footer-label">متقاضیان دریافتی</div><div class="slider-card-footer-num">' + applicants + '</div></div>' +
-            '</div>' +
-          '</div>';
-        }).join('');
+      function cardHTML(job) {
+        var roles = (job.roles || []).map(function(r){ return '<span class="slider-card-role">'+r+'</span>'; }).join('');
+        var url = '/artist.html?project=' + encodeURIComponent(job.project);
+        var applicants = job.applicants || '—';
+        return '<div class="slider-card">' +
+          '<div class="slider-card-title"><span>فراخوان:</span> ' + job.project + '</div>' +
+          '<div class="slider-card-meta">' + job.city + '<span class="slider-card-meta-dot"></span>منتشرشده</div>' +
+          '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + '</div>' +
+          '<div class="slider-card-divider"></div>' +
+          '<div class="slider-card-footer">' +
+            '<a href="' + url + '" class="slider-card-cta">درخواست همکاری</a>' +
+            '<div style="text-align:left"><div class="slider-card-footer-label">متقاضیان دریافتی</div><div class="slider-card-footer-num">' + applicants + '</div></div>' +
+          '</div>' +
+        '</div>';
+      }
 
-        // dots
+      function renderSlider() {
+        count = jobs.length;
+        // Build track with a clone of the last slide at the start and a clone of the first at the end,
+        // so auto-advance / swipe can wrap around seamlessly without a visible jump.
+        var slidesHTML = jobs.map(cardHTML);
+        track.innerHTML = slidesHTML[count - 1] + slidesHTML.join('') + slidesHTML[0];
+
+        pos = 1;
+        track.style.transform = 'translateX(-100%)';
+
         dotsWrap.innerHTML = jobs.map(function(_, i) {
           return '<button class="slider-dot' + (i===0?' active':'') + '" onclick="goSlide('+i+')"></button>';
         }).join('');
       }
 
+      function updateDots() {
+        var real = ((pos - 1) + count) % count;
+        document.querySelectorAll('.slider-dot').forEach(function(d,i){ d.classList.toggle('active', i===real); });
+      }
+
+      function goTo(newPos, animate) {
+        if (animate === false) { track.style.transition = 'none'; }
+        pos = newPos;
+        track.style.transform = 'translateX(-' + (pos * 100) + '%)';
+        if (animate === false) {
+          // force reflow so the transition:none takes effect before restoring it
+          void track.offsetHeight;
+          track.style.transition = '';
+        }
+        updateDots();
+      }
+
+      function next() { if (!isJumping) goTo(pos + 1); }
+      function prev() { if (!isJumping) goTo(pos - 1); }
+
+      track.addEventListener('transitionend', function(e) {
+        if (e.target !== track || e.propertyName !== 'transform') return;
+        if (pos === count + 1) {
+          isJumping = true;
+          goTo(1, false);
+          isJumping = false;
+        } else if (pos === 0) {
+          isJumping = true;
+          goTo(count, false);
+          isJumping = false;
+        }
+      });
+
       window.goSlide = function(idx) {
-        current = idx;
-        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
-        document.querySelectorAll('.slider-dot').forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+        goTo(idx + 1);
         resetAuto();
       };
 
       function startAuto() {
         timer = setInterval(function() {
-          current = (current + 1) % jobs.length;
-          goSlide(current);
+          next();
         }, 4000);
       }
 
@@ -1407,6 +1447,39 @@
         clearInterval(timer);
         startAuto();
       }
+
+      // ── Touch swipe support ──
+      var touchStartX = 0, touchDeltaX = 0, isTouching = false;
+      track.addEventListener('touchstart', function(e) {
+        isTouching = true;
+        touchStartX = e.touches[0].clientX;
+        touchDeltaX = 0;
+        clearInterval(timer);
+        track.style.transition = 'none';
+      }, { passive: true });
+
+      track.addEventListener('touchmove', function(e) {
+        if (!isTouching) return;
+        touchDeltaX = e.touches[0].clientX - touchStartX;
+        var base = -(pos * 100);
+        var wrapEl = track.parentElement;
+        var pct = (touchDeltaX / wrapEl.offsetWidth) * 100;
+        track.style.transform = 'translateX(' + (base + pct) + '%)';
+      }, { passive: true });
+
+      track.addEventListener('touchend', function() {
+        isTouching = false;
+        track.style.transition = '';
+        var threshold = 40; // px
+        if (touchDeltaX < -threshold) {
+          next();
+        } else if (touchDeltaX > threshold) {
+          prev();
+        } else {
+          goTo(pos); // snap back
+        }
+        resetAuto();
+      });
     })();
   </script>
 
