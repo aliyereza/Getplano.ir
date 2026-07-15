@@ -513,9 +513,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <option value="+7">🇷🇺 RU +7</option>
                   <option value="+86">🇨🇳 CN +86</option>
                 </select>
-                <input type="tel" name="phone" placeholder="بدون صفر وارد کنید" style="flex:1;direction:ltr;text-align:left;">
+                <input type="tel" name="phone" id="phoneInput" placeholder="بدون صفر وارد کنید" maxlength="10" inputmode="numeric" style="flex:1;direction:ltr;text-align:left;">
               </div>
-              <div class="err-msg">این فیلد الزامی است</div>
+              <div class="err-msg" id="phone-err">این فیلد الزامی است</div>
             </div>
             <div class="field">
               <label>ایمیل</label>
@@ -618,6 +618,161 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <label class="radio-item"><input type="radio" name="gender" value="فرقی ندارد"><span>فرقی ندارد</span></label>
               </div>
               <div class="err-msg">این فیلد الزامی است</div>
+            </div>
+            <div class="field" id="f-age">
+              <label>محدوده سنی مورد نیاز</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <select name="age_from" id="ageFrom" style="flex:1;">
+                  <option value="">از</option>
+                  <option value="0">زیر ۱ سال</option>
+                  <option value="1">1 سال</option>
+                  <option value="2">2 سال</option>
+                  <option value="3">3 سال</option>
+                  <option value="4">4 سال</option>
+                  <option value="5">5 سال</option>
+                  <option value="6">6 سال</option>
+                  <option value="7">7 سال</option>
+                  <option value="8">8 سال</option>
+                  <option value="9">9 سال</option>
+                  <option value="10">10 سال</option>
+                  <option value="11">11 سال</option>
+                  <option value="12">12 سال</option>
+                  <option value="13">13 سال</option>
+                  <option value="14">14 سال</option>
+                  <option value="15">15 سال</option>
+                  <option value="16">16 سال</option>
+                  <option value="17">17 سال</option>
+                  <option value="18">18 سال</option>
+                  <option value="19">19 سال</option>
+                  <option value="20">20 سال</option>
+                  <option value="21">21 سال</option>
+                  <option value="22">22 سال</option>
+                  <option value="23">23 سال</option>
+                  <option value="24">24 سال</option>
+                  <option value="25">25 سال</option>
+                  <option value="26">26 سال</option>
+                  <option value="27">27 سال</option>
+                  <option value="28">28 سال</option>
+                  <option value="29">29 سال</option>
+                  <option value="30">30 سال</option>
+                  <option value="31">31 سال</option>
+                  <option value="32">32 سال</option>
+                  <option value="33">33 سال</option>
+                  <option value="34">34 سال</option>
+                  <option value="35">35 سال</option>
+                  <option value="36">36 سال</option>
+                  <option value="37">37 سال</option>
+                  <option value="38">38 سال</option>
+                  <option value="39">39 سال</option>
+                  <option value="40">40 سال</option>
+                  <option value="41">41 سال</option>
+                  <option value="42">42 سال</option>
+                  <option value="43">43 سال</option>
+                  <option value="44">44 سال</option>
+                  <option value="45">45 سال</option>
+                  <option value="46">46 سال</option>
+                  <option value="47">47 سال</option>
+                  <option value="48">48 سال</option>
+                  <option value="49">49 سال</option>
+                  <option value="50">50 سال</option>
+                  <option value="51">51 سال</option>
+                  <option value="52">52 سال</option>
+                  <option value="53">53 سال</option>
+                  <option value="54">54 سال</option>
+                  <option value="55">55 سال</option>
+                  <option value="56">56 سال</option>
+                  <option value="57">57 سال</option>
+                  <option value="58">58 سال</option>
+                  <option value="59">59 سال</option>
+                  <option value="60">60 سال</option>
+                  <option value="61">61 سال</option>
+                  <option value="62">62 سال</option>
+                  <option value="63">63 سال</option>
+                  <option value="64">64 سال</option>
+                  <option value="65">65 سال</option>
+                  <option value="66">66 سال</option>
+                  <option value="67">67 سال</option>
+                  <option value="68">68 سال</option>
+                  <option value="69">69 سال</option>
+                  <option value="70">70 سال</option>
+                </select>
+                <span style="color:var(--ivory2);font-size:.8rem;flex-shrink:0;">تا</span>
+                <select name="age_to" id="ageTo" style="flex:1;">
+                  <option value="">تا</option>
+                  <option value="0">زیر ۱ سال</option>
+                  <option value="1">1 سال</option>
+                  <option value="2">2 سال</option>
+                  <option value="3">3 سال</option>
+                  <option value="4">4 سال</option>
+                  <option value="5">5 سال</option>
+                  <option value="6">6 سال</option>
+                  <option value="7">7 سال</option>
+                  <option value="8">8 سال</option>
+                  <option value="9">9 سال</option>
+                  <option value="10">10 سال</option>
+                  <option value="11">11 سال</option>
+                  <option value="12">12 سال</option>
+                  <option value="13">13 سال</option>
+                  <option value="14">14 سال</option>
+                  <option value="15">15 سال</option>
+                  <option value="16">16 سال</option>
+                  <option value="17">17 سال</option>
+                  <option value="18">18 سال</option>
+                  <option value="19">19 سال</option>
+                  <option value="20">20 سال</option>
+                  <option value="21">21 سال</option>
+                  <option value="22">22 سال</option>
+                  <option value="23">23 سال</option>
+                  <option value="24">24 سال</option>
+                  <option value="25">25 سال</option>
+                  <option value="26">26 سال</option>
+                  <option value="27">27 سال</option>
+                  <option value="28">28 سال</option>
+                  <option value="29">29 سال</option>
+                  <option value="30">30 سال</option>
+                  <option value="31">31 سال</option>
+                  <option value="32">32 سال</option>
+                  <option value="33">33 سال</option>
+                  <option value="34">34 سال</option>
+                  <option value="35">35 سال</option>
+                  <option value="36">36 سال</option>
+                  <option value="37">37 سال</option>
+                  <option value="38">38 سال</option>
+                  <option value="39">39 سال</option>
+                  <option value="40">40 سال</option>
+                  <option value="41">41 سال</option>
+                  <option value="42">42 سال</option>
+                  <option value="43">43 سال</option>
+                  <option value="44">44 سال</option>
+                  <option value="45">45 سال</option>
+                  <option value="46">46 سال</option>
+                  <option value="47">47 سال</option>
+                  <option value="48">48 سال</option>
+                  <option value="49">49 سال</option>
+                  <option value="50">50 سال</option>
+                  <option value="51">51 سال</option>
+                  <option value="52">52 سال</option>
+                  <option value="53">53 سال</option>
+                  <option value="54">54 سال</option>
+                  <option value="55">55 سال</option>
+                  <option value="56">56 سال</option>
+                  <option value="57">57 سال</option>
+                  <option value="58">58 سال</option>
+                  <option value="59">59 سال</option>
+                  <option value="60">60 سال</option>
+                  <option value="61">61 سال</option>
+                  <option value="62">62 سال</option>
+                  <option value="63">63 سال</option>
+                  <option value="64">64 سال</option>
+                  <option value="65">65 سال</option>
+                  <option value="66">66 سال</option>
+                  <option value="67">67 سال</option>
+                  <option value="68">68 سال</option>
+                  <option value="69">69 سال</option>
+                  <option value="70">70 سال</option>
+                </select>
+              </div>
+              <div class="err-msg" id="age-err">محدوده سنی را درست وارد کنید</div>
             </div>
           </div>
 
@@ -796,11 +951,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
     document.getElementById('jalaliCal').addEventListener('click', function(e){ e.stopPropagation(); });
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyH1CdBX11euNvUlowWI4H7nKy1rFukPvUjusuF_8i9l2yWs1xr_t6sFj4cLf8pmPzy/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoLwEZpR7tiUexkeUfrPSf86pPpu4bcJPGu_CFuQficBwEguux4kk_rPNZOzrA3t18/exec';
 
     document.getElementById('rolesOtherCb').addEventListener('change', function() {
       document.getElementById('otherRoleWrap').style.display = this.checked ? 'block' : 'none';
       if (!this.checked) document.querySelector('#employerForm [name="other_role"]').value = '';
+    });
+
+    document.getElementById('phoneInput').addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
     });
 
     function val(name) { return document.querySelector('#employerForm [name="' + name + '"]').value.trim(); }
@@ -823,7 +982,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       check('f-firstname', 'firstname');
       check('f-lastname',  'lastname');
-      check('f-phone',     'phone');
+
+      var phoneVal = document.querySelector('#employerForm [name="phone"]').value.trim();
+      var phoneErr = document.getElementById('phone-err');
+      var phoneField = document.getElementById('f-phone');
+      if (!phoneVal) {
+        phoneField.classList.add('invalid');
+        phoneErr.textContent = 'این فیلد الزامی است';
+        ok = false;
+      } else if (!/^[0-9]{10}$/.test(phoneVal)) {
+        phoneField.classList.add('invalid');
+        phoneErr.textContent = 'شماره صحیح نیست';
+        ok = false;
+      } else {
+        phoneField.classList.remove('invalid');
+      }
+
       check('f-project',   'project');
       check('f-type',      'type');
       check('f-city',      'city');
@@ -838,6 +1012,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (roles.length === 0) ok = false;
 
       checkRadio('f-gender', 'gender');
+
+      var ageFrom = document.getElementById('ageFrom').value;
+      var ageTo = document.getElementById('ageTo').value;
+      var ageField = document.getElementById('f-age');
+      var ageInvalid = (ageFrom === '' && ageTo !== '') || (ageFrom !== '' && ageTo === '') ||
+                        (ageFrom !== '' && ageTo !== '' && parseInt(ageTo) < parseInt(ageFrom));
+      ageField.classList.toggle('invalid', ageInvalid);
+      if (ageInvalid) ok = false;
+
       checkRadio('f-salary', 'salary');
       checkRadio('f-exp',    'experience');
 
@@ -866,6 +1049,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         description: val('description'),
         roles:       rolesList.join('، '),
         gender:      radio('gender'),
+        age_from:    ageFrom,
+        age_to:      ageTo,
         salary:      radio('salary'),
         experience:  radio('experience'),
         timestamp:   new Date().toISOString()

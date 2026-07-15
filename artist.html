@@ -490,8 +490,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="field" id="f-phone">
               <label><span class="req">*</span>شماره تماس</label>
-              <input type="tel" name="phone" placeholder="09xx xxx xxxx">
-              <div class="err-msg">شماره تماس معتبر وارد کنید</div>
+              <input type="tel" name="phone" id="phoneInput" placeholder="09xx xxx xxxx" maxlength="11" inputmode="numeric">
+              <div class="err-msg" id="phone-err">شماره صحیح نیست</div>
             </div>
 
             <div class="field" id="f-age">
@@ -601,7 +601,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       let valid = true;
       const required = [
         {id:'f-name',  name:'fullname'},
-        {id:'f-phone', name:'phone'},
         {id:'f-age',   name:'age'},
         {id:'f-bio',   name:'bio'},
       ];
@@ -611,12 +610,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if(!el.value.trim()){wrapper.classList.add('invalid');valid=false;}
         else{wrapper.classList.remove('invalid');}
       });
+
+      var phoneVal = document.querySelector('#artistForm [name="phone"]').value.trim();
+      var phoneWrapper = document.getElementById('f-phone');
+      if (!/^[0-9]{11}$/.test(phoneVal)) {
+        phoneWrapper.classList.add('invalid');
+        valid = false;
+      } else {
+        phoneWrapper.classList.remove('invalid');
+      }
+
       var skills = document.querySelectorAll('#artistForm [name="skills"]:checked');
       var skillsWrapper = document.getElementById('f-skills');
       if(skills.length===0){skillsWrapper.classList.add('invalid');valid=false;}
       else{skillsWrapper.classList.remove('invalid');}
       return valid;
     }
+
+    document.getElementById('phoneInput').addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+    });
 
     document.getElementById('artistForm').addEventListener('submit', async function(e){
       e.preventDefault();
