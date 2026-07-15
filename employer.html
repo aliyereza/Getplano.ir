@@ -800,23 +800,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     document.getElementById('rolesOtherCb').addEventListener('change', function() {
       document.getElementById('otherRoleWrap').style.display = this.checked ? 'block' : 'none';
-      if (!this.checked) document.querySelector('[name="other_role"]').value = '';
+      if (!this.checked) document.querySelector('#employerForm [name="other_role"]').value = '';
     });
 
-    function val(name) { return document.querySelector('[name="' + name + '"]').value.trim(); }
-    function radio(name) { var el = document.querySelector('[name="' + name + '"]:checked'); return el ? el.value : ''; }
+    function val(name) { return document.querySelector('#employerForm [name="' + name + '"]').value.trim(); }
+    function radio(name) { var el = document.querySelector('#employerForm [name="' + name + '"]:checked'); return el ? el.value : ''; }
 
     function submitForm() {
       var ok = true;
 
       function check(id, name) {
-        var v = document.querySelector('[name="' + name + '"]').value.trim();
+        var v = document.querySelector('#employerForm [name="' + name + '"]').value.trim();
         document.getElementById(id).classList.toggle('invalid', !v);
         if (!v) ok = false;
       }
 
       function checkRadio(id, name) {
-        var v = document.querySelector('[name="' + name + '"]:checked');
+        var v = document.querySelector('#employerForm [name="' + name + '"]:checked');
         document.getElementById(id).classList.toggle('invalid', !v);
         if (!v) ok = false;
       }
@@ -833,7 +833,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       else { deadlineWrapper.classList.remove('invalid'); }
       check('f-desc',      'description');
 
-      var roles = document.querySelectorAll('[name="roles"]:checked');
+      var roles = document.querySelectorAll('#employerForm [name="roles"]:checked');
       document.getElementById('f-roles').classList.toggle('invalid', roles.length === 0);
       if (roles.length === 0) ok = false;
 
@@ -851,13 +851,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       btn.textContent = 'در حال ارسال...';
 
       var rolesList = Array.from(roles).map(function(r){ return r.value; });
-      var other = document.querySelector('[name="other_role"]').value.trim();
+      var other = document.querySelector('#employerForm [name="other_role"]').value.trim();
       if (other) rolesList.push(other);
 
       var data = {
         firstname:   val('firstname'),
         lastname:    val('lastname'),
-        phone:       (document.querySelector('[name="phone_code"]').value + val('phone')),
+        phone:       (document.querySelector('#employerForm [name="phone_code"]').value + val('phone')),
         email:       val('email'),
         project:     val('project'),
         type:        val('type'),

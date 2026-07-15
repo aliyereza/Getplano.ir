@@ -592,7 +592,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       var cb = document.getElementById('skillsOther');
       var wrap = document.getElementById('otherSkillWrap');
       wrap.style.display = cb.checked ? 'block' : 'none';
-      if (!cb.checked) document.querySelector('[name="other_skill"]').value = '';
+      if (!cb.checked) document.querySelector('#artistForm [name="other_skill"]').value = '';
     }
 
     const ARTIST_SCRIPT = 'https://script.google.com/macros/s/AKfycbzwFso8kzNell_EuXA8iA3mJijOYRLTyemkVON_9pfXI9wZ3qLNRDW48ucJtCquZRwpCA/exec';
@@ -606,12 +606,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         {id:'f-bio',   name:'bio'},
       ];
       required.forEach(function(f){
-        var el = document.querySelector('[name="'+f.name+'"]');
+        var el = document.querySelector('#artistForm [name="'+f.name+'"]');
         var wrapper = document.getElementById(f.id);
         if(!el.value.trim()){wrapper.classList.add('invalid');valid=false;}
         else{wrapper.classList.remove('invalid');}
       });
-      var skills = document.querySelectorAll('[name="skills"]:checked');
+      var skills = document.querySelectorAll('#artistForm [name="skills"]:checked');
       var skillsWrapper = document.getElementById('f-skills');
       if(skills.length===0){skillsWrapper.classList.add('invalid');valid=false;}
       else{skillsWrapper.classList.remove('invalid');}
@@ -621,24 +621,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('artistForm').addEventListener('submit', async function(e){
       e.preventDefault();
       // honeypot check
-      if (document.querySelector('[name="website"]').value !== '') return;
+      if (document.querySelector('#artistForm [name="website"]').value !== '') return;
       if(!validateForm()) return;
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.textContent = 'در حال ارسال...';
-      var skills = Array.from(document.querySelectorAll('[name="skills"]:checked')).map(function(el){return el.value;});
+      var skills = Array.from(document.querySelectorAll('#artistForm [name="skills"]:checked')).map(function(el){return el.value;});
       var data = {
-        fullname:  document.querySelector('[name="fullname"]').value.trim(),
-        phone:     document.querySelector('[name="phone"]').value.trim(),
-        age:       document.querySelector('[name="age"]').value.trim(),
-        city:      document.querySelector('[name="city"]').value.trim(),
+        fullname:  document.querySelector('#artistForm [name="fullname"]').value.trim(),
+        phone:     document.querySelector('#artistForm [name="phone"]').value.trim(),
+        age:       document.querySelector('#artistForm [name="age"]').value.trim(),
+        city:      document.querySelector('#artistForm [name="city"]').value.trim(),
         skills:    (function(){
           var s = skills.filter(function(x){return x !== 'سایر';});
-          var other = document.querySelector('[name="other_skill"]').value.trim();
+          var other = document.querySelector('#artistForm [name="other_skill"]').value.trim();
           if(other) s.push(other);
           return s.join('، ');
         })(),
-        bio:       document.querySelector('[name="bio"]').value.trim(),
+        bio:       document.querySelector('#artistForm [name="bio"]').value.trim(),
         timestamp: new Date().toISOString(),
         project:   document.getElementById('artistForm').dataset.project || ''
       };
