@@ -1462,10 +1462,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         var roles = (job.roles || []).map(function(r){ return '<span class="slider-card-role">'+r+'</span>'; }).join('');
         var url = '/artist.html?project=' + encodeURIComponent(job.project);
         var applicants = job.applicants || '—';
+
+        function formatAgeRange(j) {
+          var f = (j.ageFrom || '').toString().trim();
+          var t = (j.ageTo || '').toString().trim();
+          if (!f && !t) return '';
+          var fLabel = f === '0' ? 'زیر ۱ سال' : (f + ' سال');
+          var tLabel = t === '0' ? 'زیر ۱ سال' : (t + ' سال');
+          if (f === t) return fLabel;
+          if (f === '0') return 'تا ' + tLabel;
+          return f + ' تا ' + tLabel;
+        }
+        var ageLabel = formatAgeRange(job);
+        var ageChip = ageLabel ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">سن: '+ageLabel+'</span>' : '';
+
         return '<div class="slider-card">' +
           '<div class="slider-card-title"><span>فراخوان:</span> ' + job.project + '</div>' +
           '<div class="slider-card-meta">' + job.city + '<span class="slider-card-meta-dot"></span>منتشرشده</div>' +
-          '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + '</div>' +
+          '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + ageChip + '</div>' +
           '<div class="slider-card-divider"></div>' +
           '<div class="slider-card-footer">' +
             '<a href="' + url + '" class="slider-card-cta">درخواست همکاری</a>' +

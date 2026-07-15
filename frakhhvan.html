@@ -796,7 +796,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           }
         }
 
-        var cityLine = (job.city || '') + (deadlineStr ? ' <span style="display:block;font-size:.72rem;color:var(--gold);opacity:.85;margin-top:4px;">' + deadlineStr + '</span>' : '');
+        var cityLine = (job.city || '');
+
+        function formatAgeRange(j) {
+          var f = (j.ageFrom || '').toString().trim();
+          var t = (j.ageTo || '').toString().trim();
+          if (!f && !t) return '';
+          var fLabel = f === '0' ? 'زیر ۱ سال' : (f + ' سال');
+          var tLabel = t === '0' ? 'زیر ۱ سال' : (t + ' سال');
+          if (f === t) return fLabel;
+          if (f === '0') return 'تا ' + tLabel;
+          return f + ' تا ' + tLabel;
+        }
+        var ageLabel = formatAgeRange(job);
 
         var descHtml = '';
         if (job.description) {
@@ -812,6 +824,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               '<div class="job-name">'+(job.project||'')+'</div>' +
             '</div>' +
             '<div class="job-date">تاریخ ثبت فراخوان: '+(job.date||'')+'</div>' +
+            (deadlineStr ? '<div class="job-date" style="color:var(--gold);opacity:.9;">'+deadlineStr+'</div>' : '') +
           '</div>' +
           '<div class="job-city"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg> '+cityLine+'</div>' +
           '<div class="job-roles">'+roles+'</div>' +
@@ -822,6 +835,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           '<div class="job-meta">' +
             '<span class="meta-badge '+salaryClass+'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> '+salaryLabel+'</span>' +
             '<span class="meta-badge '+expClass+'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> '+expLabel+'</span>' +
+            (ageLabel ? '<span class="meta-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg> '+ageLabel+'</span>' : '') +
           '</div>' +
           '<a href="'+artistUrl+'" class="job-cta">درخواست همکاری</a>' +
         '</div>';
