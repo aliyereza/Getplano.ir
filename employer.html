@@ -804,8 +804,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="success-box" id="successBox">
       <div class="success-icon">🎬</div>
-      <h2>فراخوان شما ثبت شد!</h2>
-      <p>اطلاعات پروژه شما دریافت شد و به‌زودی در صفحه فراخوان‌های Plano نمایش داده می‌شود.</p>
+      <h2 id="successTitle">فراخوان شما ثبت شد!</h2>
+      <p id="successMsg">اطلاعات پروژه شما دریافت شد و به‌زودی در صفحه فراخوان‌های Plano نمایش داده می‌شود.</p>
+
+      <div id="editLinkBox" style="margin:20px 0;padding:16px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.02);text-align:right;">
+        <div style="font-size:.78rem;color:var(--gold);font-weight:700;margin-bottom:8px;">لینک ویرایش فراخوان</div>
+        <div style="font-size:.72rem;color:var(--ivory2);line-height:1.8;margin-bottom:10px;">این لینک رو ذخیره کن؛ هر وقت خواستی اطلاعات فراخوان رو تغییر بدی، همین لینک رو باز کن.</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="editLinkInput" readonly style="flex:1;min-width:200px;direction:ltr;text-align:left;font-size:.75rem;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:#181818;color:var(--ivory2);">
+          <button type="button" onclick="copyEditLink()" id="copyLinkBtn" style="flex-shrink:0;padding:8px 16px;border-radius:7px;border:none;background:var(--gold);color:var(--black);font-family:Vazirmatn,sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;">کپی لینک</button>
+        </div>
+      </div>
+
       <a href="/frakhhvan.html">مشاهده فراخوان‌ها</a>
     </div>
 
@@ -953,6 +963,104 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoLwEZpR7tiUexkeUfrPSf86pPpu4bcJPGu_CFuQficBwEguux4kk_rPNZOzrA3t18/exec';
 
+    // ── Edit-link support ──
+    // هر فراخوان یک توکن یکتا داره. اگه صفحه با ?edit=TOKEN باز بشه، یعنی کاربر
+    // داره یه فراخوان قبلی رو ویرایش می‌کنه؛ وگرنه یه توکن جدید برای فراخوان تازه می‌سازیم.
+    function makeToken() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+        var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+      });
+    }
+
+    var urlParams = new URLSearchParams(location.search);
+    var editToken = urlParams.get('edit') || '';
+    var isEditMode = !!editToken;
+    if (!editToken) editToken = makeToken();
+
+    if (isEditMode) {
+      document.getElementById('submitBtn').textContent = 'در حال بارگذاری فراخوان...';
+      document.getElementById('submitBtn').disabled = true;
+
+      window._prefillCallback = function(json) {
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = false;
+
+        if (!json || json.status !== 'ok' || !json.data) {
+          btn.textContent = 'ثبت فراخوان';
+          alert('فراخوانی با این لینک پیدا نشد. ممکنه لینک اشتباه باشه یا فراخوان حذف شده باشه.');
+          return;
+        }
+
+        var d = json.data;
+        function setVal(name, value) {
+          var el = document.querySelector('#employerForm [name="' + name + '"]');
+          if (el) el.value = value || '';
+        }
+        function setChecked(name, value) {
+          var el = document.querySelector('#employerForm [name="' + name + '"][value="' + value + '"]');
+          if (el) el.checked = true;
+        }
+
+        setVal('firstname', d.firstname);
+        setVal('lastname', d.lastname);
+        setVal('email', d.email);
+        setVal('project', d.project);
+        setVal('type', d.type);
+        setVal('city', d.city);
+        setVal('description', d.description);
+
+        // شماره تماس: کد کشور رو از ابتدای رشته جدا می‌کنیم
+        var phoneCodeSel = document.querySelector('#employerForm [name="phone_code"]');
+        var fullPhone = d.phone || '';
+        var matched = false;
+        if (phoneCodeSel) {
+          Array.from(phoneCodeSel.options).forEach(function(opt) {
+            if (!matched && fullPhone.indexOf(opt.value) === 0) {
+              phoneCodeSel.value = opt.value;
+              document.getElementById('phoneInput').value = fullPhone.slice(opt.value.length);
+              matched = true;
+            }
+          });
+        }
+        if (!matched) document.getElementById('phoneInput').value = fullPhone;
+
+        // مهلت فراخوان (تاریخ شمسی نمایشی)
+        if (d.deadline) {
+          document.getElementById('jalaliDisplay').value = d.deadline;
+          document.getElementById('deadlineVal').value = d.deadline;
+        }
+
+        // نقش‌ها (چک‌باکس‌های چندتایی)
+        var knownRoles = Array.from(document.querySelectorAll('#employerForm [name="roles"]')).map(function(cb){return cb.value;});
+        (d.roles || []).forEach(function(r) {
+          if (knownRoles.indexOf(r) !== -1) {
+            setChecked('roles', r);
+          } else if (r) {
+            document.getElementById('rolesOtherCb').checked = true;
+            document.getElementById('otherRoleWrap').style.display = 'block';
+            document.querySelector('#employerForm [name="other_role"]').value = r;
+          }
+        });
+
+        setChecked('gender', d.gender);
+        setChecked('salary', d.salary);
+        setChecked('experience', d.experience);
+        if (d.age_from !== undefined) document.getElementById('ageFrom').value = d.age_from;
+        if (d.age_to   !== undefined) document.getElementById('ageTo').value = d.age_to;
+
+        btn.textContent = 'بروزرسانی فراخوان';
+        var titleEl = document.querySelector('.page-title');
+        if (titleEl) titleEl.textContent = 'ویرایش فراخوان پروژه';
+        titleEl.scrollIntoView({behavior:'smooth', block:'start'});
+      };
+
+      var s = document.createElement('script');
+      s.src = SCRIPT_URL + '?token=' + encodeURIComponent(editToken) + '&callback=_prefillCallback&t=' + Date.now();
+      document.head.appendChild(s);
+    }
+
     document.getElementById('rolesOtherCb').addEventListener('change', function() {
       document.getElementById('otherRoleWrap').style.display = this.checked ? 'block' : 'none';
       if (!this.checked) document.querySelector('#employerForm [name="other_role"]').value = '';
@@ -1031,7 +1139,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      btn.textContent = 'در حال ارسال...';
+      btn.textContent = isEditMode ? 'در حال بروزرسانی...' : 'در حال ارسال...';
 
       var rolesList = Array.from(roles).map(function(r){ return r.value; });
       var other = document.querySelector('#employerForm [name="other_role"]').value.trim();
@@ -1053,6 +1161,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         age_to:      ageTo,
         salary:      radio('salary'),
         experience:  radio('experience'),
+        token:       editToken,
         timestamp:   new Date().toISOString()
       };
 
@@ -1062,13 +1171,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
       }).then(function() {
+        var editUrl = location.origin + location.pathname + '?edit=' + encodeURIComponent(editToken);
+        document.getElementById('editLinkInput').value = editUrl;
+
+        if (isEditMode) {
+          document.getElementById('successTitle').textContent = 'فراخوان شما بروزرسانی شد!';
+          document.getElementById('successMsg').textContent = 'تغییرات شما با موفقیت ذخیره شد.';
+        } else {
+          document.getElementById('successTitle').textContent = 'فراخوان شما ثبت شد!';
+          document.getElementById('successMsg').textContent = 'اطلاعات پروژه شما دریافت شد و به‌زودی در صفحه فراخوان‌های Plano نمایش داده می‌شود.';
+        }
+
         document.getElementById('formWrap').style.display = 'none';
         document.getElementById('successBox').style.display = 'block';
         window.scrollTo({top: 0, behavior: 'smooth'});
       }).catch(function() {
         btn.disabled = false;
-        btn.textContent = 'ثبت فراخوان';
+        btn.textContent = isEditMode ? 'بروزرسانی فراخوان' : 'ثبت فراخوان';
         alert('خطا در ارسال. لطفاً دوباره تلاش کنید.');
+      });
+    }
+
+    function copyEditLink() {
+      var input = document.getElementById('editLinkInput');
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value).then(function() {
+        var btn = document.getElementById('copyLinkBtn');
+        var original = btn.textContent;
+        btn.textContent = 'کپی شد ✓';
+        setTimeout(function(){ btn.textContent = original; }, 1800);
+      }).catch(function() {
+        document.execCommand('copy');
       });
     }
   </script>
