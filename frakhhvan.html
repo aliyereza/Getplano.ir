@@ -672,7 +672,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <script>
     // ⚠️ این URL رو بعد از deploy کردن Apps Script جایگزین کن
-    const API_URL = 'https://script.google.com/macros/s/AKfycbzDkbwZbaocPM82pYI6PcoKEzMDtrgp_jtE4PW1u9mjP8C7e6dfelH14wtNtFJfxzzk/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwqB9LlJrSPuZsh_5e0UQ5tPVhwVF_pKCQzqy-f9KGAoGD1Dm_1Y_47tSbMsAXywQHZ/exec';
 
     const ARTIST_URL = '/artist.html';
 
@@ -762,7 +762,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       grid.innerHTML = jobs.map(function(job, i) {
         var rolesList = Array.isArray(job.roles) ? job.roles : [];
         var roles = rolesList.map(function(r){ return '<span class="role-tag">'+r+'</span>'; }).join('');
-        if (job.gender) roles += '<span class="role-tag" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>';
+
+        var genderLabel = job.gender || '';
 
         var salaryClass = job.salary === 'دارد' ? 'green' : 'red';
         var salaryLabel = job.salary === 'دارد' ? 'دستمزد دارد' : 'بدون دستمزد';
@@ -823,6 +824,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               '<span style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.7;">نام پروژه</span>' +
               '<div class="job-name">'+(job.project||'')+'</div>' +
             '</div>' +
+            (job.type ? '<div style="font-size:.75rem;color:var(--ivory2);">نوع پروژه: <span style="color:var(--gold);">'+job.type+'</span></div>' : '') +
             '<div class="job-date">تاریخ ثبت فراخوان: '+(job.date||'')+'</div>' +
             (deadlineStr ? '<div class="job-date" style="color:var(--gold);opacity:.9;">'+deadlineStr+'</div>' : '') +
           '</div>' +
@@ -833,9 +835,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             (job.applicants > 0 ? '<span style="color:var(--gold);font-weight:700;">' + job.applicants + '</span> نفر درخواست داده‌اند' : 'هنوز درخواستی ثبت نشده') +
           '</div>' +
           '<div class="job-meta">' +
+            (genderLabel ? '<span class="meta-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg> '+genderLabel+'</span>' : '') +
+            (ageLabel ? '<span class="meta-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> '+ageLabel+'</span>' : '') +
             '<span class="meta-badge '+salaryClass+'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> '+salaryLabel+'</span>' +
             '<span class="meta-badge '+expClass+'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> '+expLabel+'</span>' +
-            (ageLabel ? '<span class="meta-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg> '+ageLabel+'</span>' : '') +
           '</div>' +
           '<a href="'+artistUrl+'" class="job-cta">درخواست همکاری</a>' +
         '</div>';

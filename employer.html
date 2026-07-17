@@ -521,6 +521,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <label>ایمیل</label>
               <input type="email" name="email" placeholder="example@email.com">
             </div>
+            <div class="field" id="f-contact_method">
+              <label>ترجیح می‌دید از چه طریقی باهاتون در ارتباط باشیم؟</label>
+              <div class="radio-row">
+                <label class="radio-item"><input type="radio" name="contact_method" value="ایمیل"><span>ایمیل</span></label>
+                <label class="radio-item"><input type="radio" name="contact_method" value="واتساپ"><span>واتساپ</span></label>
+                <label class="radio-item"><input type="radio" name="contact_method" value="تلگرام"><span>تلگرام</span></label>
+                <label class="radio-item"><input type="radio" name="contact_method" value="بله"><span>بله</span></label>
+                <label class="radio-item"><input type="radio" name="contact_method" value="فرقی ندارد"><span>فرقی ندارد</span></label>
+              </div>
+            </div>
           </div>
 
           <div class="form-section">
@@ -961,7 +971,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
     document.getElementById('jalaliCal').addEventListener('click', function(e){ e.stopPropagation(); });
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoLwEZpR7tiUexkeUfrPSf86pPpu4bcJPGu_CFuQficBwEguux4kk_rPNZOzrA3t18/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqB9LlJrSPuZsh_5e0UQ5tPVhwVF_pKCQzqy-f9KGAoGD1Dm_1Y_47tSbMsAXywQHZ/exec';
 
     // ── Edit-link support ──
     // هر فراخوان یک توکن یکتا داره. اگه صفحه با ?edit=TOKEN باز بشه، یعنی کاربر
@@ -1006,6 +1016,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         setVal('firstname', d.firstname);
         setVal('lastname', d.lastname);
         setVal('email', d.email);
+        setChecked('contact_method', d.contact_method);
         setVal('project', d.project);
         setVal('type', d.type);
         setVal('city', d.city);
@@ -1150,6 +1161,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         lastname:    val('lastname'),
         phone:       (document.querySelector('#employerForm [name="phone_code"]').value + val('phone')),
         email:       val('email'),
+        contact_method: radio('contact_method'),
         project:     val('project'),
         type:        val('type'),
         city:        val('city'),
