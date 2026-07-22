@@ -38,7 +38,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta name="apple-mobile-web-app-title" content="Plano">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
   <style>
     @font-face {
       font-family: 'IranianSans';
@@ -97,7 +98,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       --gold-xs: rgba(201,162,39,.06);
       --ivory:   #F4EFE6;
       --ivory2:  #CFC7BA;
-      --muted:   #5A5247;
+      --muted:   #948A7D;
       --border:  rgba(201,162,39,.14);
       --max:     1080px;
     }
@@ -525,7 +526,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     ═══════════════════════════════════ */
     .nav-hamburger {
       display:none; align-items:center; justify-content:center;
-      width:36px; height:36px; background:transparent;
+      width:44px; height:44px; background:transparent;
       border:1px solid var(--border); border-radius:8px;
       cursor:pointer; flex-direction:column; gap:5px; padding:8px;
     }
@@ -556,7 +557,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     .nav-mobile-close {
       position:absolute; top:20px; left:20px;
-      width:36px; height:36px; border-radius:50%;
+      width:44px; height:44px; border-radius:50%;
       background:rgba(255,255,255,.07); border:none;
       color:var(--ivory2); font-size:1rem; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
@@ -970,14 +971,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <nav class="nav">
     <div class="wrap">
       <div class="nav-inner">
-        <a href="#" class="nav-logo"><img src="/plano-logo.png" alt="Plano" height="34"></a>
+        <a href="#" class="nav-logo"><img src="/plano-logo.png" alt="Plano" width="29" height="34"></a>
         <div class="nav-links">
-          <a href="/frakhhvan.html" class="nav-a">فراخوان‌ها</a>
-          <a href="/blog.html" class="nav-a">مقالات</a>
+          <a href="/contact.html" class="nav-a">ارتباط با ما</a>
           <a href="/about.html" class="nav-a">درباره ما</a>
+          <a href="/blog.html" class="nav-a">مقالات</a>
           <a href="#employer" class="nav-a">برای کارفرما</a>
           <a href="#artist"   class="nav-a">برای هنرمندان</a>
-          <a href="/contact.html" class="nav-a">ارتباط با ما</a>
+          <a href="/frakhhvan.html" class="nav-a">فراخوان‌ها</a>
           <a href="/artist.html" class="nav-a nav-artist">ثبت هنرمند</a>
           <a href="/employer.html" class="nav-cta">ثبت فراخوان</a>
           <button class="nav-hamburger" onclick="openMenu()" aria-label="منو">
@@ -1061,9 +1062,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- ── PROBLEM ── -->
   <section class="section">
     <div class="wrap">
-      <span class="eyebrow-tag reveal">چرا Plano؟</span>
-      <h2 class="section-title reveal reveal-delay-1">مشکلاتی که همه می‌شناسند</h2>
-      <p class="section-body reveal reveal-delay-2">صنعت سینما و تئاتر هنوز با روش‌های قدیمی کار می‌کند.</p>
+      <span class="eyebrow-tag reveal" style="text-align:center;display:block;">چرا Plano؟</span>
+      <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">مشکلاتی که همه می‌شناسند</h2>
+      <p class="section-body reveal reveal-delay-2" style="text-align:center;margin:0 auto;">صنعت سینما و تئاتر هنوز با روش‌های قدیمی کار می‌کند.</p>
       <div class="problem-list reveal reveal-delay-2">
         <div class="problem-item">
           <span class="problem-num">—</span>
@@ -1252,6 +1253,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="footer-inner">
         <a href="https://getplano.ir" class="footer-logo">Plano</a>
         <div style="display:flex;align-items:center;gap:16px;">
+          <a href="/about.html" style="font-size:.78rem;color:var(--ivory2);text-decoration:none;">درباره ما</a>
           <a href="/contact.html" style="font-size:.78rem;color:var(--ivory2);text-decoration:none;">ارتباط با ما</a>
           <span class="footer-r">getplano.ir</span>
         </div>
@@ -1296,7 +1298,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       position: absolute;
       top: 16px;
       left: 16px;
-      width: 30px; height: 30px;
+      width: 44px; height: 44px;
       border-radius: 50%;
       background: rgba(255,255,255,.08);
       border: none;
@@ -1407,11 +1409,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </style>
 
   <div id="ios-banner-card">
-    <button id="ios-banner-close" onclick="closeBanner()">✕</button>
+    <button id="ios-banner-close" onclick="closeBanner()" aria-label="بستن">✕</button>
 
     <div id="ios-banner-logo">
       <div id="ios-banner-logo-icon">
-        <img src="/apple-touch-icon.png" alt="Plano">
+        <img src="/apple-touch-icon.png" alt="Plano" width="52" height="52">
       </div>
       <span id="ios-banner-logo-text">PLANO</span>
     </div>
@@ -1495,10 +1497,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Mobile Menu -->
   <div class="nav-mobile-menu" id="mobileMenu">
-    <button class="nav-mobile-close" onclick="closeMenu()">✕</button>
+    <button class="nav-mobile-close" onclick="closeMenu()" aria-label="بستن منو">✕</button>
     <a href="/frakhhvan.html" onclick="closeMenu()">فراخوان‌ها</a>
-    <a href="#employer" onclick="closeMenu()">برای کارفرما</a>
     <a href="#artist" onclick="closeMenu()">برای هنرمندان</a>
+    <a href="#employer" onclick="closeMenu()">برای کارفرما</a>
+    <a href="/blog.html" onclick="closeMenu()">مقالات</a>
+    <a href="/about.html" onclick="closeMenu()">درباره ما</a>
     <a href="/contact.html" onclick="closeMenu()">ارتباط با ما</a>
     <a href="/artist.html" class="m-outline" onclick="closeMenu()">ثبت هنرمند</a>
     <a href="/employer.html" class="m-gold" onclick="closeMenu()">ثبت فراخوان</a>

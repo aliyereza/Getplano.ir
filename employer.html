@@ -78,7 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
       --black:#111111;--gold:#C9A227;--border:rgba(201,162,39,.13);
-      --ivory:#F4EFE6;--ivory2:#CFC7BA;--muted:#5A5247;--error:#e07070;--max:680px;
+      --ivory:#F4EFE6;--ivory2:#CFC7BA;--muted:#948A7D;--error:#e07070;--max:680px;
     }
     .faq-section{max-width:640px;margin:80px auto 60px;}
     .faq-section h2{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:800;color:var(--ivory);margin-bottom:24px;}
@@ -567,7 +567,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <input type="text" class="jalali-input" id="jalaliDisplay" name="deadline" placeholder="انتخاب تاریخ شمسی" readonly>
                 <div class="jalali-cal" id="jalaliCal">
                   <div class="jalali-nav">
-                    <button type="button" onclick="jalaliPrev()">&#8249;</button>
+                    <button type="button" onclick="jalaliPrev()" aria-label="ماه قبل">&#8249;</button>
                     <div style="display:flex;gap:6px;align-items:center;">
                       <select id="jalaliMonthSel" onchange="jalaliChangeMonth(this.value)" style="background:#222;border:1px solid var(--border);color:var(--ivory);border-radius:6px;padding:3px 6px;font-size:.75rem;font-family:Vazirmatn,sans-serif;">
                         <option value="0">فروردین</option><option value="1">اردیبهشت</option>
@@ -579,7 +579,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                       </select>
                       <select id="jalaliYearSel" onchange="jalaliChangeYear(this.value)" style="background:#222;border:1px solid var(--border);color:var(--ivory);border-radius:6px;padding:3px 6px;font-size:.75rem;font-family:Vazirmatn,sans-serif;"></select>
                     </div>
-                    <button type="button" onclick="jalaliNext()">&#8250;</button>
+                    <button type="button" onclick="jalaliNext()" aria-label="ماه بعد">&#8250;</button>
                   </div>
                   <div class="jalali-days-header">
                     <span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span>
