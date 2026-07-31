@@ -7,18 +7,18 @@
 ## صفحات اصلی
 
 - [صفحه اصلی](https://getplano.ir/): معرفی پلتفرم و ورود به مسیر کارفرما یا هنرمند
-- [ثبت فراخوان (کارفرما)](https://getplano.ir/employer.html): فرم ثبت فراخوان پروژه شامل نوع پروژه، شهر، مهلت، نقش‌های مورد نیاز و شرایط همکاری
-- [ثبت‌نام هنرمند](https://getplano.ir/artist.html): فرم ساخت پروفایل هنرمند شامل تخصص، سن، شهر و معرفی کوتاه
-- [فراخوان‌های فعال](https://getplano.ir/frakhhvan.html): فهرست به‌روز فراخوان‌های بازیگری و کستینگ در تهران و سراسر ایران، با فیلتر بر اساس نقش
-- [درباره پلانو](https://getplano.ir/about.html)
-- [تماس با ما](https://getplano.ir/contact.html)
+- [ثبت فراخوان (کارفرما)](https://getplano.ir/employer): فرم ثبت فراخوان پروژه شامل نوع پروژه، شهر، مهلت، نقش‌های مورد نیاز و شرایط همکاری
+- [ثبت‌نام هنرمند](https://getplano.ir/artist): فرم ساخت پروفایل هنرمند شامل تخصص، سن، شهر و معرفی کوتاه
+- [فراخوان‌های فعال](https://getplano.ir/frakhhvan): فهرست به‌روز فراخوان‌های بازیگری و کستینگ در تهران و سراسر ایران، با فیلتر بر اساس نقش
+- [درباره پلانو](https://getplano.ir/about)
+- [تماس با ما](https://getplano.ir/contact)
 
 ## بلاگ
 
-- [بلاگ پلانو](https://getplano.ir/blog.html): مقالات آموزشی درباره کستینگ و صنعت سینما و تئاتر
-- [راهنمای رزومه بازیگری](https://getplano.ir/blog-acting-resume.html)
-- [راهنمای کستینگ](https://getplano.ir/blog-casting-guide.html)
-- [چگونه فراخوان کستینگ پیدا کنیم](https://getplano.ir/blog-how-to-find-casting-calls.html)
+- [بلاگ پلانو](https://getplano.ir/blog): مقالات آموزشی درباره کستینگ و صنعت سینما و تئاتر
+- [راهنمای رزومه بازیگری](https://getplano.ir/blog-acting-resume)
+- [راهنمای کستینگ](https://getplano.ir/blog-casting-guide)
+- [چگونه فراخوان کستینگ پیدا کنیم](https://getplano.ir/blog-how-to-find-casting-calls)
 
 ## راهنمای استفاده برای عامل‌های هوش مصنوعی
 
