@@ -489,26 +489,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div id="formWrap">
       <div class="form-card">
-        <form id="employerForm">
+        <form id="employerForm" toolname="createCastingCall" tooldescription="ثبت یک فراخوان جدید کستینگ برای پروژه سینمایی یا تئاتری در پلتفرم Plano. اطلاعات تماس کارفرما و جزئیات پروژه (نوع، شهر، مهلت، نقش‌های مورد نیاز) را دریافت و ثبت می‌کند.">
 
           <div class="form-section">
             <div class="form-section-title">اطلاعات شخصی</div>
             <div class="two-col">
               <div class="field" id="f-firstname">
                 <label><span class="req">*</span>نام</label>
-                <input type="text" name="firstname" placeholder="نام شما">
+                <input type="text" name="firstname" placeholder="نام شما" toolparamdescription="نام کوچک کارفرما">
                 <div class="err-msg">این فیلد الزامی است</div>
               </div>
               <div class="field" id="f-lastname">
                 <label><span class="req">*</span>نام خانوادگی</label>
-                <input type="text" name="lastname" placeholder="نام خانوادگی">
+                <input type="text" name="lastname" placeholder="نام خانوادگی" toolparamdescription="نام خانوادگی کارفرما">
                 <div class="err-msg">این فیلد الزامی است</div>
               </div>
             </div>
             <div class="field" id="f-phone">
               <label><span class="req">*</span>شماره تماس</label>
               <div style="display:flex;gap:8px;direction:ltr;">
-                <select name="phone_code" style="width:115px;flex-shrink:0;direction:ltr;">
+                <select name="phone_code" style="width:115px;flex-shrink:0;direction:ltr;" toolparamdescription="کد بین‌المللی کشور شماره تماس">
                   <option value="+98">🇮🇷 IR +98</option>
                   <option value="+1">🇺🇸 US +1</option>
                   <option value="+44">🇬🇧 GB +44</option>
@@ -519,18 +519,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <option value="+7">🇷🇺 RU +7</option>
                   <option value="+86">🇨🇳 CN +86</option>
                 </select>
-                <input type="tel" name="phone" id="phoneInput" placeholder="بدون صفر وارد کنید" maxlength="10" inputmode="numeric" style="flex:1;direction:ltr;text-align:left;">
+                <input type="tel" name="phone" id="phoneInput" placeholder="بدون صفر وارد کنید" maxlength="10" inputmode="numeric" style="flex:1;direction:ltr;text-align:left;" toolparamdescription="شماره موبایل کارفرما بدون صفر ابتدایی">
               </div>
               <div class="err-msg" id="phone-err">این فیلد الزامی است</div>
             </div>
             <div class="field">
               <label>ایمیل</label>
-              <input type="email" name="email" placeholder="example@email.com">
+              <input type="email" name="email" placeholder="example@email.com" toolparamdescription="آدرس ایمیل کارفرما (اختیاری)">
             </div>
             <div class="field" id="f-contact_method">
               <label>ترجیح می‌دید از چه طریقی باهاتون در ارتباط باشیم؟</label>
               <div class="radio-row">
-                <label class="radio-item"><input type="radio" name="contact_method" value="ایمیل"><span>ایمیل</span></label>
+                <label class="radio-item"><input type="radio" name="contact_method" value="ایمیل" toolparamdescription="روش ترجیحی برای برقراری ارتباط با کارفرما"><span>ایمیل</span></label>
                 <label class="radio-item"><input type="radio" name="contact_method" value="واتساپ"><span>واتساپ</span></label>
                 <label class="radio-item"><input type="radio" name="contact_method" value="تلگرام"><span>تلگرام</span></label>
                 <label class="radio-item"><input type="radio" name="contact_method" value="بله"><span>بله</span></label>
@@ -543,12 +543,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="form-section-title">اطلاعات پروژه</div>
             <div class="field" id="f-project">
               <label><span class="req">*</span>نام پروژه</label>
-              <input type="text" name="project" placeholder="نام پروژه">
+              <input type="text" name="project" placeholder="نام پروژه" toolparamdescription="نام پروژه سینمایی یا تئاتری">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
             <div class="field" id="f-type">
               <label><span class="req">*</span>نوع پروژه</label>
-              <select name="type">
+              <select name="type" toolparamdescription="نوع پروژه (تئاتر، فیلم بلند، سریال و غیره)">
                 <option value="">انتخاب کنید</option>
                 <option>تئاتر</option>
                 <option>نمایشنامه‌خوانی</option>
@@ -564,13 +564,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="field" id="f-city">
               <label><span class="req">*</span>شهر</label>
-              <input type="text" name="city" placeholder="تهران">
+              <input type="text" name="city" placeholder="تهران" toolparamdescription="شهر محل اجرای پروژه">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
             <div class="field" id="f-deadline">
               <label><span class="req">*</span>مهلت فراخوان</label>
               <div class="jalali-wrap">
-                <input type="text" class="jalali-input" id="jalaliDisplay" name="deadline" placeholder="انتخاب تاریخ شمسی" readonly>
+                <input type="text" class="jalali-input" id="jalaliDisplay" name="deadline" placeholder="انتخاب تاریخ شمسی" readonly toolparamdescription="مهلت شمسی فراخوان به فرمت متنی نمایشی، مثلاً ۱۵ مرداد ۱۴۰۳">
                 <div class="jalali-cal" id="jalaliCal">
                   <div class="jalali-nav">
                     <button type="button" onclick="jalaliPrev()" aria-label="ماه قبل">&#8249;</button>
@@ -598,7 +598,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="field" id="f-desc">
               <label><span class="req">*</span>توضیحات پروژه</label>
-              <textarea name="description" placeholder="توضیح مختصری از پروژه، شرایط همکاری و..."></textarea>
+              <textarea name="description" placeholder="توضیح مختصری از پروژه، شرایط همکاری و..." toolparamdescription="توضیحات کامل پروژه و شرایط همکاری"></textarea>
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
           </div>
@@ -608,7 +608,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="field" id="f-roles">
               <label><span class="req">*</span>چه نقش‌هایی نیاز دارید؟</label>
               <div class="check-grid">
-                <label class="check-item"><input type="checkbox" name="roles" value="بازیگر"><span>بازیگر</span></label>
+                <label class="check-item"><input type="checkbox" name="roles" value="بازیگر" toolparamdescription="نقش‌های مورد نیاز برای این فراخوان (می‌توان چند مورد انتخاب کرد)"><span>بازیگر</span></label>
                 <label class="check-item"><input type="checkbox" name="roles" value="کارگردان"><span>کارگردان</span></label>
                 <label class="check-item"><input type="checkbox" name="roles" value="دستیار کارگردان"><span>دستیار کارگردان</span></label>
                 <label class="check-item"><input type="checkbox" name="roles" value="فیلمبردار"><span>فیلمبردار</span></label>
@@ -620,7 +620,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <label class="check-item"><input type="checkbox" name="roles" value="سایر" id="rolesOtherCb"><span>سایر</span></label>
               </div>
               <div class="other-field" id="otherRoleWrap">
-                <input type="text" name="other_role" placeholder="مثلاً: مدل، عکاس، نورپرداز...">
+                <input type="text" name="other_role" placeholder="مثلاً: مدل، عکاس، نورپرداز..." toolparamdescription="نقش سفارشی در صورت انتخاب گزینه «سایر»">
               </div>
               <div class="err-msg">حداقل یک نقش انتخاب کنید</div>
             </div>
@@ -628,7 +628,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="field" id="f-gender">
               <label><span class="req">*</span>جنسیت</label>
               <div class="radio-row">
-                <label class="radio-item"><input type="radio" name="gender" value="آقا"><span>آقا</span></label>
+                <label class="radio-item"><input type="radio" name="gender" value="آقا" toolparamdescription="جنسیت مورد نیاز برای نقش"><span>آقا</span></label>
                 <label class="radio-item"><input type="radio" name="gender" value="خانم"><span>خانم</span></label>
                 <label class="radio-item"><input type="radio" name="gender" value="آقا و خانم"><span>آقا و خانم</span></label>
                 <label class="radio-item"><input type="radio" name="gender" value="فرقی ندارد"><span>فرقی ندارد</span></label>
@@ -638,7 +638,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="field" id="f-age">
               <label>محدوده سنی مورد نیاز</label>
               <div style="display:flex;gap:8px;align-items:center;">
-                <select name="age_from" id="ageFrom" style="flex:1;">
+                <select name="age_from" id="ageFrom" style="flex:1;" toolparamdescription="حداقل سن مورد نیاز">
                   <option value="">از</option>
                   <option value="0">زیر ۱ سال</option>
                   <option value="1">1 سال</option>
@@ -713,7 +713,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <option value="70">70 سال</option>
                 </select>
                 <span style="color:var(--ivory2);font-size:.8rem;flex-shrink:0;">تا</span>
-                <select name="age_to" id="ageTo" style="flex:1;">
+                <select name="age_to" id="ageTo" style="flex:1;" toolparamdescription="حداکثر سن مورد نیاز">
                   <option value="">تا</option>
                   <option value="0">زیر ۱ سال</option>
                   <option value="1">1 سال</option>
@@ -797,7 +797,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="field" id="f-salary">
               <label><span class="req">*</span>دستمزد</label>
               <div class="radio-row">
-                <label class="radio-item"><input type="radio" name="salary" value="دارد"><span>دارد</span></label>
+                <label class="radio-item"><input type="radio" name="salary" value="دارد" toolparamdescription="آیا برای این نقش دستمزد پرداخت می‌شود؟"><span>دارد</span></label>
                 <label class="radio-item"><input type="radio" name="salary" value="ندارد"><span>ندارد</span></label>
               </div>
               <div class="err-msg">این فیلد الزامی است</div>
@@ -805,7 +805,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="field" id="f-exp">
               <label><span class="req">*</span>نیاز به سابقه</label>
               <div class="radio-row">
-                <label class="radio-item"><input type="radio" name="experience" value="دارد"><span>دارد</span></label>
+                <label class="radio-item"><input type="radio" name="experience" value="دارد" toolparamdescription="آیا سابقه کاری برای این نقش الزامی است؟"><span>دارد</span></label>
                 <label class="radio-item"><input type="radio" name="experience" value="ندارد"><span>ندارد</span></label>
               </div>
               <div class="err-msg">این فیلد الزامی است</div>

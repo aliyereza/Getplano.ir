@@ -482,7 +482,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div id="formWrap">
       <div class="form-card">
-        <form id="artistForm" novalidate>
+        <form id="artistForm" novalidate toolname="registerArtistProfile" tooldescription="ثبت پروفایل یک هنرمند یا عوامل سینما و تئاتر در پلتفرم Plano، شامل اطلاعات تماس، سن، شهر، حوزه‌های تخصصی و معرفی کوتاه، تا برای فراخوان‌های کستینگ مرتبط دیده شود.">
 
           <!-- اطلاعات شخصی -->
           <div class="form-section">
@@ -490,25 +490,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="field" id="f-name">
               <label><span class="req">*</span>نام و نام خانوادگی</label>
-              <input type="text" name="fullname" placeholder="نام کامل شما">
+              <input type="text" name="fullname" placeholder="نام کامل شما" toolparamdescription="نام و نام خانوادگی کامل هنرمند">
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
 
             <div class="field" id="f-phone">
               <label><span class="req">*</span>شماره تماس</label>
-              <input type="tel" name="phone" id="phoneInput" placeholder="09xx xxx xxxx" maxlength="11" inputmode="numeric">
+              <input type="tel" name="phone" id="phoneInput" placeholder="09xx xxx xxxx" maxlength="11" inputmode="numeric" toolparamdescription="شماره موبایل هنرمند با فرمت ایرانی، مثلاً 09121234567">
               <div class="err-msg" id="phone-err">شماره صحیح نیست</div>
             </div>
 
             <div class="field" id="f-age">
               <label><span class="req">*</span>سن</label>
-              <input type="number" name="age" placeholder="مثلاً ۲۵" min="15" max="99">
+              <input type="number" name="age" placeholder="مثلاً ۲۵" min="15" max="99" toolparamdescription="سن هنرمند بین ۱۵ تا ۹۹ سال">
               <div class="err-msg">سن معتبر وارد کنید</div>
             </div>
 
             <div class="field">
               <label>شهر</label>
-              <input type="text" name="city" placeholder="تهران">
+              <input type="text" name="city" placeholder="تهران" toolparamdescription="شهر محل سکونت هنرمند">
             </div>
           </div>
 
@@ -519,7 +519,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="field" id="f-skills">
               <label><span class="req">*</span>حوزه فعالیت</label>
               <div class="check-grid">
-                <label class="check-item"><input type="checkbox" name="skills" value="بازیگر"><span>بازیگر</span></label>
+                <label class="check-item"><input type="checkbox" name="skills" value="بازیگر" toolparamdescription="حوزه‌های تخصصی و مهارت هنرمند (می‌توان چند مورد انتخاب کرد)"><span>بازیگر</span></label>
                 <label class="check-item"><input type="checkbox" name="skills" value="کارگردان"><span>کارگردان</span></label>
                 <label class="check-item"><input type="checkbox" name="skills" value="دستیار کارگردان"><span>دستیار کارگردان</span></label>
                 <label class="check-item"><input type="checkbox" name="skills" value="فیلمبردار"><span>فیلمبردار</span></label>
@@ -531,14 +531,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <label class="check-item"><input type="checkbox" name="skills" value="سایر" id="skillsOther" onchange="toggleOther()"><span>سایر</span></label>
               </div>
               <div class="field" id="otherSkillWrap" style="display:none;margin-top:10px;">
-                <input type="text" name="other_skill" placeholder="مثلاً: مدل، عکاس، نورپرداز...">
+                <input type="text" name="other_skill" placeholder="مثلاً: مدل، عکاس، نورپرداز..." toolparamdescription="مهارت سفارشی در صورت انتخاب گزینه «سایر»">
               </div>
               <div class="err-msg">حداقل یک مورد انتخاب کنید</div>
             </div>
 
             <div class="field" id="f-bio">
               <label><span class="req">*</span>معرفی کوتاه</label>
-              <textarea name="bio" placeholder="سابقه کاری، مهارت‌ها و توضیحات بیشتر..."></textarea>
+              <textarea name="bio" placeholder="سابقه کاری، مهارت‌ها و توضیحات بیشتر..." toolparamdescription="معرفی کوتاه شامل سابقه کاری و مهارت‌های هنرمند"></textarea>
               <div class="err-msg">این فیلد الزامی است</div>
             </div>
           </div>
