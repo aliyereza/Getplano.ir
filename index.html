@@ -1572,7 +1572,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + ageChip + '</div>' +
           '<div class="slider-card-divider"></div>' +
           '<div class="slider-card-footer">' +
-            '<a href="' + url + '" class="slider-card-cta">درخواست همکاری</a>' +
+            '<a href="' + url + '" class="slider-card-cta" aria-label="درخواست همکاری برای فراخوان ' + job.project + '">درخواست همکاری</a>' +
             '<div style="text-align:left"><div class="slider-card-footer-label">متقاضیان دریافتی</div><div class="slider-card-footer-num">' + applicants + '</div></div>' +
           '</div>' +
         '</div>';
@@ -1684,10 +1684,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   (function() {
 
     // ── Hero entrance ──
-    window.addEventListener('load', function() {
-      var inner = document.querySelector('.hero-inner');
-      if (inner) inner.classList.add('loaded');
-    });
+    // NOTE: previously gated on window 'load', which waits for every
+    // resource on the page (fonts, images, GTM, Clarity, ahrefs) before
+    // revealing the H1 — this was directly inflating LCP (8.7s in
+    // PageSpeed). The script runs at the bottom of <body>, so the DOM
+    // is already parsed; add the class immediately instead.
+    var heroInner = document.querySelector('.hero-inner');
+    if (heroInner) heroInner.classList.add('loaded');
 
     // ── Spotlight cursor ──
     var spotlight = document.getElementById('spotlight');
