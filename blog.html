@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+<!-- Google Tag Manager (deferred: loads on first user interaction, or after 4s fallback, to keep it out of the initial-load performance budget) -->
+<script>(function(w,d,s,l,i){
+  var loaded=false;
+  function start(){
+    if(loaded) return; loaded=true;
+    w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+    events.forEach(function(e){ d.removeEventListener(e,start,{passive:true}); });
+    clearTimeout(fallback);
+  }
+  var events=['scroll','mousemove','keydown','touchstart','click'];
+  events.forEach(function(e){ d.addEventListener(e,start,{passive:true,once:true}); });
+  var fallback=setTimeout(start,4000);
 })(window,document,'script','dataLayer','GTM-WJTGQLRV');</script>
 <!-- End Google Tag Manager -->
 
@@ -330,7 +340,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M23 19v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">مراحل تست بازیگری</span>
-        <div class="blog-card-title">تست بازیگری چگونه است؟ راهنمای کامل مراحل تست بازیگری</div>
+        <h2 class="blog-card-title">تست بازیگری چگونه است؟ راهنمای کامل مراحل تست بازیگری</h2>
         <div class="blog-card-excerpt">از گفت‌وگو با کارگردان تا اجرای مونولوگ؛ همه مراحل رایج تست بازیگری در یک راهنما.</div>
         <div class="blog-card-meta">
           <span>۷ دقیقه مطالعه</span>
@@ -344,7 +354,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">جدیدترین فراخوان‌ها</span>
-        <div class="blog-card-title">چگونه از فراخوان بازیگری مطلع شویم؟</div>
+        <h2 class="blog-card-title">چگونه از فراخوان بازیگری مطلع شویم؟</h2>
         <div class="blog-card-excerpt">راهنمای کامل پیدا کردن جدیدترین فراخوان‌های بازیگری در تهران و سراسر ایران.</div>
         <div class="blog-card-meta">
           <span>۷ دقیقه مطالعه</span>
@@ -358,7 +368,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">تست بازیگری</span>
-        <div class="blog-card-title">چگونه در تست بازیگری قبول شویم؟</div>
+        <h2 class="blog-card-title">چگونه در تست بازیگری قبول شویم؟</h2>
         <div class="blog-card-excerpt">مهم‌ترین نکاتی که شانس شما را در هر تست و فراخوان بازیگری افزایش می‌دهد.</div>
         <div class="blog-card-meta">
           <span>۶ دقیقه مطالعه</span>
@@ -372,7 +382,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17.3" r="0.6" fill="currentColor" stroke="none"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">اشتباهات رایج</span>
-        <div class="blog-card-title">رایج‌ترین اشتباهات بازیگران در تست بازیگری</div>
+        <h2 class="blog-card-title">رایج‌ترین اشتباهات بازیگران در تست بازیگری</h2>
         <div class="blog-card-excerpt">اشتباهاتی که کارگردانان بارها به آن اشاره کرده‌اند و راه‌های جلوگیری از آن‌ها.</div>
         <div class="blog-card-meta">
           <span>۷ دقیقه مطالعه</span>
@@ -386,7 +396,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h6M9 9h2"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">رزومه بازیگری</span>
-        <div class="blog-card-title">چگونه یک رزومه بازیگری حرفه‌ای بنویسیم؟</div>
+        <h2 class="blog-card-title">چگونه یک رزومه بازیگری حرفه‌ای بنویسیم؟</h2>
         <div class="blog-card-excerpt">راهنمای کامل به همراه نمونه ساختار رزومه، برای بازیگران با و بدون سابقه.</div>
         <div class="blog-card-meta">
           <span>۸ دقیقه مطالعه</span>
@@ -400,7 +410,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">تمرین بازیگری</span>
-        <div class="blog-card-title">۱۰ تمرین روزانه برای تقویت بازیگری</div>
+        <h2 class="blog-card-title">۱۰ تمرین روزانه برای تقویت بازیگری</h2>
         <div class="blog-card-excerpt">تمرین‌های ساده و مؤثر که هر بازیگر می‌تواند هر روز در خانه انجام دهد.</div>
         <div class="blog-card-meta">
           <span>۷ دقیقه مطالعه</span>
@@ -414,7 +424,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="blog-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></div>
       <div class="blog-card-body">
         <span class="blog-cat">راهنمای فراخوان</span>
-        <div class="blog-card-title">راهنمای کامل شرکت در فراخوان‌های بازیگری</div>
+        <h2 class="blog-card-title">راهنمای کامل شرکت در فراخوان‌های بازیگری</h2>
         <div class="blog-card-excerpt">هرآنچه قبل از ثبت درخواست در یک فراخوان بازیگری باید بدانید.</div>
         <div class="blog-card-meta">
           <span>۸ دقیقه مطالعه</span>

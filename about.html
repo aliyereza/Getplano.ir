@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+<!-- Google Tag Manager (deferred: loads on first user interaction, or after 4s fallback, to keep it out of the initial-load performance budget) -->
+<script>(function(w,d,s,l,i){
+  var loaded=false;
+  function start(){
+    if(loaded) return; loaded=true;
+    w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+    events.forEach(function(e){ d.removeEventListener(e,start,{passive:true}); });
+    clearTimeout(fallback);
+  }
+  var events=['scroll','mousemove','keydown','touchstart','click'];
+  events.forEach(function(e){ d.addEventListener(e,start,{passive:true,once:true}); });
+  var fallback=setTimeout(start,4000);
 })(window,document,'script','dataLayer','GTM-WJTGQLRV');</script>
 <!-- End Google Tag Manager -->
 
