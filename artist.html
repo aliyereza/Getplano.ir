@@ -510,6 +510,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="err-msg" id="phone-err">شماره صحیح نیست</div>
             </div>
 
+            <div class="field" id="f-email">
+              <label><span class="req">*</span>ایمیل</label>
+              <input type="email" name="email" placeholder="example@email.com" toolparamdescription="آدرس ایمیل هنرمند (اجباری)">
+              <div class="err-msg" id="email-err">ایمیل معتبر وارد کنید</div>
+            </div>
+
             <div class="field" id="f-age">
               <label><span class="req">*</span>سن</label>
               <input type="number" name="age" placeholder="مثلاً ۲۵" min="15" max="99" toolparamdescription="سن هنرمند بین ۱۵ تا ۹۹ سال">
@@ -636,6 +642,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         phoneWrapper.classList.remove('invalid');
       }
 
+      var emailVal = document.querySelector('#artistForm [name="email"]').value.trim();
+      var emailWrapper = document.getElementById('f-email');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        emailWrapper.classList.add('invalid');
+        valid = false;
+      } else {
+        emailWrapper.classList.remove('invalid');
+      }
+
       var skills = document.querySelectorAll('#artistForm [name="skills"]:checked');
       var skillsWrapper = document.getElementById('f-skills');
       if(skills.length===0){skillsWrapper.classList.add('invalid');valid=false;}
@@ -659,6 +674,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       var data = {
         fullname:  document.querySelector('#artistForm [name="fullname"]').value.trim(),
         phone:     document.querySelector('#artistForm [name="phone"]').value.trim(),
+        email:     document.querySelector('#artistForm [name="email"]').value.trim(),
         age:       document.querySelector('#artistForm [name="age"]').value.trim(),
         city:      document.querySelector('#artistForm [name="city"]').value.trim(),
         skills:    (function(){
