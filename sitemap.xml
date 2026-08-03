@@ -26,6 +26,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://getplano.ir/blog-start-acting.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://getplano.ir/blog-audition-process.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
