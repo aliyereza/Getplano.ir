@@ -548,9 +548,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
               <div class="err-msg" id="phone-err">این فیلد الزامی است</div>
             </div>
-            <div class="field">
+            <div class="field" id="f-email">
               <label><span class="req">*</span>ایمیل</label>
               <input type="email" name="email" placeholder="example@email.com" required toolparamdescription="آدرس ایمیل کارفرما (اجباری)">
+              <div class="err-msg" id="email-err">این فیلد الزامی است</div>
             </div>
             <div class="field" id="f-contact_method">
               <label>ترجیح می‌دید از چه طریقی باهاتون در ارتباط باشیم؟</label>
@@ -1146,6 +1147,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         ok = false;
       } else {
         phoneField.classList.remove('invalid');
+      }
+
+      var emailVal = document.querySelector('#employerForm [name="email"]').value.trim();
+      var emailErr = document.getElementById('email-err');
+      var emailField = document.getElementById('f-email');
+      if (!emailVal) {
+        emailField.classList.add('invalid');
+        emailErr.textContent = 'این فیلد الزامی است';
+        ok = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        emailField.classList.add('invalid');
+        emailErr.textContent = 'ایمیل معتبر وارد کنید';
+        ok = false;
+      } else {
+        emailField.classList.remove('invalid');
       }
 
       check('f-project',   'project');
