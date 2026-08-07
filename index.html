@@ -1775,7 +1775,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     // ── Dust particles ──
     var canvas = document.getElementById('dust-canvas');
-    if (canvas) {
+    if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       var ctx = canvas.getContext('2d');
       var particles = [];
       var W, H;
@@ -1789,8 +1789,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       resize();
       window.addEventListener('resize', resize);
 
-      // Create particles
-      for (var i = 0; i < 55; i++) {
+      // Fewer particles = meaningfully less per-frame canvas work
+      var PARTICLE_COUNT = 28;
+      for (var i = 0; i < PARTICLE_COUNT; i++) {
         particles.push({
           x:    Math.random() * window.innerWidth,
           y:    Math.random() * window.innerHeight,
@@ -1803,7 +1804,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       var rafId;
-      function drawDust() {
+      var lastFrame = 0;
+      var FRAME_INTERVAL = 1000 / 30; // cap at ~30fps instead of 60fps
+
+      function drawDust(ts) {
+        rafId = requestAnimationFrame(drawDust);
+        if (ts - lastFrame < FRAME_INTERVAL) return;
+        lastFrame = ts;
+
         ctx.clearRect(0, 0, W, H);
         particles.forEach(function(p) {
           ctx.beginPath();
@@ -1820,18 +1828,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           if (p.x < -10) p.x = W + 5;
           if (p.x > W + 10) p.x = -5;
         });
-        rafId = requestAnimationFrame(drawDust);
       }
 
-      // Only animate when visible
-      if ('IntersectionObserver' in window) {
-        var obs = new IntersectionObserver(function(entries) {
-          if (entries[0].isIntersecting) { if (!rafId) drawDust(); }
-          else { cancelAnimationFrame(rafId); rafId = null; }
-        });
-        obs.observe(document.body);
+      function startDust() { if (!rafId) { lastFrame = 0; rafId = requestAnimationFrame(drawDust); } }
+      function stopDust()  { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+      // Only animate the hero section, and only once the page is idle —
+      // avoids competing with initial script evaluation, and genuinely
+      // stops once the user scrolls past the hero (unlike observing <body>,
+      // which is always "in view").
+      var heroEl = document.querySelector('.hero') || document.querySelector('.hero-inner') || canvas;
+      function armObserver() {
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting && !document.hidden) startDust();
+            else stopDust();
+          });
+          obs.observe(heroEl);
+        } else {
+          startDust();
+        }
+      }
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) stopDust(); else armObserver();
+      });
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(armObserver, { timeout: 2000 });
       } else {
-        drawDust();
+        setTimeout(armObserver, 300);
       }
     }
 
