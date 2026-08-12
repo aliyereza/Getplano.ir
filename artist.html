@@ -655,6 +655,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       var skillsWrapper = document.getElementById('f-skills');
       if(skills.length===0){skillsWrapper.classList.add('invalid');valid=false;}
       else{skillsWrapper.classList.remove('invalid');}
+
+      if (!valid) {
+        var firstInvalid = document.querySelector('.invalid');
+        if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
       return valid;
     }
 
