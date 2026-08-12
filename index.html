@@ -638,6 +638,7 @@
       will-change:transform;
     }
     .slider-card {
+      position:relative;
       min-width:100%; max-width:100%;
       direction:rtl;
       background:rgba(255,255,255,.02);
@@ -646,6 +647,17 @@
       display:flex; flex-direction:column; gap:0;
       box-shadow:0 0 40px rgba(201,162,39,.06);
       flex-shrink:0;
+      overflow:hidden;
+    }
+    .slider-card.is-closed{opacity:.5;filter:grayscale(.35);}
+    .slider-card .job-watermark{
+      position:absolute;top:42%;left:50%;
+      transform:translate(-50%,-50%) rotate(-16deg);
+      font-size:1.05rem;font-weight:800;color:#e07070;
+      border:2px solid #e07070;border-radius:8px;
+      padding:6px 20px;background:rgba(17,17,17,.88);
+      letter-spacing:.02em;white-space:nowrap;
+      z-index:5;pointer-events:none;
     }
     .slider-card-title {
       font-size:1.2rem; font-weight:700; color:var(--ivory);
@@ -1627,14 +1639,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
         var ageLabel = formatAgeRange(job);
         var ageChip = ageLabel ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">سن: '+ageLabel+'</span>' : '';
+        var isClosed = job.status && job.status !== 'فعال';
 
-        return '<div class="slider-card">' +
+        return '<div class="slider-card' + (isClosed ? ' is-closed' : '') + '">' +
+          (isClosed ? '<div class="job-watermark">مهلت ثبت‌نام تمام شده</div>' : '') +
           '<div class="slider-card-title"><span>فراخوان:</span> ' + job.project + '</div>' +
           '<div class="slider-card-meta">' + job.city + '<span class="slider-card-meta-dot"></span>منتشرشده</div>' +
           '<div class="slider-card-roles">' + roles + (job.gender ? '<span class="slider-card-role" style="border-color:rgba(201,162,39,.35);color:#C9A227;">'+job.gender+'</span>' : '') + ageChip + '</div>' +
           '<div class="slider-card-divider"></div>' +
           '<div class="slider-card-footer">' +
-            '<a href="' + url + '" class="slider-card-cta" aria-label="درخواست همکاری برای فراخوان ' + job.project + '">درخواست همکاری</a>' +
+            (isClosed
+              ? '<span class="slider-card-cta" style="opacity:.5;cursor:not-allowed;background:var(--muted);">مهلت تمام شده</span>'
+              : '<a href="' + url + '" class="slider-card-cta" aria-label="درخواست همکاری برای فراخوان ' + job.project + '">درخواست همکاری</a>'
+            ) +
             '<div style="text-align:left"><div class="slider-card-footer-label">متقاضیان دریافتی</div><div class="slider-card-footer-num">' + applicants + '</div></div>' +
           '</div>' +
         '</div>';
